@@ -9,3 +9,5 @@ Jeremy Neilson | neilso14 | 1007656804 | jeremy.neilson@mail.utoronto.ca | Slack
 Bharath Varma Chamathi | chamart1 | 1007303767 | bharath.chamarthi@mail.utoronto.ca | Slack | Bharath Varma Chamathi
 
 Xin Yi Hu | huxin14 | 1006830208 | xinye.hu@mail.utoronto.ca | Slack | Xin Yi Hu
+
+Athul Vincent | vince103 | 1006669295 | athul.vincent@mail.utoronto.ca | Slack | Athul Vincent
