@@ -12,19 +12,13 @@ GoGo is a website that connects individuals who want to explore events and exper
 
  GoGo's target users can be broadly categorized into two:
  * Individuals who experience anxiety or discomfort attending events alone or are simply looking for people to go with. For example, 
+ Garry: [https://perfectstrangers.xtensio.com/edit/3cywm27q](url)
+ Amelia: [https://whydoihavetomakethis.xtensio.com/pca604rl](url)
+ 
  * Businesses organising events that want to tap into a larger market by connecting individuals who would otherwise skip out on experiences due to the anxiety of attending alone. For example, 
+ Carl: [https://whydoihavetomakethis.xtensio.com/yxkghh8f](url)
 
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
-
-YOUR ANSWER GOES HERE ...
-
- * Short (2-5 min' read max)
- * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
- * Explain the benefits of your product explicitly & clearly. For example:
-    * Save users time (how much?)
-    * Allow users to discover new information (which information? And, why couldn't they discover it before?)
-    * Provide users with more accurate and/or informative data (what kind of data? Why is it useful to them?)
-
 
 We describe why users would choose our product by comparing it with the alternatives that users use today to solve their problem:
 * MeetUp <br />
