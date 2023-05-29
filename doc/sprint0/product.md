@@ -11,7 +11,7 @@ GoGo is a website that connects individuals who want to explore events and exper
 #### Q2: Who are your target users? (2-3 personas)
 
  GoGo's target users can be broadly categorized into two:
- * Individuals who experience anxiety or discomfort attending events alone or are simply looking for people to go with. For example,
+ * Individuals who experience anxiety or discomfort attending events alone or are simply looking for people to go with. For example, 
  Garry: [https://perfectstrangers.xtensio.com/edit/3cywm27q](url)
  Amelia: [https://whydoihavetomakethis.xtensio.com/pca604rl](url)
  
