@@ -2,21 +2,21 @@
 ​
 As an unregistered user, I want to register on the GOGO website using my email address so that I can create, attend and/or view events.
 
-Given the email is not linked to another account, when the user successfully registers an account on the website, they should be able to login using the same credentials on the login page.
+Given the email is not linked to another account, when the user successfully registers an account on the website, they should be able to log in using the same credentials on the login page.
 ​
 
 ## User Story 2
 ​
-As an unregistered user, I want to register on the GOGO website using my google account so that I can create, attend and/or view events without having to remember an extra password.
+As an unregistered user, I want to register on the GOGO website using my Google account so that I can create, attend and/or view events without having to remember an extra password.
 
-Given the google email is not linked to another account, when the user successfully registers an account on the website using sign-in with their Google  account, they should be able to login using “Sign in with Google” on the login page.
+Given the Google email is not linked to another account, when the user successfully registers an account on the website using sign-in with their Google account, they should be able to log in using “Sign in with Google” on the login page.
 ​
 
 ## User Story 3
 ​
-As an unregistered user, I want to register on the GOGO website using my facebook account so that I can create, attend and/or view events without having to remember an extra password.
+As an unregistered user, I want to register on the GOGO website using my Facebook account so that I can create, attend and/or view events without having to remember an extra password.
 
-Given the facebook account is not linked to another GOGO account, when the user successfully registers an account on the website using their facebook account, they should be able to login using “Sign in with Facebook” on the login page.
+Given the Facebook account is not linked to another GOGO account, when the user successfully registers an account on the website using their Facebook account, they should be able to log in using “Sign in with Facebook” on the login page.
 ​
 
 ## User Story 4
@@ -35,14 +35,14 @@ Given that the user is logged in, when they add an event, then the event will be
 
 ## User Story 6
 ​
-As a logged-in user, I want to find events that match my interests by applying filters based on event types so that I can discover events that I would be interested in going to.
+As a logged-in user, I want to find events that match my interests by applying filters based on event types so that I can discover events that I would be interested in going to.   
 ​
 Given an event searching user who is logged in, when they put in an event type in the event search bar, then they should be able to see a list of posted events matching that category in the search results.
 
 
 ## User Story 7
 ​
-As a logged-in user, I want to send invites to other people to accompany me to an event listed on the app, so that I have a buddy to attend the event with. 
+As a logged-in user, I want to send invites to other people to accompany me to an event listed on the app, so that I have a buddy to attend the event with.   
 
 Given the user is logged in, when they invite other users to accompany them to the event, then they should be able to see the invitation on their sent invitations list.
 
@@ -119,14 +119,14 @@ Given the user is logged in, when the user completes editing his interests, then
 ​
 ## User Story 18
 ​
-As a registered GOGO user, I want a dashboard which will show me events based on my interests so that I can find events I am interested in easily and in an expedient manner.
+As a registered GOGO user, I want a dashboard that will show me events based on my interests so that I can find events I am interested in easily and in an expedient manner.
 
 Given the user is registered, when they log in, then their dashboard should show events tailored to their interests. 
 
 
 ## User Story 19
 
-As a logged-in user, I would like to have an onMe checkbox in my invitation so that I can indicate to the invitee that I am willing to pay for their ticket.
+As a logged-in user, I would like to have an "onMe" checkbox in my invitation so that I can indicate to the invitee that I am willing to pay for their ticket.
 
 Given the invited user is logged in, when the invite-sending user checks the onMe feature and sends the invitation, then the invitee should see that the inviter is willing to pay.
 
@@ -161,6 +161,6 @@ Given a business that has posted an event with promoters, when they navigate to 
 
 ## User Story 24
 
-As a logged-in user, I want to be able to accept or reject a “promoter” status invitation from a business for an event, so I can invite people on the businesses behalf.
+As a logged-in user, I want to be able to accept or reject a “promoter” status invitation from a business for an event, so that I can invite people on behalf of the business.
 
 Given a business sends a “promoter” status invitation, when the invited user receives the invitation, then the user can choose “Accept” or “Reject”.
