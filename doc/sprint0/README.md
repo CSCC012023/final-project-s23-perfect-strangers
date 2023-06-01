@@ -12,17 +12,25 @@ GoGo resolves this issue by allowing one individual to reach out to others in or
 * [React](https://react.dev/)
 * [Node](https://nodejs.org/en)
 
-The MERN stack was chosen because it provides an easy way, fast way to develop a website and it is a widely popular tech stack with lots of tutorials and documentation that would make it easy for us to get ramped up quickly. Additionally, it has a strong developer community and a wealth of resources to solve commonly encountered issues during development.
+The MERN stack was chosen because it provides an easy way, fast way to develop a website and it is a widely popular tech stack with lots of tutorials and documentation that would make it easy for us to get started. Additionally, it has a strong developer community and a wealth of resources to solve commonly encountered issues during development.
 
 ## Installation
 
-To run this project locally, you should have npm installed locally and access to a MongoDB Atlas cluster. Paste the connection string to server/.env then perform the following steps:
+To run this project locally, you should have npm installed locally. Instructions on how to do that can be found [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). You should also have access to a MongoDB Atlas cluster. Paste the connection string to server/.env then perform the following steps:
 1.  Clone the repository.
 2.  With the server/ folder as your current directory, run the following in a command line:
     ```
     npm install
     npm start
     ```
+
+- If you are using a Linux machine or macOS, you may need to run the following command before running ```npm start```.
+    ```
+    sudo npm install -g nodemon
+    ```
+- Also, macOS users may need to turn off **Airplay Receiver**. ```System Settings > General > AirDrop & Handoff > AirPlay Receiver```
+
+
 3. With the client/ folder as your current directory, run the following in a second command line:
     ```
     npm install
