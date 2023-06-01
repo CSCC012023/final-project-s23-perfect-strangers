@@ -12,7 +12,7 @@ GoGo resolves this issue by allowing one individual to reach out to others in or
 * [React](https://react.dev/)
 * [Node](https://nodejs.org/en)
 
-The MERN stack was chosen because it provides an easy way, fast way to develop a website and it is a widely popular tech stack with lots of tutorials and documentation that would make it easy for us to get ramped up quickly. Additionally, it has a strong developer community and a wealth of resources to solve commonly encountered issues during development.
+The MERN stack was chosen because it provides an easy way, fast way to develop a website and it is a widely popular tech stack with lots of tutorials and documentation that would make it easy for us to get started. Additionally, it has a strong developer community and a wealth of resources to solve commonly encountered issues during development.
 
 ## Installation
 
@@ -24,7 +24,7 @@ To run this project locally, you should have npm installed locally. Instructions
     npm start
     ```
 
-- If using a linux omachine or macOS, may need to run the following command before running ```npm start```.
+- If you are using a Linux machine or macOS, you may need to run the following command before running ```npm start```.
     ```
     sudo npm install -g nodemon
     ```
