@@ -16,9 +16,10 @@ The MERN stack was chosen because it provides an easy way, fast way to develop a
 
 ## Installation
 
-To run this project locally, you should have npm installed locally. Instructions on how to do that can be found [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). You should also have access to a MongoDB Atlas cluster. Paste the connection string to server/.env then perform the following steps:
+To run this project locally, you should have npm installed locally. Instructions on how to do that can be found [here](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Subsequently, proceed with the following steps:
 1.  Clone the repository.
-2.  With the doc/sprint0/setup/server/ folder as your current directory, run the following in a command line:
+2.  Create a [MongoDB](https://www.mongodb.com/) Atlas cluster and paste the connection string to server/.env.
+3.  With the doc/sprint0/setup/server/ folder as your current directory, run the following in a command line:
     ```
     npm install
     npm start
@@ -31,12 +32,12 @@ To run this project locally, you should have npm installed locally. Instructions
 - Also, macOS users may need to turn off **Airplay Receiver**. ```System Settings > General > AirDrop & Handoff > AirPlay Receiver```
 
 
-3. With the doc/sprint0/setup/client/ folder as your current directory, run the following in a second command line:
+4. With the doc/sprint0/setup/client/ folder as your current directory, run the following in a second command line:
     ```
     npm install
     npm start
     ```
-4. Navigate to the following website using a web browser:
+5. Navigate to the following website using a web browser:
     ```
     http://localhost:3000/
     ```
