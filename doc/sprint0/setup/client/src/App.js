@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import Axios from "axios";
+import BioPage from "./BioPage";
 
 function App() {
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -15,7 +16,7 @@ function App() {
   }, []);
 
   const createUser = () => {
-    Axios.post("http://localhost:5000/users/add/", {
+    Axios.post("http://localhost:5000/users/", {
       name: name, 
       age: age, 
       username: username,
@@ -28,9 +29,11 @@ function App() {
       alert("User Created!");
     });
   };
+
   return (
     <div className="App">
-      <div className='usersDisplay'>
+      <BioPage/>
+      {/* <div className='usersDisplay'>
         {listOfUsers.map((user) => {
           return (
           <div>
@@ -41,8 +44,9 @@ function App() {
           </div>)
         })
         }
-      </div>
-      <div>
+      </div> */}
+      
+      {/* <div>
         <input 
         type='text' 
         placeholder='Name' 
@@ -65,7 +69,7 @@ function App() {
           setUsername(event.target.value);
           }}/>
         <button onClick={createUser}> Create User</button>
-      </div>
+      </div> */}
     </div>
   );
 }
