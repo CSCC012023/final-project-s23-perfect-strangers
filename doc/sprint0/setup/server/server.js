@@ -19,11 +19,9 @@ connection.once('open', () => {
 });
 
 const usersRouter = require('./routes/users');
-
-app.use('/users', usersRouter);
-
 const objectsRouter = require('./routes/miscObjects');
 
+app.use('/users', usersRouter);
 app.use('/objects', objectsRouter);
 
 app.listen(port, () => {
