@@ -22,6 +22,10 @@ const usersRouter = require('./routes/users');
 
 app.use('/users', usersRouter);
 
+const objectsRouter = require('./routes/miscObjects');
+
+app.use('/objects', objectsRouter);
+
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 })

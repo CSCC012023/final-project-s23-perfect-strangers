@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import Axios from "axios";
+import MisccObject from './MisccObject';
 
 function App() {
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -8,10 +9,17 @@ function App() {
   const [age, setAge] = useState(0);
   const [username, setUsername] = useState("");
 
+  const [objects, setObjects] = useState([]);
+
   useEffect(() => {
     Axios.get("http://localhost:5000/users/").then((response) => {
       setListOfUsers(response.data);
     });
+    Axios.get('http://localhost:5000/objects/').then(
+      (res) => {
+        setObjects(res.data);
+      }
+    )
   }, []);
 
   const createUser = () => {
@@ -65,6 +73,11 @@ function App() {
           setUsername(event.target.value);
           }}/>
         <button onClick={createUser}> Create User</button>
+      </div>
+      <div>
+        {objects.map(obj => {
+          <MisccObject id={obj._id} name={obj.name} embd={obj.embed}/>
+        })}
       </div>
     </div>
   );
