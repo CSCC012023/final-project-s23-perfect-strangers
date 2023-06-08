@@ -1,8 +1,11 @@
-import { Avatar } from 'primereact/avatar';
-import { AvatarGroup } from 'primereact/avatargroup';
 import React from 'react';
+import Axios from "axios";
+
+import { useState } from "react";
+
 import './BioPage.css'
 import UserInterests from './Interests';
+
 
 const ProfilePicture = (props) => {
     return(
@@ -30,11 +33,22 @@ const AgeGender = (props) => {
 const BioPage = (props) => {
     // Get user name from MongoDB
     const userName = "Farhan";
+
+    // Get age and gender from MongoDB
     const age = "19";
     const gender = "Male";
 
     // Get user's profile picture from MongoDB
-    // npm install primereact primeicons
+
+
+    // Get all possible interests from MongoDB
+    const [interestList, setInterestList] = useState([])
+    Axios.get("http://localhost:5000/api/userInterests/masterInterestList")
+    .then((response) => {
+        setInterestList(response.data[0].interestList);
+    });
+
+
     return(
         <div className='BioPageTop'>
             <ProfilePicture/>
@@ -42,7 +56,7 @@ const BioPage = (props) => {
             <div className='BioPageTopRight'>
                 <UserName userName={userName}/>
                 <AgeGender age={age} gender={gender}/>
-                <UserInterests/>
+                <UserInterests interestList={interestList}/>
             </div>
         </div>
     );

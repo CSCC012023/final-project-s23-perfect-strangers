@@ -10,13 +10,15 @@ function App() {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    Axios.get("http://localhost:5000/users/").then((response) => {
+    Axios.get("http://localhost:5000/api/users").then((response) => {
       setListOfUsers(response.data);
     });
+    console.log(listOfUsers);
   }, []);
 
+
   const createUser = () => {
-    Axios.post("http://localhost:5000/users/", {
+    Axios.post("http://localhost:5000/api/users/", {
       name: name, 
       age: age, 
       username: username,
@@ -44,9 +46,9 @@ function App() {
           </div>)
         })
         }
-      </div> */}
+      </div>
       
-      {/* <div>
+       <div>
         <input 
         type='text' 
         placeholder='Name' 

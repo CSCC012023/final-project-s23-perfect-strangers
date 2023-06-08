@@ -18,9 +18,17 @@ connection.once('open', () => {
     console.log("MongoDB connection established");
 });
 
-const usersRouter = require('./routes/users');
+/* 
+    - If more API_End_Point files (routes) have been added in the routes folder, only need to make changes in this section
+    - Currently, routers for only two routes have been set up
+    - In the routers below, need to give path to the js file containing the routes/API_End_Points
+*/
 
-app.use('/users', usersRouter);
+const usersRouter = require('./routes/users');
+const interestRouter = require('./routes/interests');
+
+app.use('/api', usersRouter);
+app.use('/api', interestRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

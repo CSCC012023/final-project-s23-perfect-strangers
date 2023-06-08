@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
         trim: true,
         minlength: 2
-    }
+    },
 });
 
 const UserModel = mongoose.model("users", userSchema);
