@@ -24,23 +24,17 @@ function App() {
 
   const [objects, setObjects] = useState([]);
 
-  const [objSize, setObjSize] = useState(0);
-
   useEffect(() => {
     Axios.get("http://localhost:5000/users/").then((response) => {
       setListOfUsers(response.data);
     });
-  }, []);
-
-  useEffect(() => {
     Axios.get('http://localhost:5000/objects/').then(
       (res) => {
         setObjects(res.data);
-        setObjSize(objects.length);
         console.log('got objects');
       }
-    )
-  }, [objSize]);
+    );
+  }, []);
 
   console.log('got ' + objects.length + ' objects')
 
@@ -61,10 +55,15 @@ function App() {
 
   const addObject = () => {
     const objName = makeid(20);
+    const objLName = makeid(10);
     Axios.post('http://localhost:5000/objects/', {
-      name: objName
+      name: objName,
     }).then((res) => {
-      setObjSize(objSize+1);
+      setObjects([...objects, {
+        _id: res.data,
+        name: objName,
+        embed: []
+      }])
     })
   }
 
@@ -111,13 +110,11 @@ function App() {
         {objects.map((obj) => {
           return (
             <MisccObject 
-              name={obj.name}
-              _id={obj._id}
-              embd={obj.embed}
+              obj={obj}
               delFunc={() => {
                 Axios.delete('http://localhost:5000/objects/'+obj._id)
                   .then(()=>{
-                    setObjSize(objSize-1);
+                    setObjects(objects.filter(object => object._id != obj._id))
                   })
               }}
               updateEmbedFunc={(eElem) => {
@@ -125,7 +122,8 @@ function App() {
                 let i = objects.findIndex((object) => object._id === obj._id);
                 objectsCopy[i] = {embed: eElem, ...objects[i]};
                 setObjects(objectsCopy);
-              }} />
+              }}
+              nameGenFunc={() => makeid(10)} />
           )
         })}
       </div>

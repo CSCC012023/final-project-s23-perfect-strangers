@@ -13,7 +13,7 @@ router.route('/').post((req, res) => {
     const newMiscObject = new MiscObjectModel({name: name, embed: []});
 
     newMiscObject.save()
-        .then(() => res.json(newMiscObject))
+        .then(() => res.json(res._id))
         .catch(err => res.status(411).json('Error: ' + err));
 
 });
@@ -21,7 +21,7 @@ router.route('/').post((req, res) => {
 router.route('/update/:id').post((req, res) => {
     MiscObjectModel.findById(req.params.id)
         .then(miscObject => {
-            miscObject.embed = [...miscObject.embed, {name: makeid(10)}];
+            miscObject.embed = [...miscObject.embed, {name: req.body.name}];
             miscObject.save()
                 .then(() => res.json(miscObject))
                 .catch(err => res.status(413).json('Error: ' + err));

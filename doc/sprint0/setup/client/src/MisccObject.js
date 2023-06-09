@@ -7,12 +7,14 @@ const EmbeddedObject = ({name}) => {
     );
 }
  
-const MisccObject = ({_id, name, embd, delFunc, updateEmbedFunc}) => {
+const MisccObject = ({_id, name, embd, delFunc, updateEmbedFunc, nameGenFunc}) => {
 
     const [embeddedElements, setEmbeddedElements] = useState(embd);
 
     const addEmbed = (_id) => {
-        Axios.post("http://localhost:5000/objects/update/"+_id)
+        Axios.post("http://localhost:5000/objects/update/"+_id, {
+            name: nameGenFunc()
+        })
             .then(res => {
                 setEmbeddedElements(res.data.embed);
                 updateEmbedFunc(embeddedElements);
@@ -26,7 +28,9 @@ const MisccObject = ({_id, name, embd, delFunc, updateEmbedFunc}) => {
             <button onClick={delFunc}>delete object</button>
             <button onClick={() => addEmbed(_id)}>add embed</button>
             {embeddedElements.map(eObj => {
-                <EmbeddedObject name={eObj.name} />
+                return (
+                    <EmbeddedObject name={eObj.name} />
+                )
             })}
         </div>
     );
