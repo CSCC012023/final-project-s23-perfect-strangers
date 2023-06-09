@@ -20,7 +20,7 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [cantSignUp, setCantSignUp] = useState(false);
-    const [Msg, setMsg] = useState('Sign Up');
+    const [Msg, setMsg] = useState('Sign Up');      // state for the content of the sign in button
 
     const throwErrMsg = (emsg) => {             // when user enters invalid info, this function is called
         setCantSignUp(true);                    // it changes the Signup button to display the error msg
