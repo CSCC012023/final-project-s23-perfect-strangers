@@ -4,25 +4,39 @@ import styles from './Signup.module.css';
 
 const Signup = ({signedUpCallBack, loginRedirect}) => {
 
+    // signedUpCallBack = (String) => {...do stuff, doesn't care for the return value}
+    // signedUpCallBack is a function passed to Signup as a prop
+    // it is called with the username when a user is successfully created
+    // example in App.js
+
+    // loginRedirect = () => {...do stuff, hopefull redirect to login page}
+    // loginRedirect is a function which redirects the user to the login page
+    // it is not implemented here, but is passed in as a prop.
+    // it should be implemented by the person who is in charge of navigation
+    // and then passed in to the Signup component
+
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [cantSignUp, setCantSignUp] = useState(false);
     const [Msg, setMsg] = useState('Sign Up');
 
-    const throwErrMsg = (emsg) => {
-        setCantSignUp(true);
+    const throwErrMsg = (emsg) => {             // when user enters invalid info, this function is called
+        setCantSignUp(true);                    // it changes the Signup button to display the error msg
         setMsg(emsg);
     }
 
-    const onSubmitCallback = (event) => {
-        event.preventDefault();
+    const onSubmit = (event) => {       // called when the form is submitted
+        event.preventDefault();         // don't update page
 
-        if(cantSignUp) {
+        if(cantSignUp) {                // if button is already showing an error, remove the error
             setCantSignUp(false);
             setMsg('Sign Up');
             return;
         }
+
+        // preprocessing errors
 
         if(email === '') {
             throwErrMsg('Please enter a valid email address.');
@@ -32,18 +46,25 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
             return
         }
 
+        // attempt post operation
+
         Axios.post("http://localhost:5000/email-auth/", {
             email: email,
             password: password,
             username: username
         }).then((res) => {
-            if (res.data.msg === 'user created') {
-                signedUpCallBack(username);
-            } else if (res.data.err.message !== undefined) {
+            if (res.data.msg === 'user created') {              // new user is created
+                signedUpCallBack(username);                     // call signedUpCallBack
+            } 
+            
+            // user could not be created, show error message
+            
+            else if (res.data.err.message !== undefined) {
                 throwErrMsg(res.data.err.message);
                 console.log(res.data.err);
             } else if (res.data.msg === 'email taken') {
                 //TODO: prompt Login page redirect
+                throwErrMsg('Email is already registered, try Logging in')
                 console.log('email taken')
             } else {
                 throwErrMsg('Given username is already taken');
@@ -55,7 +76,7 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
     return ( 
         <div className={styles.container}>
         <h1 className={styles.heading}>SIGN UP</h1>
-        <form onSubmit={onSubmitCallback} className={styles.signupForm}>
+        <form onSubmit={onSubmit} className={styles.signupForm}>
             <input 
                 type="email"
                 value={email}

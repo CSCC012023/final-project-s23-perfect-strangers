@@ -60,7 +60,8 @@ body {
 
 .errMsgButton {
     margin: 10px;
-    height: 44px;
+    min-height: 44px;
+    height:fit-content;
     width: 440px;
     background-color: #FF0000;
     color: #1e1e1e;
