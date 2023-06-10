@@ -1,6 +1,7 @@
 import Axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from './Signup.module.css';
+import jwt_decode from "jwt-decode";
 
 const Signup = ({signedUpCallBack, loginRedirect}) => {
 
@@ -15,6 +16,27 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
     // it should be implemented by the person who is in charge of navigation
     // and then passed in to the Signup component
 
+    // google authentication code:
+
+    const handleCallbackResponse = (res) => {       // callback function for google auth
+        var userObject = jwt_decode(res.credential);
+        console.log(userObject);
+    }
+    
+    useEffect(() => {                   // useEffect hook to attach google signin button
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: "316675003864-lc9nfuqrmtsqvt7fp1vdnp0baq1c682s.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+        });
+
+        google.accounts.id.renderButton(
+            document.getElementById("GoogleSignUp"),
+            {theme: "outline", size: "large"}
+        )
+    }, []);
+
+    //-------------------------------------------------------------------------
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -109,7 +131,7 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
             <div className={styles.line}></div>
         </div>
         <div className={styles.division}>
-            <button>TODO: Google Auth</button>
+            <div id="GoogleSignUp"></div>
             <button>TODO: Facebook (not Meta) Auth</button>
         </div>
         <div className={styles.loginDiv}>
