@@ -5,9 +5,9 @@ import jwt_decode from "jwt-decode";
 
 const Signup = ({signedUpCallBack, loginRedirect}) => {
 
-    // signedUpCallBack = (String) => {...do stuff, doesn't care for the return value}
+    // signedUpCallBack = (JSON object) => {...do stuff, doesn't care for the return value}
     // signedUpCallBack is a function passed to Signup as a prop
-    // it is called with the username when a user is successfully created
+    // it is called with a JSON object which is guarenteed to have a 'name' and 'email' field
     // example in App.js
 
     // loginRedirect = () => {...do stuff, hopefull redirect to login page}
@@ -19,8 +19,7 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
     // google authentication code:
 
     const handleCallbackResponse = (res) => {       // callback function for google auth
-        var userObject = jwt_decode(res.credential);
-        console.log(userObject);
+        signedUpCallBack(jwt_decode(res.credential));
     }
     
     useEffect(() => {                   // useEffect hook to attach google signin button
@@ -64,7 +63,10 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
             throwErrMsg('Please enter a valid email address.');
             return
         } else if(password === '') {
-            throwErrMsg('Please enter your Password.');
+            throwErrMsg('Please enter a password.');
+            return
+        } else if(username === '') {
+            throwErrMsg('Please enter a username.');
             return
         }
 
@@ -76,7 +78,10 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
             username: username
         }).then((res) => {
             if (res.data.msg === 'user created') {              // new user is created
-                signedUpCallBack(username);                     // call signedUpCallBack
+                signedUpCallBack({                              // call signedUpCallBack
+                    email: email,
+                    name: username
+                });
             } 
             
             // user could not be created, show error message
@@ -88,9 +93,6 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
                 //TODO: prompt Login page redirect
                 throwErrMsg('Email is already registered, try Logging in')
                 console.log('email taken')
-            } else {
-                throwErrMsg('Given username is already taken');
-                console.log(res.data.err);
             }
         })
     }
@@ -131,8 +133,8 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
             <div className={styles.line}></div>
         </div>
         <div className={styles.division}>
-            <div id="GoogleSignUp"></div>
-            <button>TODO: Facebook (not Meta) Auth</button>
+            <div id="GoogleSignUp" style={{flex: 1}}></div>
+            <button style={{flex: 1}}>TODO: Facebook (not Meta) Auth</button>
         </div>
         <div className={styles.loginDiv}>
             already have an account ? 

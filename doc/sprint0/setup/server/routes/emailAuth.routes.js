@@ -15,15 +15,7 @@ router.route('/').post(             // post request used for signup
             }))
             .catch(err => {             // if not, then send an error message 
                                         // (dont use status, we don't want to escape from the program)
-                if(err.keyValue !== undefined && err.keyValue.email !== undefined)
-                res.json({
-                    msg: 'email taken',
-                    err: err
-                });
-                else res.json({
-                    msg: 'username taken',
-                    err: err
-                });
+                res.json({ msg: 'email taken', err: err});
             })
     }
 )

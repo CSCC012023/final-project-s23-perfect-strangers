@@ -7,7 +7,9 @@ function App() {
   return (
     <div>
       <Signup
-        signedUpCallBack={(username) => console.log(username)}
+        signedUpCallBack={({name, email}) => {
+          console.log("name: " + name + ", email: " + email);
+        }}
         loginRedirect={() => console.log('requested login')}
       />
     </div>
