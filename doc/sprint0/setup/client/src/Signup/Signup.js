@@ -101,27 +101,34 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
         <div className={styles.container}>
         <h1 className={styles.heading}>SIGN UP</h1>
         <form onSubmit={onSubmit} className={styles.signupForm}>
-            <input 
-                type="email"
-                value={email}
-                placeholder="Email"
-                disabled={cantSignUp}
-                onChange={(e) => setEmail(e.target.value)}
-                className={styles.inputField} />
-            <input 
-                type="text"
-                value={password}
-                placeholder="Password"
-                disabled={cantSignUp}
-                onChange={(e) => setPassword(e.target.value)}
-                className={styles.inputField} />
-            <input 
-                type="text"
-                value={username}
-                placeholder="Username"
-                disabled={cantSignUp}
-                onChange={(e) => setUsername(e.target.value)}
-                className={styles.inputField} />
+            <div className={styles.division}>
+                <input 
+                    type="email"
+                    value={email}
+                    placeholder="Email"
+                    disabled={cantSignUp}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={styles.inputField} />
+            </div>
+            <div className={styles.division}>
+                <input 
+                    type="text"
+                    value={password}
+                    placeholder="Password"
+                    disabled={cantSignUp}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className={styles.inputField} />
+            </div>
+            <div className={styles.division}>
+                <input 
+                    type="text"
+                    value={username}
+                    placeholder="Username"
+                    disabled={cantSignUp}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className={styles.inputField} />
+            </div>
+            
             <button 
                 type="submit"
                 className={cantSignUp ? styles.errMsgButton : styles.submitButton}>
@@ -129,7 +136,7 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
         </form>
         <div className={styles.division}>
             <div className={styles.line}></div>
-            <p className={styles.signUpWith}>or sign up with</p>
+            <p className={styles.text}>or sign up with</p>
             <div className={styles.line}></div>
         </div>
         <div className={styles.division}>
@@ -139,7 +146,7 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
         <div className={styles.loginDiv}>
             already have an account ? 
             <button 
-                className={styles.loginButton}
+                className={styles.tButton}
                 onClick={loginRedirect}>
                 Log in
             </button>

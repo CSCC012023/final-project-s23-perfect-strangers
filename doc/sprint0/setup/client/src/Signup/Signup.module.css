@@ -27,9 +27,9 @@ body {
 }
 
 .inputField {
-    margin: 10px;
-    height: 44px;
-    width: 440px;
+    padding: 9.5px;
+    flex: 1;
+    margin: 10px 0;
     background-color: #FFFFFF;
     border-radius: 5px;
     border-width: 0;
@@ -79,8 +79,8 @@ body {
 }
 
 .division{
-    width: 440px;
-    margin: 10px;
+    min-width: 440px;
+    width: min-content;
     display: flex;
     flex-direction: row;
     margin-left: auto;
@@ -95,12 +95,16 @@ body {
     flex-grow: 1;
 }
 
-.signUpWith {
+.text {
     color: #FFFFFF;
     font-family: 'Advent Pro', sans-serif;
     font-size: 30px;
     font-weight: 300;
-    margin: 0px 10px;
+    height: 44px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .loginDiv {
@@ -116,7 +120,7 @@ body {
     color: #FFFFFF;
 }
 
-.loginButton {
+.tButton {
     font-family: 'Advent Pro', sans-serif;
     font-size: 30px;
     font-weight: 300;
@@ -127,6 +131,6 @@ body {
     transition-duration: 0.4s;
 }
 
-.loginButton:hover {
+.tButton:hover {
     font-weight: 700;
 }
