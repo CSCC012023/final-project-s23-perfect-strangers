@@ -1,7 +1,7 @@
 // Get dependencies
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
-const facebookUserModel = require('../models/facebookUsersModel');
+const facebookUserModel = require('../models/facebookUserModel');
 
 /*     
     STEP 1: Need to create a new facebook strategy
@@ -10,6 +10,16 @@ const facebookUserModel = require('../models/facebookUsersModel');
     - callbackURL: where facebook will send the requested information
     - profileFields: Information that our app requires from facebook
 */
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
+
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
+
+  
 
 passport.use(
     new FacebookStrategy ({
@@ -43,18 +53,18 @@ passport.use(
     )
 );
 
-router.get('/', passport.authenticate('facebook', { scope: 'email' }));
+// router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 
-router.get(
-  '/callback',
-  passport.authenticate('facebook', {
-    failureRedirect: '/auth/facebook/error',
-  }),
-  function (req, res) {
-    // Successful authentication, redirect to success screen.
-    res.redirect('/auth/facebook/success');
-  }
-);
+// router.get(
+//   '/callback',
+//   passport.authenticate('facebook', {
+//     failureRedirect: '/auth/facebook/error',
+//   }),
+//   function (req, res) {
+//     // Successful authentication, redirect to success screen.
+//     res.redirect('/auth/facebook/success');
+//   }
+// );
 
 
-module.exports = router;
+// module.exports = router;

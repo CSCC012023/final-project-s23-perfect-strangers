@@ -18,5 +18,5 @@ const fbUserSchema = new mongoose.Schema({
     }
 });
 
-const FBUserModel = mongoose.model("FBUsers", fbUserSchema);
+const FBUserModel = mongoose.model("facebookUserModel", fbUserSchema);
 module.exports = FBUserModel;

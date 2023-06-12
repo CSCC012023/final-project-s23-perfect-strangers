@@ -1,8 +1,11 @@
 const express = require("express");
+const session = require('express-session')
 const mongoose = require('mongoose');
 const cors = require('cors');
+const passport = require('passport');
 
 require('dotenv').config();
+require('./routes/meta-auth.js') // For Facebook Auth
 
 const app = express ();
 const port = process.env.PORT || 5000;
@@ -30,6 +33,26 @@ const interestRouter = require('./routes/interests');
 app.use('/api', usersRouter);
 app.use('/api', interestRouter);
 
+//
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+  }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.get('/',(req,res)=>{
+  res.send(`Hello world ${req.user.displayName}`)
+})
+app.get('/auth/error', (req, res) => res.send('Unknown Error'))
+app.get('/auth/facebook',passport.authenticate('facebook'));
+app.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: '/login' }),
+function(req, res) {
+   res.redirect('/');
+});
+
+//
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 })
