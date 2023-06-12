@@ -65,14 +65,26 @@ function UserBio() {
   return (
     <>
       <div className="AboutMe" style={{ display: "flex" }}>
-        <h2>About Me</h2>{" "}
-        <Button
-          variant="light"
+        <h2>About Me</h2>
+        <div
+          class="d-grid gap-2 d-md-flex justify-content-md-end"
           style={{ marginLeft: "auto" }}
-          onClick={onEditSaveButtonClick}
         >
-          {!editAbout ? "Edit" : "Save"}
-        </Button>{" "}
+          {editAbout && (
+            <Button
+              variant="light"
+              onClick={() => {
+                setEditAbout(false);
+                setEditedText(aboutText);
+              }}
+            >
+              Cancel Edit
+            </Button>
+          )}
+          <Button variant="light" onClick={onEditSaveButtonClick}>
+            {!editAbout ? "Edit" : "Save"}
+          </Button>
+        </div>
       </div>
       {EditOrAbout()}
     </>
