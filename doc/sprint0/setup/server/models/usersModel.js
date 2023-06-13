@@ -15,7 +15,11 @@ const userSchema = new mongoose.Schema({
         unique: true,
         trim: true,
         minlength: 2
-    }
+    },
+    biography: {
+        type: String,
+        trim: true,
+    },
 });
 
 const UserModel = mongoose.model("users", userSchema);
