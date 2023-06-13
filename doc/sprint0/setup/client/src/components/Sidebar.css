@@ -1,0 +1,21 @@
+
+.sidebar{
+    font-weight: bold;
+    width: 250px;
+    position: absolute;
+    top: 0;
+}
+
+.logo{
+    color: #AD03DE;
+    font-size: 45px;
+    margin-left: 35px;
+
+}
+
+.nav-text a{
+    color: white;
+    text-decoration: none;
+    font-size: 35px;
+    line-height: 1.5;
+}
