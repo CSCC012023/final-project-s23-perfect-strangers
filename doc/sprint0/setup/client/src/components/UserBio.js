@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Axios from "axios";
-import { Text } from "react-native";
+import { Text } from "react-native"; // npm install react-native // npm install react-native-web
 
-import Form from "react-bootstrap/Form";
+import "./UserBio.css";
 
-function UserBio() {
-  const username = "APIUsername";
-  const url = "http://localhost:5000/users";
+import Form from "react-bootstrap/Form"; //npm install react-bootstrap
+
+const UserBio = (props) => {
+  const username = props.username;
+  const url = "http://localhost:5000/api/";
   let [aboutText, setAboutText] = useState("");
   let [editedText, setEditedText] = useState(aboutText);
   let [editAbout, setEditAbout] = useState(false);
@@ -16,12 +18,14 @@ function UserBio() {
     if (editAbout) {
       setAboutText(editedText);
 
-      Axios.post(url + "/setBiography/", {
+      Axios.post(url + "biography/", {
         username: username,
         biography: editedText,
-      }).then((response) => {
-        console.log(response);
-      });
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => console.log(err));
 
       setEditAbout(false);
     } else {
@@ -30,9 +34,7 @@ function UserBio() {
   }
 
   useEffect(() => {
-    Axios.get(url + "/biography/", {
-      params: { username: username },
-    })
+    Axios.get(url + "biography/" + username)
       .then((response) => {
         setAboutText(response.data.biography);
         console.log(response);
@@ -44,7 +46,7 @@ function UserBio() {
     if (editAbout) {
       return (
         <Form>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+          <Form.Group className="mb-3">
             <Form.Label>
               <h4>Edit About</h4>
             </Form.Label>
@@ -59,24 +61,34 @@ function UserBio() {
         </Form>
       );
     } else {
-      return <Text style={{ fontSize: 16 }}>{aboutText}</Text>;
+      return <Text style={{ fontSize: 16, color: "white" }}>{aboutText}</Text>;
     }
   };
   return (
     <>
-      <div className="AboutMe" style={{ display: "flex" }}>
-        <h2>About Me</h2>{" "}
-        <Button
-          variant="light"
-          style={{ marginLeft: "auto" }}
-          onClick={onEditSaveButtonClick}
-        >
-          {!editAbout ? "Edit" : "Save"}
-        </Button>{" "}
+      <div className="AboutMe">
+        <h2>About Me</h2>
+        <br />
+        <div className="EditSaveButton" style={{ marginLeft: "auto" }}>
+          {editAbout && (
+            <Button
+              variant="light"
+              onClick={() => {
+                setEditAbout(false);
+                setEditedText(aboutText);
+              }}
+            >
+              Cancel Edit
+            </Button>
+          )}
+          <Button variant="light" onClick={onEditSaveButtonClick}>
+            {!editAbout ? "Edit" : "Save"}
+          </Button>
+        </div>
       </div>
-      {EditOrAbout()}
+      <div className="EditOrAbout">{EditOrAbout()}</div>
     </>
   );
-}
+};
 
 export default UserBio;

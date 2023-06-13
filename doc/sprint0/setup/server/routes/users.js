@@ -27,17 +27,21 @@ router.route("/users/:id").get(async (req, res) => {
     res.send(post);
   } catch {
     res.status(404);
-    res.send({ error: "user does not exist" });
+    res.send({ error: "User does not exist" });
   }
 });
 
 // Get a user with their biography
 // Querying the cluster by username
-router.route("/biography").get(async (req, res) => {
-  const username = req.query.username;
-
-  const user = await UserModel.findOne({ username: username });
-  res.send(user);
+router.route("/biography/:username").get(async (req, res) => {
+  try {
+    const user = await UserModel.findOne({ username: req.params.username });
+    console.log(req.params.username);
+    res.send(user);
+  } catch {
+    res.status(404);
+    res.send({ error: "User does not exist" });
+  }
 });
 
 // Post a user with their biography
@@ -50,6 +54,7 @@ router.route("/biography").post(async (req, res) => {
     await user.save();
     res.send(user);
   } catch (err) {
+    res.status(404);
     res.send(err);
   }
 });

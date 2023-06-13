@@ -1,0 +1,16 @@
+.AboutMe{
+    min-width: 100px;
+    max-width: 1430px;
+    display: flex;
+    flex-direction: row;
+    word-wrap:break-word;
+    color: white;
+    background-color: black;
+}
+
+.EditOrAbout {
+    min-width: 100px;
+    max-width: 1430px;
+    color: white;
+    background-color: black;
+}
