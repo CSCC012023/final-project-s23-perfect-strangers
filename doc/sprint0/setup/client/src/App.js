@@ -1,9 +1,9 @@
-import UserBio from "./components/UserBio";
+import BioPage from "./components/BioPage";
 
 function App() {
   return (
     <div className="App">
-      <UserBio />
+      <BioPage />
     </div>
   );
 }
