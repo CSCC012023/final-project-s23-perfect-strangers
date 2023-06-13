@@ -1,19 +1,76 @@
-*{
+body{
   background-color: black;
   font-family: "Advent Pro";
 }
 
 .page-title{
-  margin-left: 600px;
-  margin-top: 0;
-  color: #AD03DE;
-  font-weight: bold;
-  font-size: 55px;
-  background-color: blue;
+  float: left;
+  width: 75%;
 }
 
-.create-button{
+.page-title h1{
+  margin-left: 650px;
+  color: #AD03DE;
+  font-weight: bold;
+  font-size: 100px;
+}
+
+.create-event{
+  float: left;
+  width: 25%;
+  height: 200px;
+}
+
+.create-event button{
+  color: black;
+  background-color: yellow;
+  float: left;
+  margin-top: 150px;
+  border: none;
+  padding: 5px 10px 5px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 12px;
+}
+
+.create-event input[type=text]{
+  margin-top: 20px;
+  padding: 5px;
+  font-size: 15px;
+  margin-left: 30px;
+  border-radius: 11px;
+  border: none;
+}
+
+.event-header:after{
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.event-display {
   color: white;
+  margin-left: 630px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.event-details{
+  width: 300px;
   background-color: white;
-  margin-left: 800px;
+  color: black;
+  padding-left: 40px;
+  border-radius: 10px;
+}
+
+#event-date{
+  color: #ff1493;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#event-location{
+  font-size: 20px;
 }
