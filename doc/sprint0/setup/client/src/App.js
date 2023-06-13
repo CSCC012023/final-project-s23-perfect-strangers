@@ -3,19 +3,18 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import Signup from './Signup/Signup';
 import AccountSetup from './Signup/AccountSetup';
+import { useSelector } from 'react-redux';
 
 function App() {
 
-    /*
-    return (
-        <Signup
-            signedUpCallBack={(c) => console.log(c)}
-            loginRedirect={() => console.log('requested login page')} />
-    )
-    */
+    const { email, username } = useSelector(state => state.userInfo);
 
     return (
-        <AccountSetup name='bharath' email='bharathvarma169@gmail.com' />
+        <Signup
+            signedUpCallBack={() => {
+                console.log({email: email, username: username});
+            }}
+            loginRedirect={() => console.log('requested login page')} />
     )
 }
 

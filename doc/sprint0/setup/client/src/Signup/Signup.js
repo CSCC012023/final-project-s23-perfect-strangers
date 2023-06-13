@@ -2,6 +2,8 @@ import Axios from "axios";
 import { useState, useEffect } from "react";
 import styles from './Signup.module.css';
 import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { updateUserInfo } from "../redux/userInfo";
 
 const Signup = ({signedUpCallBack, loginRedirect}) => {
 
@@ -16,10 +18,18 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
     // it should be implemented by the person who is in charge of navigation
     // and then passed in to the Signup component
 
+    const dispatch = useDispatch();                             // define function which calls redux functions
+
+
     // google authentication code:
 
     const handleCallbackResponse = (res) => {       // callback function for google auth
-        signedUpCallBack(jwt_decode(res.credential));
+        const details = jwt_decode(res.credential);
+        dispatch(updateUserInfo({
+            email: details.email,
+            username: details.name
+        }));
+        signedUpCallBack();
     }
     
     useEffect(() => {                   // useEffect hook to attach google signin button
@@ -78,10 +88,11 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
             username: username
         }).then((res) => {
             if (res.data.msg === 'user created') {              // new user is created
-                signedUpCallBack({                              // call signedUpCallBack
+                dispatch(updateUserInfo({
                     email: email,
-                    name: username
-                });
+                    username: username
+                }));
+                signedUpCallBack();                             // call signedUpCallBack
             } 
             
             // user could not be created, show error message
