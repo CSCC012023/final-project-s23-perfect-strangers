@@ -19,7 +19,7 @@ function Dashboard(){
                 </div>
                 <div className="create-event">
                     <input type="text" placeholder="Search"></input>
-                    <Link to="/invites">
+                    <Link to="/create-events">
                         <button>+ Create</button>
                     </Link>
                 </div>

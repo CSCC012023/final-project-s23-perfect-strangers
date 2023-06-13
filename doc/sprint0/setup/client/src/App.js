@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Invites from './pages/Invites';
 import Account from './pages/Account';
 import Logout from './pages/Logout';
+import CreateEvents from './pages/CreateEvents';
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
           <Route path="/invites" exact element={<Invites />} />
           <Route path="/account" exact element={<Account />} />
           <Route path="/logout" exact element={<Logout />} />
+          <Route path="/create-events" exact element={<CreateEvents />} />
         </Routes>
       </Router>
     </>
