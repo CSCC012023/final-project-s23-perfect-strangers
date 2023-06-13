@@ -2,6 +2,7 @@ import './App.css';
 import { useState, useEffect } from "react";
 import Axios from "axios";
 import BioPage from "./BioPage";
+import UserBio from "./UserBio";
 
 function App() {
   const [listOfUsers, setListOfUsers] = useState([]);
@@ -35,6 +36,7 @@ function App() {
   return (
     <div className="App">
       <BioPage/>
+
       {/* <div className='usersDisplay'>
         {listOfUsers.map((user) => {
           return (

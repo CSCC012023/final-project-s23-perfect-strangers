@@ -33,4 +33,28 @@ router.route("/users/:id").get(async (req, res) => {
     }
 })
 
+// Get a user with their biography
+// Querying the cluster by username
+router.route("/biography").get(async (req, res) => {
+    const username = req.query.username;
+  
+    const user = await UserModel.findOne({ username: username });
+    res.send(user);
+});
+
+// Post a user with their biography
+router.route("/biography").post(async (req, res) => {
+    username = req.body.username;
+    userBio = req.body.biography;
+    try {
+      let user = await UserModel.findOne({ username: username });
+      user.biography = userBio;
+      await user.save();
+      res.send(user);
+    } catch (err) {
+      res.send(err);
+    }
+});
+
+
 module.exports = router;

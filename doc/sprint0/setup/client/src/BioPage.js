@@ -6,6 +6,8 @@ import { useState } from "react";
 import './BioPage.css'
 import UserInterests from './Interests';
 
+import UserBio from "./UserBio";
+
 
 const ProfilePicture = (props) => {
     return(
@@ -14,10 +16,10 @@ const ProfilePicture = (props) => {
     )
 }
 
-const UserName = (props) => {
+const DisplayName = (props) => {
     return(
-        <div className='UserName'>
-            {props.userName}
+        <div className='DisplayName'>
+            {props.displayName}
         </div>
     )
 }
@@ -32,7 +34,8 @@ const AgeGender = (props) => {
 
 const BioPage = (props) => {
     // Get user name from MongoDB
-    const userName = "Farhan";
+    const userName = "faisalf4";
+    const displayName = "Farhan";
 
     // Get age and gender from MongoDB
     const age = "19";
@@ -50,14 +53,18 @@ const BioPage = (props) => {
 
 
     return(
-        <div className='BioPageTop'>
-            <ProfilePicture/>
+        // <div clasName='BioPage'>
+        <div className="BioPage">
+            <div className='BioPageTop'>
+                <ProfilePicture/>
 
-            <div className='BioPageTopRight'>
-                <UserName userName={userName}/>
-                <AgeGender age={age} gender={gender}/>
-                <UserInterests interestList={interestList}/>
+                <div className='BioPageTopRight'>
+                    <DisplayName displayName={displayName}/>
+                    <AgeGender age={age} gender={gender}/>
+                    <UserInterests interestList={interestList}/>
+                </div>
             </div>
+            <UserBio username={userName}/>
         </div>
     );
 };
