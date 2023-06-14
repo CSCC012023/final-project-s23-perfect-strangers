@@ -22,7 +22,7 @@ export default class ExamplePage extends Component {
       Axios.get('http://localhost:5000/login', config) 
         .then((res) => {
           // Handle the API response
-          console.log(res.data);
+          console.log(res.data);             //res.data will contain the user info
           this.setState({ loggedIn: true }); // Set the loggedIn state to true
         })
         .catch((error) => {

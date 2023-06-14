@@ -34,7 +34,21 @@ router.route('/').post((req, res) => {
 
 router.route('/').get((req, res) => {
   //res.json({req});
-  res.json({});
+  //res.json({});
+  if (req.headers && req.headers.authorization) {
+    var authorization = req.headers.authorization.split(' ')[1],
+            decoded;
+        try {
+            decoded = jwt.verify(authorization, "shhhhh");
+        } catch (e) {
+            return res.status(401).send('unauthorized');
+        }
+        var userId = decoded.id;
+        EmailAuthModel.findOne({_id: userId}).then(function(user){
+          // Do something with the user
+          res.json({ user: user });
+      });
+  }
   // EmailAuthModel.findOne({ token: req.Authorization.split(' ')[1] })
   //     .then((user) => {
   //       res.json({ user: user });
