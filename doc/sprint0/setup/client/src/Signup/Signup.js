@@ -1,11 +1,10 @@
 import Axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from './Signup.module.css';
-import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { updateUserInfo } from "../redux/userInfo";
 
-const Signup = ({signedUpCallBack, loginRedirect}) => {
+const Signup = ({signedUpCallback, loginRedirect}) => {
 
     // signedUpCallBack = (JSON object) => {...do stuff, doesn't care for the return value}
     // signedUpCallBack is a function passed to Signup as a prop
@@ -65,7 +64,7 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
                     email: email,
                     username: username
                 }));
-                signedUpCallBack();
+                signedUpCallback();
             } 
             
             // user could not be created, show error message

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 let UserDetailsModel = require('../models/userDetails.model');
 
-router.route('/account-setup').post(
+router.route('/').post(
     (req, res) => {
         const newUserDetails = new UserDetailsModel({
             email: req.body.email,

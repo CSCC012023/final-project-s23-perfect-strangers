@@ -1,21 +1,13 @@
 import './App.css';
-import { useState, useEffect } from "react";
-import Signup from './Signup/Signup';
-import AccountSetup from './Signup/AccountSetup';
+import SignupHub from './Signup/SignupHub';
 
 function App() {
 
-    const [signedIn, setSignedIn] = useState(false);
-
-    return (<>
-    { 
-        (signedIn === false)
-            ? <Signup
-                signedUpCallBack={() => setSignedIn(true)}
-                loginRedirect={() => console.log('requested login page')} />
-            : <AccountSetup />
-    }
-    </>);
+    return (
+        <SignupHub 
+            accountSetupCallback={() => console.log('account set up')}
+            loginRedirect={() => console.log('requested login page')}/>
+    )
 }
 
 export default App;
