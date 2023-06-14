@@ -28,10 +28,15 @@ function Dashboard(){
                 {events && events.map(event => (
                     <>
                         <div key={event._id} className="event-details">
-                            <h1>{event.title}</h1>
-                            <p id="event-date">{event.event_date}</p>
-                            <p id="event-location">{event.location}</p>
-                            <p>from ${event.price}</p>
+                            <div className="event-photo">
+                                <p>Photo</p>
+                            </div>
+                            <div className="event-info">
+                                <h1>{event.title}</h1>
+                                <p id="event-date">{event.event_date}</p>
+                                <p id="event-location">{event.location}</p>
+                                <p>from ${event.price}</p>
+                            </div>
                         </div>
                         <br></br>
                     </>

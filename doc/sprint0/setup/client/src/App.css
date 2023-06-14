@@ -50,19 +50,20 @@ body{
 
 .event-display {
   color: white;
-  margin-left: 630px;
+  margin-left: 300px;
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .event-details{
-  width: 300px;
+  width: 400px;
   background-color: white;
-  color: black;
-  padding-left: 40px;
+  padding-left: 10px;
   border-radius: 10px;
+  display: inline-block;
+  margin-right: 150px;
 }
 
 #event-date{
@@ -73,4 +74,20 @@ body{
 
 #event-location{
   font-size: 20px;
+}
+
+.event-photo{
+  float: left;
+  width: 100px;
+  background-color: turquoise;
+  margin-top: 50px;
+  height: 100px;
+  text-align: center;
+}
+
+.event-info{
+  float: left;
+  width: 260px;
+  color: black;
+  margin-left: 10px;
 }
