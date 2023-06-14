@@ -33,7 +33,7 @@ function Dashboard(){
                             </div>
                             <div className="event-info">
                                 <h1>{event.title}</h1>
-                                <p id="event-date">{event.event_date}</p>
+                                <p id="event-date">{event.date}</p>
                                 <p id="event-location">{event.location}</p>
                                 <p>from ${event.price}</p>
                             </div>

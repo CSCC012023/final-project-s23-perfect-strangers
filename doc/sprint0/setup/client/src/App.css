@@ -64,6 +64,7 @@ body{
   border-radius: 10px;
   display: inline-block;
   margin-right: 150px;
+  margin-bottom: 90px;
 }
 
 #event-date{
@@ -89,5 +90,5 @@ body{
   float: left;
   width: 260px;
   color: black;
-  margin-left: 10px;
+  margin-left: 20px;
 }
