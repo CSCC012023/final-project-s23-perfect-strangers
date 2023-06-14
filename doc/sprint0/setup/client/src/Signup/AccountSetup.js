@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import styles from './Signup.module.css';
+import { useSelector } from 'react-redux';
 
-const AccountSetup = ({name, email}) => {
+const AccountSetup = () => {
+
+    const {email, username} = useSelector(state => state.userInfo);
 
     const [age, setAge] = useState(1);
     const [gender, setGender] = useState('');
@@ -12,11 +15,11 @@ const AccountSetup = ({name, email}) => {
         else setAge(intVal);
     }
 
-    return ( (name !== undefined) && (email !== undefined) && (name !== '') && (email !== ' ') ?
+    return ( (username !== undefined) && (email !== undefined) && (username !== '') && (email !== ' ') ?
         <div className={styles.container}>
             <h1 className={styles.heading}>ACCOUNT SETUP</h1>
             <div className={styles.division}>
-                <p className={styles.text}>{name}</p>
+                <p className={styles.text}>{username}</p>
                 <p className={styles.text}>|</p>
                 <p className={styles.text}>{email}</p>
             </div>

@@ -10,6 +10,7 @@ export const userInfoSlice = createSlice({
         updateUserInfo: (state, action) => {       // define action to update state
             state.email = action.payload.email;
             state.username = action.payload.username;
+//            action.payload.callback();
         }
     }
 });

@@ -20,33 +20,6 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
 
     const dispatch = useDispatch();                             // define function which calls redux functions
 
-
-    // google authentication code:
-
-    const handleCallbackResponse = (res) => {       // callback function for google auth
-        const details = jwt_decode(res.credential);
-        dispatch(updateUserInfo({
-            email: details.email,
-            username: details.name
-        }));
-        signedUpCallBack();
-    }
-    
-    useEffect(() => {                   // useEffect hook to attach google signin button
-        /* global google */
-        google.accounts.id.initialize({
-            client_id: "316675003864-lc9nfuqrmtsqvt7fp1vdnp0baq1c682s.apps.googleusercontent.com",
-            callback: handleCallbackResponse
-        });
-
-        google.accounts.id.renderButton(
-            document.getElementById("GoogleSignUp"),
-            {theme: "outline", size: "large"}
-        )
-    }, []);
-
-    //-------------------------------------------------------------------------
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
@@ -92,7 +65,7 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
                     email: email,
                     username: username
                 }));
-                signedUpCallBack();                             // call signedUpCallBack
+                signedUpCallBack();
             } 
             
             // user could not be created, show error message
@@ -151,7 +124,7 @@ const Signup = ({signedUpCallBack, loginRedirect}) => {
             <div className={styles.line}></div>
         </div>
         <div className={styles.division}>
-            <div id="GoogleSignUp" style={{flex: 1}}></div>
+            <button style={{flex: 1}}>TODO: Google Auth</button>
             <button style={{flex: 1}}>TODO: Facebook (not Meta) Auth</button>
         </div>
         <div className={styles.loginDiv}>

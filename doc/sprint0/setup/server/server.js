@@ -20,9 +20,11 @@ connection.once('open', () => {
 
 //define routers
 const emailAuthRouter = require('./routes/emailAuth.routes');
+const userDetailsRouter = require('./routes/userDetails.routes');
 
 //connect routers
 app.use('/email-auth', emailAuthRouter);
+app.use('/user-details', userDetailsRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
