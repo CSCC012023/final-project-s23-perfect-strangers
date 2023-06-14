@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import Signup from './Signup/Signup';
 import Login from './Login/Login';
+import ExamplePage from './ExamplePage/ExamplePage';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
@@ -22,8 +23,9 @@ function App() {
       {redirectToLogin && <Navigate to="/login" replace />}
       <Routes>
         <Route path="/" element={<Login loggedInCallBack={(username) => console.log(username)} SignUpRedirect={signupRedirect} />} />
-        <Route path="/signup" element={<Signup loginRedirect = {loginRedirect}/>} />
+        <Route path="/signup" element={<Signup signedUpCallBack = {(username) => console.log(username)} />} />
         <Route path="/login" element={<Login loggedInCallBack={(username) => console.log(username)} SignUpRedirect={signupRedirect} />} />
+        <Route path="/examplepage" element={<ExamplePage />}/>
       </Routes>
     </Router>
   );

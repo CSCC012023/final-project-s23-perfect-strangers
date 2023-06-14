@@ -1,20 +1,11 @@
 import Axios from "axios";
 import { useState } from "react";
 import styles from './Login.module.css';
+import React, {component} from 'react';
+
+//const jwt = require("jsonwebtoken");
 
 const Login = ({loggedInCallBack, SignUpRedirect}) => {
-
-    // loggedInCallBack = (String) => {...do stuff, doesn't care for the return value}
-    // loggedInCallBack is a function passed to Signup as a prop
-    // it is called with the username when a user is successfully created
-    // example in App.js
-
-    // SignUpRedirect = () => {...do stuff, hopefull redirect to login page}
-    // SignUpRedirect is a function which redirects the user to the login page
-    // it is not implemented here, but is passed in as a prop.
-    // it should be implemented by the person who is in charge of navigation
-    // and then passed in to the Signup component
-
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -52,12 +43,13 @@ const Login = ({loggedInCallBack, SignUpRedirect}) => {
             email: email,
             password: password
         }).then((res) => {
-            
             // Handle the login response according to your requirements
             if (res.data.user) {
                 // Redirect the user or perform any other necessary actions
                 console.log(res);
                 console.log('Login success');
+                
+                localStorage.setItem('token', res.data.user.token);
             } else {
                 throwErrMsg(res.data.err);
                 console.log(res.data.err);
