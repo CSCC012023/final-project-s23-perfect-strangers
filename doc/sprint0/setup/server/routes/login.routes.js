@@ -33,8 +33,6 @@ router.route('/').post((req, res) => {
 
 
 router.route('/').get((req, res) => {
-  //res.json({req});
-  //res.json({});
   if (req.headers && req.headers.authorization) {
     var authorization = req.headers.authorization.split(' ')[1],
             decoded;
@@ -43,9 +41,10 @@ router.route('/').get((req, res) => {
         } catch (e) {
             return res.status(401).send('unauthorized');
         }
+
         var userId = decoded.id;
+        
         EmailAuthModel.findOne({_id: userId}).then(function(user){
-          // Do something with the user
           res.json({ user: user });
       });
   }
