@@ -1,49 +1,43 @@
-import { useState } from "react";
-import SignupHub from "./Signup/SignupHub";
-import Login from "./Login/Login";
-import ExamplePage from "./ExamplePage/ExamplePage";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import './App.css';
+import { useState, useEffect } from "react";
+import Axios from "axios";
+import BioPage from "./BioPage";
+import UserBio from "./UserBio";
 
 function App() {
+  const [listOfUsers, setListOfUsers] = useState([]);
+  const [name, setName] = useState("");
+  const [age, setAge] = useState(0);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    Axios.get("http://localhost:5000/api/users").then((response) => {
+      setListOfUsers(response.data);
+    });
+    console.log(listOfUsers);
+  }, []);
+
+
+  const createUser = () => {
+    Axios.post("http://localhost:5000/api/users/", {
+      name: name, 
+      age: age, 
+      username: username,
+    }).then((response) => {
+      setListOfUsers([...listOfUsers, {
+        name: name, 
+        age: age, 
+        username: username,
+      }])
+      alert("User Created!");
+    });
+  };
 
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Login
-              loggedInCallBack={'/examplepage'}
-              SignUpRedirect={'/signup'}
-            />
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <SignupHub accountSetupCallback={"/"} loginRedirect={"/"} />
-          }
-        />
-        <Route path="/examplepage" element={<ExamplePage />} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <BioPage/>
+    </div>
   );
-
-
-  // return (
-  //   <div>
-  //     <Login
-  //       loggedInCallBack={(username) => console.log(username)}
-  //       SignUpRedirect={() => console.log('requested signup')}
-  //     />
-  //   </div>
-  // )
-
 }
 
 export default App;

@@ -21,24 +21,17 @@ connection.once('open', () => {
     console.log("MongoDB connection established");
 });
 
-//define routers
-const emailAuthRouter = require('./routes/emailAuth.routes');
-const userDetailsRouter = require('./routes/userDetails.routes');
-const loginRouter = require('./routes/login.routes'); 
-const usersRouter = require('./routes/users');
-const interestRouter = require('./routes/interests');
-
-//connect routers
-app.use('/email-auth', emailAuthRouter);
-app.use('/user-details', userDetailsRouter);
-app.use('/api', usersRouter);
-app.use('/api', interestRouter);
-app.use('/login', loginRouter);
 /* 
     - If more API_End_Point files (routes) have been added in the routes folder, only need to make changes in this section
     - Currently, routers for only two routes have been set up
     - In the routers below, need to give path to the js file containing the routes/API_End_Points
 */
+
+const usersRouter = require('./routes/users');
+const interestRouter = require('./routes/interests');
+
+app.use('/api', usersRouter);
+app.use('/api', interestRouter);
 
 //
 app.use(session({
@@ -59,6 +52,7 @@ function(req, res) {
    res.redirect('/');
 });
 
+//
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 })
