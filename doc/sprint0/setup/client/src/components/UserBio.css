@@ -5,14 +5,13 @@
     flex-direction: row;
     word-wrap:break-word;
     color: white;
-    background-color: black;
+    background-color: rgb(30, 30, 30);
     font-family: "Advent Pro";
 }
 
 .EditOrAbout {
     min-width: 100px;
     max-width: 1430px;
-    color: white;
-    background-color: black;
+    background-color: rgb(30, 30, 30);
     font-family: "Advent Pro";
 }
