@@ -22,13 +22,23 @@ router.route("/userInterests").get(async (req, res) => {
 
 // Get userInterest document of one user
 router.route("/userInterests/:username").get(async (req, res) => {
-  const userInterestDoc = await InterestModel.find({
-    username: req.params.username,
-  });
-  console.log(req.params.username);
-
-  // console.log(userInterestDoc[0].interestList)
-  res.send(userInterestDoc);
+  try{
+    const userInterestDoc = await InterestModel.find({
+      username: req.params.username,
+    });
+    // console.log(req.params.username);
+    // console.log(userInterestDoc[0].interestList)
+    res.send(userInterestDoc);
+  }
+  catch{
+    res.send(
+      [
+        {
+          interestList: [],
+        }
+      ]
+    )
+  }
 });
 
 // Post a userInterest

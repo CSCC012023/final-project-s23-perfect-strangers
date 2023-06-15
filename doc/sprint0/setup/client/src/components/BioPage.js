@@ -45,12 +45,18 @@ const BioPage = (props) => {
       "http://localhost:5000/api/userInterests/masterInterestList"
     ).then((response) => {
       setInterestList(response.data[0].interestList);
+
+      console.log(response);
     });
   }, []);
 
   return (
     // <div clasName='BioPage'>
     <div className="BioPage">
+        <div className="page-title">
+            <h1>ACCOUNT</h1>
+        </div>
+
       <div className="BioPageTop">
         <ProfilePicture />
 

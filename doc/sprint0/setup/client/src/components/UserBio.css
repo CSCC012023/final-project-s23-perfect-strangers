@@ -1,11 +1,12 @@
-/* .AboutMe{
+.AboutMe{
     min-width: 100px;
     max-width: 1430px;
+    font-weight: bolder;
     display: flex;
     flex-direction: row;
     word-wrap:break-word;
     color: white;
-    background-color: rgb(30, 30, 30);
+    background-color: rgb(0, 0, 0);
     font-family: "Advent Pro";
 }
 
@@ -15,4 +16,4 @@
     color: white;
     background-color: rgb(30, 30, 30);
     font-family: "Advent Pro";
-} */
+}

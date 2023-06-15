@@ -11,7 +11,7 @@ export const SidebarData = [
   },
   {
     title: "Account",
-    path: "/account",
+    path: "/bio-page",
     cName: "nav-text",
   },
   {

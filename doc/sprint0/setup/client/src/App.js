@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
+import BioPage from "./components/BioPage";
 import Dashboard from "./pages/Dashboard";
 import Invites from "./pages/Invites";
 import Account from "./pages/Account";
@@ -22,6 +23,7 @@ function App() {
           <Route path="/account" exact element={<Account />} />
           <Route path="/logout" exact element={<Logout />} />
           <Route path="/create-events" exact element={<CreateEvents />} />
+          <Route path="/bio-page" exact element={<BioPage/>} />
           <Route
             path="/"
             element={
