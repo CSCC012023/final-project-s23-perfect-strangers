@@ -22,23 +22,14 @@ router.route("/userInterests").get(async (req, res) => {
 
 // Get userInterest document of one user
 router.route("/userInterests/:username").get(async (req, res) => {
-  try{
+
     const userInterestDoc = await InterestModel.find({
       username: req.params.username,
     });
     // console.log(req.params.username);
     // console.log(userInterestDoc[0].interestList)
     res.send(userInterestDoc);
-  }
-  catch{
-    res.send(
-      [
-        {
-          interestList: [],
-        }
-      ]
-    )
-  }
+
 });
 
 // Post a userInterest
@@ -57,6 +48,7 @@ router.route("/userInterests").post(async (req, res) => {
 
   if (currentDatabaseInterests.length === 0) {
     await newInterestDoc.save();
+    console.log("user interest document posted");
     res.send(newInterestDoc);
   } else {
     // res.status(400);
@@ -69,6 +61,7 @@ router.route("/userInterests").post(async (req, res) => {
 router.route("/userInterests/:username").delete(async (req, res) => {
   try {
     await InterestModel.deleteOne({ username: req.params.username });
+    console.log("user interest document deleted");
     res.status(204).send();
   } catch {
     // res.status(404)

@@ -1,5 +1,6 @@
 import Axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import React, { component } from "react";
 import { Link } from "react-router-dom";
@@ -19,6 +20,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
     setMsg(emsg);
   };
 
+  const navigate = useNavigate();
   const onSubmit = (event) => {
     // called when the form is submitted
     event.preventDefault(); // don't update page
@@ -42,6 +44,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
 
     //post operation
 
+    // const navigate = useNavigate();
     Axios.post("http://localhost:5000/login", {
       email: email,
       password: password,
@@ -53,6 +56,10 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
         console.log("Login success");
 
         localStorage.setItem("token", res.data.user.token);
+
+        navigate(
+          loggedInCallBack, {}
+        )
       } else {
         throwErrMsg(res.data.err);
         console.log(res.data.err);
@@ -88,14 +95,14 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
                 disabled={cantLogin}
                 onChange={(e) => setUsername(e.target.value)}
                 className={styles.inputField} /> */}
-        <Link to={loggedInCallBack}>
+        {/* <Link to={loggedInCallBack}> */}
           <button
             type="submit"
             className={cantLogin ? styles.errMsgButton : styles.submitButton}
           >
             {Msg}
           </button>
-        </Link>
+        {/* </Link> */}
       </form>
       <div className={styles.division}>
         <div className={styles.line}></div>

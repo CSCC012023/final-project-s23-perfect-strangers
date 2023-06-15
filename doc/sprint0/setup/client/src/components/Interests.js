@@ -54,19 +54,19 @@ const InterestPopUp = (props) => {
         }
     }
 
-    function interestPopupCloseHandler(){
+    async function interestPopupCloseHandler(){
         props.setPopupTrigger(false)
         props.setUserInterestList(selectedInterests);
 
-        Axios.delete("http://localhost:5000/api/userInterests/faisalf4")
+         await Axios.delete("http://localhost:5000/api/userInterests/faisalf4")
         .then((response) => {
             console.log("User Interest document deleted!");
         });
 
-        Axios.post("http://localhost:5000/api/userInterests/", {
-            username: "faisalf4", 
-            interestList: selectedInterests
-        })
+        await Axios.post("http://localhost:5000/api/userInterests/", {
+                username: "faisalf4", 
+                interestList: selectedInterests
+            })
     }
 
     const globalInterestListUI = props.interestList.map((interestItem, interestIndex) => {
@@ -86,7 +86,10 @@ const InterestPopUp = (props) => {
     return (props.popupTrigger) ? (
         <div className='InterestPopup'>
             <div className='InterestPopup-inner'>
-                <button className="InterestPopupCloseBtn" onClick={(event) => {interestPopupCloseHandler()}}>
+                <button 
+                    className="InterestPopupCloseBtn" 
+                    onClick={(event) => {interestPopupCloseHandler()}}
+                >
                     Save changes
                 </button>
 
@@ -107,7 +110,14 @@ const UserInterests = (props) => {
     useEffect(() => {
         Axios.get("http://localhost:5000/api/userInterests/faisalf4")
         .then((response) => {
-            setUserInterestList(response.data[0].interestList);
+            console.log("kikos");
+            console.log(response);
+            if (response.length === 0){
+                setUserInterestList([]);
+            }
+            else{
+                setUserInterestList(response.data[0].interestList);
+            }
         });
     }, []);
 
@@ -131,7 +141,7 @@ const UserInterests = (props) => {
 
     const userinterestListUI = userInterestList.map((interestItem, interestIndex) => {
         return(
-            <div className="UserIndvInterest">
+            <div className="UserIndvInterest" key={interestIndex}>
                 {interestItem}
             </div>
         )
