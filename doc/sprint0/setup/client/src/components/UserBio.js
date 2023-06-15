@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Axios from "axios";
 import { Text } from "react-native"; // npm install react-native // npm install react-native-web
 
-import "./UserBio.css"
+import "./UserBio.css";
 
 import Form from "react-bootstrap/Form"; //npm install react-bootstrap
 
@@ -18,12 +18,14 @@ const UserBio = (props) => {
     if (editAbout) {
       setAboutText(editedText);
 
-      Axios.post(url + "/biography/", {
+      Axios.post(url + "biography/", {
         username: username,
         biography: editedText,
-      }).then((response) => {
-        console.log(response);
-      });
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => console.log(err));
 
       setEditAbout(false);
     } else {
@@ -32,9 +34,7 @@ const UserBio = (props) => {
   }
 
   useEffect(() => {
-    Axios.get(url + "/biography/", {
-      params: { username: username },
-    })
+    Axios.get(url + "biography/" + username)
       .then((response) => {
         setAboutText(response.data.biography);
         console.log(response);
@@ -46,12 +46,12 @@ const UserBio = (props) => {
     if (editAbout) {
       return (
         <Form>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+          <Form.Group className="mb-3">
             <Form.Label>
               <h4>Edit About</h4>
             </Form.Label>
             <Form.Control
-              as="textarea" 
+              as="textarea"
               defaultValue={aboutText}
               type="text"
               onChange={(e) => setEditedText(e.target.value)}
@@ -61,20 +61,16 @@ const UserBio = (props) => {
         </Form>
       );
     } else {
-      return <Text style={{ fontSize: 16 }}>{aboutText}</Text>;
+      return <Text style={{ color: "white", fontSize: 16 }}>{aboutText}</Text>;
     }
   };
   return (
     <>
-      <div className="AboutMe" style={{ display: "flex" }}>
+      <div className="AboutMe">
         <h2>About Me</h2>
-        <div
-          class="d-grid gap-2 d-md-flex justify-content-md-end"
-          style={{ marginLeft: "auto" }}
-        >
-          <br/>
+        <br />
+        <div className="EditSaveButton" style={{ marginLeft: "auto" }}>
           {editAbout && (
-            
             <Button
               variant="light"
               onClick={() => {
@@ -90,9 +86,9 @@ const UserBio = (props) => {
           </Button>
         </div>
       </div>
-      {EditOrAbout()}
+      <div className="EditOrAbout">{EditOrAbout()}</div>
     </>
   );
-}
+};
 
 export default UserBio;

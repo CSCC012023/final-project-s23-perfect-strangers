@@ -11,7 +11,7 @@
 
     z-index:1;
 
-    background-color: black;
+    background-color: rgb(30, 30, 30);
 }
 
 .BioPageTopRight{
@@ -38,9 +38,9 @@
     height: 40px;
     max-width: 200px;
 
-    font-size: 32px;
+    font-size: 40px;
     font-weight: bold;
-    font-family: Georgia;
+    font-family: "Advent Pro";
 
     text-align: left;
 }
@@ -49,12 +49,13 @@
     color: white;
 
     padding: 2px;
-    margin: 1px;
+    margin: 5px;
 
     height: 20px;
     width: 80px;
 
+    font-size: 20px;
     font-weight: bold;
-    font-family: Georgia;
+    font-family: "Advent Pro";
 
 }
