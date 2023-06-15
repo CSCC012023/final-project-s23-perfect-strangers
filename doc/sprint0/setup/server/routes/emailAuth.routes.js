@@ -1,12 +1,14 @@
 const router = require('express').Router();
 let EmailAuthModel = require('../models/emailAuth.model');
 
+const jwt = require('jsonwebtoken');
+
 router.route('/').post(             // post request used for signup
     (req, res) => {
         const newEmailAuth = new EmailAuthModel({       // create a new document with EmailAuthModel
             email: req.body.email,
             password: req.body.password,
-            username: req.body.username
+            username: req.body.username,
         });
 
         newEmailAuth.save()             // save the document

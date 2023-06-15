@@ -19,6 +19,10 @@ const emailAuth = new mongoose.Schema({
         trim: true,
         required: [true, 'Username is required'],
         minLength: [2, 'Username too short'],
+    },
+    token: {
+        type:String,
+        default: null
     }
 })
 

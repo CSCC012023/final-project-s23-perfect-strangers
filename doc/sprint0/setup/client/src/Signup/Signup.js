@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from './Signup.module.css';
 import { useDispatch } from "react-redux";
 import { updateUserInfo } from "../redux/userInfo";
+import { Link } from "react-router-dom";
 
 const Signup = ({signedUpCallback, loginRedirect}) => {
 
@@ -127,14 +128,15 @@ const Signup = ({signedUpCallback, loginRedirect}) => {
             <button style={{flex: 1}}>TODO: Facebook (not Meta) Auth</button>
         </div>
         <div className={styles.loginDiv}>
-            already have an account ? 
-            <button 
-                className={styles.tButton}
-                onClick={loginRedirect}>
-                Log in
-            </button>
+            already have an account ?
+            <Link to={loginRedirect}>
+                <button 
+                    className={styles.tButton}>
+                    Log in
+                </button>
+            </Link>
         </div>
     </div> );
 }
- 
+
 export default Signup;
