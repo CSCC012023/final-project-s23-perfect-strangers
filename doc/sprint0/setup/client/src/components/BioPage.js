@@ -2,6 +2,7 @@ import React from "react";
 import Axios from "axios";
 
 import { useState } from "react";
+import { useEffect } from "react";
 
 import "./BioPage.css";
 import UserInterests from "./Interests";
@@ -28,7 +29,7 @@ const AgeGender = (props) => {
 const BioPage = (props) => {
   // Get user name from MongoDB
   const userName = "AVINCE";
-  const displayName = "Athul";
+  const displayName = "Farhan";
 
   // Get age and gender from MongoDB
   const age = "19";
@@ -38,11 +39,14 @@ const BioPage = (props) => {
 
   // Get all possible interests from MongoDB
   const [interestList, setInterestList] = useState([]);
-  // Axios.get("http://localhost:5000/api/userInterests/masterInterestList").then(
-  //   (response) => {
-  //     setInterestList(response.data[0].interestList);
-  //   }
-  // );
+
+  useEffect(() => {
+    Axios.get(
+      "http://localhost:5000/api/userInterests/masterInterestList"
+    ).then((response) => {
+      setInterestList(response.data[0].interestList);
+    });
+  }, []);
 
   return (
     // <div clasName='BioPage'>
@@ -54,6 +58,7 @@ const BioPage = (props) => {
           <DisplayName displayName={displayName} />
           <AgeGender age={age} gender={gender} />
           <UserInterests interestList={interestList} />
+          <br />
         </div>
       </div>
       <UserBio username={userName} />

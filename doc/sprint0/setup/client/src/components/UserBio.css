@@ -6,6 +6,7 @@
     word-wrap:break-word;
     color: white;
     background-color: black;
+    font-family: "Advent Pro";
 }
 
 .EditOrAbout {
@@ -13,4 +14,5 @@
     max-width: 1430px;
     color: white;
     background-color: black;
+    font-family: "Advent Pro";
 }

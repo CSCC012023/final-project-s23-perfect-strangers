@@ -61,7 +61,7 @@ const UserBio = (props) => {
         </Form>
       );
     } else {
-      return <Text style={{ fontSize: 16, color: "white" }}>{aboutText}</Text>;
+      return <Text style={{ color: "white", fontSize: 16 }}>{aboutText}</Text>;
     }
   };
   return (
