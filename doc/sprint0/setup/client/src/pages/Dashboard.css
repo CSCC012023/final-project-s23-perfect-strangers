@@ -1,0 +1,77 @@
+.create-event{
+    float: left;
+    width: 25%;
+    height: 200px;
+  }
+  
+  .create-event button{
+    color: black;
+    background-color: yellow;
+    float: left;
+    margin-top: 150px;
+    border: none;
+    padding: 5px 10px 5px 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 12px;
+  }
+  
+  .create-event input[type=text]{
+    margin-top: 20px;
+    padding: 5px;
+    font-size: 15px;
+    margin-left: 30px;
+    border-radius: 11px;
+    border: none;
+  }
+  
+  .event-header:after{
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  .event-display {
+    color: white;
+    margin-left: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    flex-direction: row;
+  }
+  
+  .event-details{
+    width: 400px;
+    background-color: white;
+    padding-left: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-right: 150px;
+    margin-bottom: 90px;
+  }
+  
+  #event-date{
+    color: #ff1493;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  #event-location{
+    font-size: 20px;
+  }
+  
+  .event-photo{
+    float: left;
+    width: 100px;
+    background-color: turquoise;
+    margin-top: 50px;
+    height: 100px;
+    text-align: center;
+  }
+  
+  .event-info{
+    float: left;
+    width: 260px;
+    color: black;
+    margin-left: 20px;
+  }

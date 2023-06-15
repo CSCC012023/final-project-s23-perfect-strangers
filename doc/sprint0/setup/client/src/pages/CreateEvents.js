@@ -13,7 +13,7 @@ function CreateEvents() {
     const [onMe, setOnMe] = useState(false);
 
     const createUserEvent = () => {
-        Axios.post("http://localhost:5000/userevents/add", {
+        Axios.post("http://localhost:5000/api/userevents", {
             creator, title, date, location, price, description, ticketLink, onMe
         }).then(() => {
             alert("Event Created!");

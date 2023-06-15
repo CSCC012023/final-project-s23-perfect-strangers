@@ -1,13 +1,13 @@
 const router = require("express").Router();
 let UserEventsModel = require("../models/userEventsModel");
 
-router.get('/', (req, res) => {
+router.get('/userevents', (req, res) => {
     UserEventsModel.find()
             .then(userEvents => res.json(userEvents))
             .catch(err => res.status(401).json('Error: ' + err));
 });
 
-router.post('/add', (req, res) => {
+router.post('/userevents', (req, res) => {
     const creator = req.body.creator;
     const title = req.body.title;
     const date = req.body.date;

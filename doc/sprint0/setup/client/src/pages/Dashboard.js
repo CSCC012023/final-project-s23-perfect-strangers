@@ -2,12 +2,13 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Axios from "axios";
+import "./Dashboard.css";
 
 function Dashboard(){
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        Axios.get("http://localhost:5000/userevents").then((response) => {
+        Axios.get("http://localhost:5000/api/userevents").then((response) => {
       setEvents(response.data);
         });
     }, [])
