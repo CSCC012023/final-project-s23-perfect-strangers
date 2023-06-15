@@ -2,6 +2,7 @@ import Axios from "axios";
 import { useState } from "react";
 import styles from './Login.module.css';
 import React, {component} from 'react';
+import { Link } from "react-router-dom";
 
 //const jwt = require("jsonwebtoken");
 
@@ -83,10 +84,13 @@ const Login = ({loggedInCallBack, SignUpRedirect}) => {
                 disabled={cantLogin}
                 onChange={(e) => setUsername(e.target.value)}
                 className={styles.inputField} /> */}
-            <button 
-                type="submit"
-                className={cantLogin ? styles.errMsgButton : styles.submitButton}>
-                {Msg} </button>
+            <Link to={loggedInCallBack}>
+                <button 
+                    type="submit"
+                    className={cantLogin ? styles.errMsgButton : styles.submitButton}>
+                    {Msg}
+                </button>
+            </Link>
         </form>
         <div className={styles.division}>
             <div className={styles.line}></div>
@@ -98,12 +102,13 @@ const Login = ({loggedInCallBack, SignUpRedirect}) => {
             <button>TODO: Facebook (not Meta) Auth</button>
         </div>
         <div className={styles.SignUpDiv}>
-            Need an account ? 
-            <button 
-                className={styles.SignUpButton}
-                onClick={SignUpRedirect}>
-                Sign Up
-            </button>
+            Need an account ?
+            <Link to={SignUpRedirect}>
+                <button 
+                    className={styles.SignUpButton}>
+                    Sign Up
+                </button>
+            </Link>
         </div>
     </div> );
 }

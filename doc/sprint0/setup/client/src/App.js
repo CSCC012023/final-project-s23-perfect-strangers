@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Signup from "./Signup/Signup";
+import SignupHub from "./Signup/SignupHub";
 import Login from "./Login/Login";
 import ExamplePage from "./ExamplePage/ExamplePage";
 import {
@@ -10,49 +10,30 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const [redirectToSignup, setRedirectToSignup] = useState(false);
-  const [redirectToLogin, setRedirectToLogin] = useState(false);
-
-  const signupRedirect = () => {
-    setRedirectToSignup(true);
-  };
-  const loginRedirect = () => {
-    setRedirectToLogin(true);
-  };
 
   return (
     <Router>
-      {redirectToSignup && <Navigate to="/signup" replace />}
-      {redirectToLogin && <Navigate to="/login" replace />}
       <Routes>
         <Route
           path="/"
           element={
             <Login
-              loggedInCallBack={(username) => console.log(username)}
-              SignUpRedirect={signupRedirect}
+              loggedInCallBack={'/examplepage'}
+              SignUpRedirect={'/signup'}
             />
           }
         />
         <Route
           path="/signup"
           element={
-            <Signup signedUpCallBack={(username) => console.log(username)} />
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <Login
-              loggedInCallBack={(username) => console.log(username)}
-              SignUpRedirect={signupRedirect}
-            />
+            <SignupHub accountSetupCallback={"/"} loginRedirect={"/"} />
           }
         />
         <Route path="/examplepage" element={<ExamplePage />} />
       </Routes>
     </Router>
   );
+
 
   // return (
   //   <div>
@@ -62,6 +43,7 @@ function App() {
   //     />
   //   </div>
   // )
+
 }
 
 export default App;
