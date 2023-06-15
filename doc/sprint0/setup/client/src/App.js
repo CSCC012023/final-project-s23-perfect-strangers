@@ -1,10 +1,14 @@
-import './App.css';
-import { useState, useEffect } from "react";
-import Axios from "axios";
-import Signup from './Signup/Signup';
-import Login from './Login/Login';
-import ExamplePage from './ExamplePage/ExamplePage';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import "./App.css";
+import { useState } from "react";
+import Signup from "./Signup/Signup";
+import Login from "./Login/Login";
+import ExamplePage from "./ExamplePage/ExamplePage";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 
 function App() {
   const [redirectToSignup, setRedirectToSignup] = useState(false);
@@ -22,10 +26,31 @@ function App() {
       {redirectToSignup && <Navigate to="/signup" replace />}
       {redirectToLogin && <Navigate to="/login" replace />}
       <Routes>
-        <Route path="/" element={<Login loggedInCallBack={(username) => console.log(username)} SignUpRedirect={signupRedirect} />} />
-        <Route path="/signup" element={<Signup signedUpCallBack = {(username) => console.log(username)} />} />
-        <Route path="/login" element={<Login loggedInCallBack={(username) => console.log(username)} SignUpRedirect={signupRedirect} />} />
-        <Route path="/examplepage" element={<ExamplePage />}/>
+        <Route
+          path="/"
+          element={
+            <Login
+              loggedInCallBack={(username) => console.log(username)}
+              SignUpRedirect={signupRedirect}
+            />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Signup signedUpCallBack={(username) => console.log(username)} />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Login
+              loggedInCallBack={(username) => console.log(username)}
+              SignUpRedirect={signupRedirect}
+            />
+          }
+        />
+        <Route path="/examplepage" element={<ExamplePage />} />
       </Routes>
     </Router>
   );
