@@ -12,6 +12,7 @@
 .EditOrAbout {
     min-width: 100px;
     max-width: 1430px;
+    color: white;
     background-color: rgb(30, 30, 30);
     font-family: "Advent Pro";
 }
