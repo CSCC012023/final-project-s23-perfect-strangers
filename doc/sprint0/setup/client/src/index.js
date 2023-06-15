@@ -15,4 +15,3 @@ root.render(                                // provide global state to the app c
         <App />
     </Provider>
 );
-
