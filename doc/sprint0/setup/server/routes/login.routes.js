@@ -31,7 +31,6 @@ router.route('/').post((req, res) => {
       });
   });
 
-
 router.route('/').get((req, res) => {
   if (req.headers && req.headers.authorization) {
     var authorization = req.headers.authorization.split(' ')[1],
@@ -43,15 +42,11 @@ router.route('/').get((req, res) => {
         }
 
         var userId = decoded.id;
-        
+
         EmailAuthModel.findOne({_id: userId}).then(function(user){
           res.json({ user: user });
       });
   }
-  // EmailAuthModel.findOne({ token: req.Authorization.split(' ')[1] })
-  //     .then((user) => {
-  //       res.json({ user: user });
-  //     });
 });
 
 module.exports = router;
