@@ -107,20 +107,6 @@ const UserInterests = (props) => {
     // Get the user's interests from MongoDB
     // Limit to a maximum of 5 interests
     const [userInterestList, setUserInterestList] = useState([]);
-    useEffect(() => {
-        Axios.get("http://localhost:5000/api/userInterests/faisalf4")
-        .then((response) => {
-            console.log("kikos");
-            console.log(response);
-            if (response.length === 0){
-                setUserInterestList([]);
-            }
-            else{
-                setUserInterestList(response.data[0].interestList);
-            }
-        });
-    }, []);
-
     const [interestColorList, setInterestColorList] = useState(
         props.interestList.map((interest, interestIndex) => {
             const isPresent = userInterestList.indexOf(interest) > -1;
@@ -136,6 +122,38 @@ const UserInterests = (props) => {
             }
         })
     );
+
+    
+    useEffect(() => {
+        Axios.get("http://localhost:5000/api/userInterests/faisalf4")
+        .then((response) => {
+            console.log("kikos");
+            console.log(response);
+            if (response.length === 0){
+                setUserInterestList([]);
+            }
+            else{
+                setUserInterestList(response.data[0].interestList);
+                setInterestColorList(
+                    props.interestList.map((interest, interestIndex) => {
+                        const isPresent = userInterestList.indexOf(interest) > -1;
+                        if (!isPresent){
+                            return (
+                                'white'
+                            )
+                        }
+                        else{
+                            return(
+                                '#B14EFF'
+                            )
+                        }
+                    })
+                );
+            }
+        });
+    }, []);
+
+
 
     const [popupTrigger, setPopupTrigger] = useState(false);
 

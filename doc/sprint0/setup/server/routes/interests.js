@@ -29,7 +29,6 @@ router.route("/userInterests/:username").get(async (req, res) => {
     // console.log(req.params.username);
     // console.log(userInterestDoc[0].interestList)
     res.send(userInterestDoc);
-
 });
 
 // Post a userInterest
