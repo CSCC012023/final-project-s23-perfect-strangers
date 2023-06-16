@@ -1,8 +1,6 @@
 import Axios from "axios";
 import { useState } from "react";
-import styles from './Signup.module.css';
-import { useDispatch } from "react-redux";
-import { updateUserInfo } from "../redux/userInfo";
+import styles from '../styles/common_styles.module.css';
 import { Link } from "react-router-dom";
 
 const Signup = ({signedUpCallback, loginRedirect}) => {
@@ -18,7 +16,7 @@ const Signup = ({signedUpCallback, loginRedirect}) => {
     // it should be implemented by the person who is in charge of navigation
     // and then passed in to the Signup component
 
-    const dispatch = useDispatch();                             // define function which calls redux functions
+    // const dispatch = useDispatch();                             // define function which calls redux functions
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -61,10 +59,10 @@ const Signup = ({signedUpCallback, loginRedirect}) => {
             username: username
         }).then((res) => {
             if (res.data.msg === 'user created') {              // new user is created
-                dispatch(updateUserInfo({
+                /* dispatch(updateUserInfo({
                     email: email,
                     username: username
-                }));
+                })); */
                 signedUpCallback();
             } 
             
@@ -84,7 +82,7 @@ const Signup = ({signedUpCallback, loginRedirect}) => {
     return ( 
         <div className={styles.container}>
         <h1 className={styles.heading}>SIGN UP</h1>
-        <form onSubmit={onSubmit} className={styles.signupForm}>
+        <form onSubmit={onSubmit} className={styles.verticalContent}>
             <div className={styles.division}>
                 <input 
                     type="email"
@@ -112,11 +110,13 @@ const Signup = ({signedUpCallback, loginRedirect}) => {
                     onChange={(e) => setUsername(e.target.value)}
                     className={styles.inputField} />
             </div>
-            
-            <button 
-                type="submit"
-                className={cantSignUp ? styles.errMsgButton : styles.submitButton}>
-                {Msg} </button>
+            <div className={styles.division}>
+                <button 
+                    type="submit"
+                    className={cantSignUp ? styles.redButton : styles.purpleButton}>
+                    {Msg}
+                </button>
+            </div>
         </form>
         <div className={styles.division}>
             <div className={styles.line}></div>
@@ -127,11 +127,11 @@ const Signup = ({signedUpCallback, loginRedirect}) => {
             <button style={{flex: 1}}>TODO: Google Auth</button>
             <button style={{flex: 1}}>TODO: Facebook (not Meta) Auth</button>
         </div>
-        <div className={styles.loginDiv}>
+        <div className={styles.footnoteDiv}>
             already have an account ?
             <Link to={loginRedirect}>
                 <button 
-                    className={styles.tButton}>
+                    className={styles.transparentButton}>
                     Log in
                 </button>
             </Link>

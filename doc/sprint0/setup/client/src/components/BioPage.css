@@ -1,8 +1,14 @@
+.BioPage{
+    margin-left: 300px;
+    margin-top: 50px;
+}
+
 .BioPageTop{
     min-width: 600px;
     max-width: 1430px;
     
-    min-height: 120px;
+    min-height: 100px;
+    max-height: 140px;
 
     padding: 10px;
 
@@ -11,7 +17,7 @@
 
     z-index:1;
 
-    background-color: rgb(30, 30, 30);
+    background-color: rgb(0, 0, 0);
 }
 
 .BioPageTopRight{
@@ -50,11 +56,13 @@
 
     padding: 2px;
     margin: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
     height: 20px;
     width: 80px;
 
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     font-family: "Advent Pro";
 

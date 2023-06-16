@@ -54,6 +54,7 @@ const UserBio = (props) => {
               as="textarea"
               defaultValue={aboutText}
               type="text"
+              style={{fontSize: 20}}
               onChange={(e) => setEditedText(e.target.value)}
               rows={10}
             />
@@ -61,13 +62,13 @@ const UserBio = (props) => {
         </Form>
       );
     } else {
-      return <Text style={{ color: "white", fontSize: 16 }}>{aboutText}</Text>;
+      return <Text style={{ color: "white", fontSize: 20 }}>{aboutText}</Text>;
     }
   };
   return (
     <>
       <div className="AboutMe">
-        <h2>About Me</h2>
+        <h2><b>About Me</b></h2>
         <br />
         <div className="EditSaveButton" style={{ marginLeft: "auto" }}>
           {editAbout && (

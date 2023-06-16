@@ -5,7 +5,8 @@
 
     border-radius: 10px;
 
-    padding: 3px;
+    text-align: center;
+
     margin: 3px;
 
     max-width: 150px;
@@ -19,7 +20,6 @@
 }
 
 .GlobalIndvInterest{
-    /* background-color: white; */
     color: rgb(30, 30, 30);
 
     border-style: solid;
@@ -27,7 +27,8 @@
     border-radius: 10px;
     border-width: 3px;
     
-    padding: 3px;
+    text-align: center;
+    
     margin: 3px;
 
     max-width: 150px;

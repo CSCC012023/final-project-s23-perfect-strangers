@@ -38,19 +38,25 @@ const BioPage = (props) => {
   // Get user's profile picture from MongoDB
 
   // Get all possible interests from MongoDB
-  const [interestList, setInterestList] = useState([]);
+  const [interestList, setInterestList] = useState(["Hockey", "Gaming", "Coding", "Yoga", "Movies", "Burger", "Books"]);
 
-  useEffect(() => {
-    Axios.get(
-      "http://localhost:5000/api/userInterests/masterInterestList"
-    ).then((response) => {
-      setInterestList(response.data[0].interestList);
-    });
-  }, []);
+  // useEffect(() => {
+  //   Axios.get(
+  //     "http://localhost:5000/api/userInterests/masterInterestList"
+  //   ).then((response) => {
+  //     setInterestList(response.data[0].interestList);
+
+  //     console.log(response);
+  //   });
+  // }, []);
 
   return (
     // <div clasName='BioPage'>
     <div className="BioPage">
+        <div className="page-title">
+            <h1>ACCOUNT</h1>
+        </div>
+
       <div className="BioPageTop">
         <ProfilePicture />
 
