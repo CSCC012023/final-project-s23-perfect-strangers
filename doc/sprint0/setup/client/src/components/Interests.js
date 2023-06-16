@@ -127,7 +127,7 @@ const UserInterests = (props) => {
     useEffect(() => {
         Axios.get("http://localhost:5000/api/userInterests/faisalf4")
         .then((response) => {
-            console.log("kikos");
+            // console.log("kikos");
             console.log(response);
             if (response.length === 0){
                 setUserInterestList([]);

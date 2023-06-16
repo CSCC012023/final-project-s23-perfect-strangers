@@ -38,7 +38,7 @@ const BioPage = (props) => {
   // Get user's profile picture from MongoDB
 
   // Get all possible interests from MongoDB
-  const [interestList, setInterestList] = useState(["Hockey", "Gaming", "Coding", "Yoga", "Movies", "Burger"]);
+  const [interestList, setInterestList] = useState(["Hockey", "Gaming", "Coding", "Yoga", "Movies", "Burger", "Books"]);
 
   // useEffect(() => {
   //   Axios.get(
