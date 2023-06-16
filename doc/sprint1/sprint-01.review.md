@@ -45,9 +45,9 @@ We completed the following user stories:
 
 - As a logged-in user, I want to edit my user biography so that other users get to read my latest details.
 
-*Please watch the video [here](https://github.com/CSCC012023/final-project-s23-perfect-strangers/blob/develop/doc/sprint1/Product-Demo-Sprint1.MOV) or the one given below for a for a product demo.*
+*Please watch the video [here](https://youtu.be/MBSdqsC4KxA) or the one given below for a for a product demo.*
 
-<video src="https://youtu.be/MBSdqsC4KxA" controls="controls" style="max-width:1000px;">
+<video src="https://youtu.be/MBSdqsC4KxA" controls="controls"       style="max-width:1000px;">
 </video>
 
 #### Goals and/or tasks that were planned but not met/completed:
