@@ -1,11 +1,7 @@
 import Axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import styles from "../styles/common_styles.module.css";
-=======
-import styles from "./Login.module.css";
->>>>>>> origin/develop
 import React, { component } from "react";
 import { Link } from "react-router-dom";
 
@@ -61,9 +57,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
 
         localStorage.setItem("token", res.data.user.token);
 
-        navigate(
-          loggedInCallBack, {}
-        )
+        navigate(loggedInCallBack, {});
       } else {
         throwErrMsg(res.data.err);
         console.log(res.data.err);
@@ -109,10 +103,10 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
 
         <div className={styles.division}>
           <button
-              type="submit"
-              className={cantLogin ? styles.redButton : styles.purpleButton}
-            >
-              {Msg}
+            type="submit"
+            className={cantLogin ? styles.redButton : styles.purpleButton}
+          >
+            {Msg}
           </button>
         </div>
 
@@ -134,7 +128,6 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
         Need an account ?
         <Link to={SignUpRedirect}>
           <button className={styles.transparentButton}>Sign Up</button>
-
         </Link>
       </div>
     </div>

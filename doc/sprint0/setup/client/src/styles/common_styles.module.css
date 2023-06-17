@@ -2,6 +2,7 @@
 /* body should not have the weird white margins */
 body {
     margin: 0;
+    background-color: #1e1e1e;
 }
 
 /* basic container class for parent div of a page */
