@@ -1,7 +1,11 @@
 import Axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import styles from "../styles/common_styles.module.css";
+=======
+import styles from "./Login.module.css";
+>>>>>>> origin/develop
 import React, { component } from "react";
 import { Link } from "react-router-dom";
 
@@ -71,6 +75,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>LOGIN</h1>
+
       <form onSubmit={onSubmit} className={styles.verticalContent}>
         <div className={styles.division}>
           <input
@@ -92,6 +97,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
             className={styles.inputField}
           />
         </div>
+
         {/* <input 
                 type="text"
                 value={username}
@@ -100,6 +106,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
                 onChange={(e) => setUsername(e.target.value)}
                 className={styles.inputField} /> */}
         {/* <Link to={loggedInCallBack}> */}
+
         <div className={styles.division}>
           <button
               type="submit"
@@ -108,21 +115,26 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
               {Msg}
           </button>
         </div>
+
         {/* </Link> */}
       </form>
       <div className={styles.division}>
         <div className={styles.line}></div>
+
         <p className={styles.text}>or login with</p>
+
         <div className={styles.line}></div>
       </div>
       <div className={styles.division}>
         <button>TODO: Google Auth</button>
         <button>TODO: Facebook (not Meta) Auth</button>
       </div>
+
       <div className={styles.footnoteDiv}>
         Need an account ?
         <Link to={SignUpRedirect}>
           <button className={styles.transparentButton}>Sign Up</button>
+
         </Link>
       </div>
     </div>

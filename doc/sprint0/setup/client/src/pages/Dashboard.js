@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Axios from "axios";
+
 import styles from "../styles/common_styles.module.css";
 import eventStyles from "../styles/event.module.css";
+
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
@@ -14,6 +16,7 @@ function Dashboard() {
     });
   }, []);
   return (
+
     <div className={styles.rightContainer}>
       <div className={styles.horizontalContent}>
         <div className={styles.squishHeading}>
@@ -48,13 +51,16 @@ function Dashboard() {
                   <p className={styles.smalltext}>{event.date}</p>
                   <p className={styles.smalltext}>{event.location}</p>
                   <p className={styles.smalltext}>from ${event.price}</p>
+
                 </div>
               </div>
               <br></br>
             </>
           ))}
       </div>
+
     </div>
+
   );
 }
 

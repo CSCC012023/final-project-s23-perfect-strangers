@@ -15,6 +15,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <div>
+
       <Router>
         <Sidebar />
         <Routes>
@@ -42,7 +43,9 @@ function App() {
           <Route path="/examplepage" element={<ExamplePage />} />
         </Routes>
       </Router>
+
     </div>
+
   );
 }
 

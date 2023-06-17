@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import Axios from 'axios';
 import './CreateEvents.css';
+
 import styles from "../styles/common_styles.module.css";
 import ceStyles from "../styles/create_events.module.css";
+
 
 function CreateEvents() {
     const [creator, setCreator] = useState("Jeremy");
@@ -24,6 +26,7 @@ function CreateEvents() {
 
 
     return (
+
         <div className={ceStyles.createEventsPopup}>
             <div className={styles.horizontalContent}>
                 <div className={styles.squishHeading}>Create Your Event</div>
@@ -94,6 +97,7 @@ function CreateEvents() {
                 <div className={styles.division}>
                     <button className={styles.purpleButton} onClick={createUserEvent}>Create Event</button>
                 </div>
+
             </div>
         </div>
     );
