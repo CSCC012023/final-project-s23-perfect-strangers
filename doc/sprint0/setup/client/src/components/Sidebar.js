@@ -12,7 +12,7 @@ function Sidebar(){
             </div>
             <br></br>
             <nav>
-                <ul>
+                <ul style={{listStyleType: 'none'}}>
                     {SidebarData.map((page, index) => {
                         return (
                             <li key={index}>
