@@ -2,14 +2,10 @@ import { useState } from "react";
 
 import styles from "../styles/common_styles.module.css";
 
-import { useSelector } from "react-redux";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 
-const AccountSetup = ({ accountSetupCallback }) => {
-  // get email and username from global storage
-  const { email, username } = useSelector((state) => state.userInfo);
-
+const AccountSetup = ({ accountSetupCallback, email, username }) => {
   // state for age and gender
   const [age, setAge] = useState(18);
   const [gender, setGender] = useState("");
@@ -47,7 +43,6 @@ const AccountSetup = ({ accountSetupCallback }) => {
       </div>
 
       <form className={styles.verticalContent} onSubmit={handleOnSubmit}>
-
         <div className={styles.division}>
           <label className={styles.text}>Age: </label>
           <input
@@ -75,10 +70,8 @@ const AccountSetup = ({ accountSetupCallback }) => {
           </select>
         </div>
 
-        <Link to={accountSetupCallback}
-          className={styles.division}>
+        <Link to={accountSetupCallback} className={styles.division}>
           <button type="submit" className={styles.purpleButton}>
-
             Submit
           </button>
         </Link>
