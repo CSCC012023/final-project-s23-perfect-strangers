@@ -45,10 +45,9 @@ We completed the following user stories:
 
 - As a logged-in user, I want to edit my user biography so that other users get to read my latest details.
 
-*Please watch the video [here](https://youtu.be/MBSdqsC4KxA) or the one given below for a product demo.*
+_Please watch the video [here](https://youtu.be/MBSdqsC4KxA) or the one given below for a product demo._
 
 https://github.com/CSCC012023/final-project-s23-perfect-strangers/assets/77621905/5cf11af7-4784-4759-991b-36d9314e7b71
-
 
 #### Goals and/or tasks that were planned but not met/completed:
 
@@ -58,13 +57,7 @@ Our code currently does not use the session token generated during login. We cur
 
 Going into the next iteration, our main insights are:
 
-- 2 - 4 items
-- Short (no more than one short paragraph per item)
-- High-level concepts that should guide your work for the next iteration.
-- These concepts should help you decide on where to focus your efforts.
-- Can be related to product and/or process.
-
-* We should coordinate our code changes before we merge them so that we can reduce the time we spend merging code.
-* We should modularise our CSS files so that we do not override other people's styles.
-* We will organize our changes into folders so that the project structure is neat and consistent.
-* We will create API documentation before we submit our code so that other developers are aware of the purpose of the endpoints.
+- We should coordinate our code changes before we merge them so that we can reduce the time we spend merging code.
+- We should modularise our CSS files so that we do not override other people's styles.
+- We will organize our changes into folders so that the project structure is neat and consistent.
+- We will create API documentation before we submit our code so that other developers are aware of the purpose of the endpoints.
