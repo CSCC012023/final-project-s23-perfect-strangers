@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Axios from "axios";
-import "./Dashboard.css";
+
+import styles from "../styles/common_styles.module.css";
+import eventStyles from "../styles/event.module.css";
+
 
 function Dashboard() {
   const [events, setEvents] = useState([]);
@@ -13,38 +16,51 @@ function Dashboard() {
     });
   }, []);
   return (
-    <>
-      <div className="event-header">
-        <div className="page-title">
-          <h1>EVENTS</h1>
+
+    <div className={styles.rightContainer}>
+      <div className={styles.horizontalContent}>
+        <div className={styles.squishHeading}>
+          EVENTS
         </div>
-        <div className="create-event">
-          <input type="text" placeholder="Search"></input>
-          <Link to="/create-events">
-            <button>+ Create</button>
-          </Link>
+        <div className={styles.smallDivision}>
+          <div className={styles.verticalContent}>
+            <input 
+              type="text" 
+              placeholder="Search"
+              className={styles.inputMin}>
+            </input>
+            <Link 
+              to="/create-events">
+              <button className={styles.purpleButton}>
+                + Create
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
-      <div className="event-display">
+      <div className={styles.wrapContainer}>
         {events &&
           events.map((event) => (
             <>
-              <div key={event._id} className="event-details">
-                <div className="event-photo">
+              <div key={event._id} className={eventStyles.eventDetails}>
+                <div className={eventStyles.eventPhoto}>
                   <p>Photo</p>
                 </div>
-                <div className="event-info">
-                  <h1>{event.title}</h1>
-                  <p id="event-date">{event.date}</p>
-                  <p id="event-location">{event.location}</p>
-                  <p>from ${event.price}</p>
+                <div className={styles.verticalContent}>
+                  <h1 className={styles.boldtext}>{event.title}</h1>
+                  <p className={styles.smalltext}>{event.date}</p>
+                  <p className={styles.smalltext}>{event.location}</p>
+                  <p className={styles.smalltext}>from ${event.price}</p>
+
                 </div>
               </div>
               <br></br>
             </>
           ))}
       </div>
-    </>
+
+    </div>
+
   );
 }
 

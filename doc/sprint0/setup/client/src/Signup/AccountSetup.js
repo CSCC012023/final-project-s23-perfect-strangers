@@ -1,5 +1,7 @@
 import { useState } from "react";
-import styles from "./Signup.module.css";
+
+import styles from "../styles/common_styles.module.css";
+
 import { useSelector } from "react-redux";
 import Axios from "axios";
 import { Link } from "react-router-dom";
@@ -43,7 +45,9 @@ const AccountSetup = ({ accountSetupCallback }) => {
         <p className={styles.text}>|</p>
         <p className={styles.text}>{email}</p>
       </div>
-      <form className={styles.signupForm} onSubmit={handleOnSubmit}>
+
+      <form className={styles.verticalContent} onSubmit={handleOnSubmit}>
+
         <div className={styles.division}>
           <label className={styles.text}>Age: </label>
           <input
@@ -70,8 +74,11 @@ const AccountSetup = ({ accountSetupCallback }) => {
             <option value="secret">Prefer not to say</option>
           </select>
         </div>
-        <Link to={accountSetupCallback}>
-          <button type="submit" className={styles.submitButton}>
+
+        <Link to={accountSetupCallback}
+          className={styles.division}>
+          <button type="submit" className={styles.purpleButton}>
+
             Submit
           </button>
         </Link>
