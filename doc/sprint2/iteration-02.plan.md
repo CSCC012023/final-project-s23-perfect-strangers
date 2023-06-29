@@ -72,7 +72,7 @@ For example, "we use pull-requests" is not a precise statement since it leaves t
 
 We will use git flow. We have a main branch which contains the project completed in the last sprint. The main branch branches off to the develop branch, which contains the approved changes to the project for the current sprint. Finally, we have feature branches which are off the format "DEV-CGP-X", where X is the Jira number.
 
-We will prepend each commit message with ""DEV-CGP-X:", where X is the Jira number.
+We will prepend each commit message with "DEV-CGP-X:", where X is the Jira number.
 
 We will use pull-requests(PR) for changes from feature branch to develop branch. The PR will be reviewed by an assigned reviewer. Once the reviewer and author are satisfied with the changes the author will merge the changes to the develop branch.
 
