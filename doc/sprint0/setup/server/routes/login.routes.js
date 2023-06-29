@@ -13,7 +13,7 @@ router.route("/").post(async (req, res) => {
   if (emailAuth) {
     // Login successful
     try {
-      const token = jwt.sign({ id: emailAuth._id }, "shhhhh", {
+      const token = jwt.sign({ id: emailAuth._id, email:emailAuth.email }, "shhhhh", {
         expiresIn: "2h",
       });
       console.log("User Saved " + token);
