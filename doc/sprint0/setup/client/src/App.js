@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from "react";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
@@ -12,16 +11,9 @@ import SignupHub from "./Signup/SignupHub";
 import Login from "./Login/Login";
 import ExamplePage from "./ExamplePage/ExamplePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-=======
-import './App.css';
-import { useState, useEffect } from "react";
-import Axios from "axios";
-import CreateEvents from './CreateEvents';
->>>>>>> a0269778 (Implemented User Event Creation Component)
 
 function App() {
   return (
-<<<<<<< HEAD
     <div>
 
       <Router>
@@ -41,31 +33,6 @@ function App() {
                 SignUpRedirect={"/signup"}
               />
             }
-=======
-    <div className="App">
-      <div className='eventCreation'>
-        <CreateEvents />
-      </div>
-      <div className='usersDisplay'>
-        {listOfUsers.map((user) => {
-          return (
-          <div>
-            <h1>Name: {user.name}</h1>
-            <h1>Age: {user.age}</h1>
-            <h1>Username: {user.username}</h1>
-            <hr/>
-          </div>)
-        })
-        }
-      </div>
-      <div>
-        <input 
-        type='text' 
-        placeholder='Name' 
-        onChange={(event) => {
-          setName(event.target.value);
-          }}
->>>>>>> a0269778 (Implemented User Event Creation Component)
           />
           <Route
             path="/signup"

@@ -4,10 +4,12 @@ import './CreateEvents.css';
 
 import styles from "../styles/common_styles.module.css";
 import ceStyles from "../styles/create_events.module.css";
+import jwt_decode from "jwt-decode";
 
 
 function CreateEvents() {
-    const [creator, setCreator] = useState("Jeremy");
+    const token = localStorage.getItem('token');
+    const [creator, setCreator] = useState(jwt_decode(token).email);
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
