@@ -1,11 +1,19 @@
 .AboutMe{
     min-width: 100px;
     max-width: 1430px;
+<<<<<<< HEAD
+=======
+    font-weight: bolder;
+>>>>>>> develop
     display: flex;
     flex-direction: row;
     word-wrap:break-word;
     color: white;
+<<<<<<< HEAD
     background-color: rgb(30, 30, 30);
+=======
+    background-color: rgb(0, 0, 0);
+>>>>>>> develop
     font-family: "Advent Pro";
 }
 
