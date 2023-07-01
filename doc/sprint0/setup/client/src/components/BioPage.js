@@ -1,18 +1,19 @@
 import React from "react";
-import Axios from "axios";
+//import Axios from "axios";
 
 import { useState } from "react";
-import { useEffect } from "react";
+//import { useEffect } from "react";
 
-import "./BioPage.css";
+//import "./BioPage.css";
 import UserInterests from "./Interests";
 
 import UserBio from "./UserBio";
 
 import styles from "../styles/common_styles.module.css";
+import bioPageStyles from "../styles/bio_page.module.css";
 
 const ProfilePicture = (props) => {
-  return <div className="ProfilePicture"></div>;
+  return <div className={bioPageStyles.ProfilePicture}></div>;
 };
 
 const BioPage = (props) => {

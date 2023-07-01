@@ -13,7 +13,7 @@ import Axios from "axios";
 import styles from "../styles/common_styles.module.css";
 
 /* const InterestPopUp = (props) => { 
-  not good practice, always destructure your props so we know what inputs it needs
+  please destructure your props so we know what inputs it needs
 */
 const InterestPopUp = 
   ( {interestList,
