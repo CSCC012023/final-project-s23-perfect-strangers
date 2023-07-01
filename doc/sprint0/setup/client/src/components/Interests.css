@@ -43,6 +43,11 @@
     cursor: pointer;
 }
 
+
+.GlobalIndvInterest: :hover {
+    background-color: #B14EFE;
+}
+
 .UserInterestList{
     display: flex;
     flex-direction: row;

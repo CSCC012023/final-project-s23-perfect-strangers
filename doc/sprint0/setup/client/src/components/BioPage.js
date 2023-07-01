@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import "./BioPage.css";
 import UserInterests from "./Interests";
 
+import jwt_decode from "jwt-decode";
+
 import UserBio from "./UserBio";
 
 const ProfilePicture = (props) => {
@@ -37,18 +39,31 @@ const BioPage = (props) => {
 
   // Get user's profile picture from MongoDB
 
-  // Get all possible interests from MongoDB
+  // Set the interest master list
   const [interestList, setInterestList] = useState(["Hockey", "Gaming", "Coding", "Yoga", "Movies", "Burger", "Books"]);
+  
+  // Get the user Email by decoding JWT
+  const token = localStorage.getItem("token");
+  var useremail = jwt_decode(token).email;
 
+  // // Get user details
   // useEffect(() => {
+  //   // Get the user token
+  //   const token = localStorage.getItem("token");
+
+  //   // Decode this to get user email
+  //   var useremail = jwt_decode(token).email;
+
   //   Axios.get(
-  //     "http://localhost:5000/api/userInterests/masterInterestList"
+  //     "http://localhost:5000/user-details"
   //   ).then((response) => {
   //     setInterestList(response.data[0].interestList);
 
   //     console.log(response);
   //   });
   // }, []);
+
+
 
   return (
     // <div clasName='BioPage'>
@@ -63,7 +78,7 @@ const BioPage = (props) => {
         <div className="BioPageTopRight">
           <DisplayName displayName={displayName} />
           <AgeGender age={age} gender={gender} />
-          <UserInterests interestList={interestList} />
+          <UserInterests useremail={useremail} interestList={interestList} />
           <br />
         </div>
       </div>

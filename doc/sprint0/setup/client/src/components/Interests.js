@@ -10,13 +10,21 @@ import Axios from "axios";
 import "./Interests.css";
 import "reactjs-popup/dist/index.css"; // npm i reactjs-popup
 
+
+
 const InterestPopUp = (props) => {
+
+  // React hook to force re-render
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  // Local copy of interests selected by user
   const [selectedInterests, setSelectedInterests] = useState(
     props.userInterestList
   );
 
-  function changeInterestColorToPurple(colorList, index) {
+  // React implementation of hover
+  // Change color of interest div to purple when hovered over
+  const changeInterestColorToPurple = (colorList, index) => {
     if (colorList[index] !== "#B14EFF") {
       var tempList = colorList;
       tempList[index] = "#B14EFE";
@@ -25,7 +33,7 @@ const InterestPopUp = (props) => {
     }
   }
 
-  function changeInterestColorToWhite(colorList, index) {
+  const  changeInterestColorToWhite = (colorList, index) => {
     if (colorList[index] !== "#B14EFF") {
       var tempList = colorList;
       tempList[index] = "white";
@@ -34,7 +42,8 @@ const InterestPopUp = (props) => {
     }
   }
 
-  function popUpInterestItemClickHandler(currentItem, index, colorList) {
+  // Add item to local copy of the user's interest list
+  const popUpInterestItemClickHandler = (currentItem, index, colorList) => {
     const isPresent = selectedInterests.indexOf(currentItem) > -1;
     var tempList = colorList;
 
@@ -55,18 +64,20 @@ const InterestPopUp = (props) => {
     }
   }
 
+  // Update the MonGO DB interest list of the user
+  // Triggered when the user clicks on 'save changes'
   async function interestPopupCloseHandler() {
     props.setPopupTrigger(false);
     props.setUserInterestList(selectedInterests);
 
-    await Axios.delete("http://localhost:5000/api/userInterests/faisalf4").then(
+    await Axios.delete("http://localhost:5000/api/userInterests/" + props.useremail).then(
       (response) => {
         console.log("User Interest document deleted!");
       }
     );
 
     await Axios.post("http://localhost:5000/api/userInterests/", {
-      username: "faisalf4",
+      email: props.useremail,
       interestList: selectedInterests,
     });
   }
@@ -102,15 +113,12 @@ const InterestPopUp = (props) => {
       <div className="InterestPopup-inner">
         <button
           className="InterestPopupCloseBtn"
-          onClick={(event) => {
-            interestPopupCloseHandler();
-          }}
+          onClick={(event) => {interestPopupCloseHandler();}}
         >
           Save changes
         </button>
 
-        <br />
-        <br />
+        <br /><br />
 
         <div>{globalInterestListUI}</div>
       </div>
@@ -119,6 +127,11 @@ const InterestPopUp = (props) => {
     ""
   );
 };
+
+
+
+
+
 
 const UserInterests = (props) => {
   // Get the user's interests from MongoDB
@@ -136,7 +149,7 @@ const UserInterests = (props) => {
   );
 
   useEffect(() => {
-    Axios.get("http://localhost:5000/api/userInterests/faisalf4")
+    Axios.get("http://localhost:5000/api/userInterests/" + props.useremail)
       .then((response) => {
         // console.log("kikos");
         console.log(response);
@@ -184,13 +197,11 @@ const UserInterests = (props) => {
       </button>
 
       <InterestPopUp
-        popupTrigger={popupTrigger}
-        setPopupTrigger={setPopupTrigger}
-        userInterestList={userInterestList}
-        setUserInterestList={setUserInterestList}
         interestList={props.interestList}
-        interestColorList={interestColorList}
-        setInterestColorList={setInterestColorList}
+        useremail={props.useremail}
+        popupTrigger={popupTrigger} setPopupTrigger={setPopupTrigger}
+        userInterestList={userInterestList} setUserInterestList={setUserInterestList}
+        interestColorList={interestColorList} setInterestColorList={setInterestColorList}   
       />
     </div>
   );

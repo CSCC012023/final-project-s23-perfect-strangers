@@ -22,4 +22,5 @@ router.route('/').post(             // post request used for signup
     }
 )
 
+
 module.exports = router;
