@@ -23,7 +23,7 @@ router.route("/userInterests").get(async (req, res) => {
 // Get userInterest document of one user
 router.route("/userInterests/:username").get(async (req, res) => {
 
-    const userInterestDoc = await InterestModel.find({
+    const userInterestDoc = await InterestModel.find({    // why not findOne??
       username: req.params.username,
     });
     // console.log(req.params.username);

@@ -9,21 +9,10 @@ import UserInterests from "./Interests";
 
 import UserBio from "./UserBio";
 
+import styles from "../styles/common_styles.module.css";
+
 const ProfilePicture = (props) => {
   return <div className="ProfilePicture"></div>;
-};
-
-const DisplayName = (props) => {
-  return <div className="DisplayName">{props.displayName}</div>;
-};
-
-const AgeGender = (props) => {
-  return (
-    <div className="AgeGender">
-      {props.age}, {"           "}
-      {props.gender}
-    </div>
-  );
 };
 
 const BioPage = (props) => {
@@ -52,17 +41,17 @@ const BioPage = (props) => {
 
   return (
     // <div clasName='BioPage'>
-    <div className="BioPage">
-        <div className="page-title">
-            <h1>ACCOUNT</h1>
-        </div>
-
-      <div className="BioPageTop">
+    <div className={styles.rightContainer}>
+      <div className={styles.horizontalContent}>
         <ProfilePicture />
 
-        <div className="BioPageTopRight">
-          <DisplayName displayName={displayName} />
-          <AgeGender age={age} gender={gender} />
+        <div className={styles.verticalContent}>
+          <div className={`${styles.boldtext} ${styles.alignleft}`}>
+            {displayName}
+          </div>
+          <div className={`${styles.smalltext} ${styles.alignleft}`}>
+            {age}, {gender}
+          </div>
           <UserInterests interestList={interestList} />
           <br />
         </div>
