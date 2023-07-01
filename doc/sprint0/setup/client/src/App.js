@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import BioPage from "./components/BioPage";
-
-function App() {
-  return (
-    <div className="App">
-      <BioPage />
-=======
 import React from "react";
 import "./App.css";
 import Sidebar from "./components/Sidebar";
@@ -52,7 +44,6 @@ function App() {
         </Routes>
       </Router>
 
->>>>>>> develop
     </div>
 
   );

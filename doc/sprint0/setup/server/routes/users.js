@@ -36,11 +36,7 @@ router.route("/users/:id").get(async (req, res) => {
 router.route("/biography/:username").get(async (req, res) => {
   try {
     const user = await UserModel.findOne({ username: req.params.username });
-<<<<<<< HEAD
-    console.log(req.params.username);
-=======
     // console.log(req.params.username);
->>>>>>> develop
     res.send(user);
   } catch {
     res.status(404);

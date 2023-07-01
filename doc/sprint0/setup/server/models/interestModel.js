@@ -1,11 +1,7 @@
 const mongoose = require("mongoose");
 
 const interestSchema = new mongoose.Schema({
-<<<<<<< HEAD
-  username: {
-=======
   email: {
->>>>>>> develop
     type: String,
     required: true,
     unique: true,
