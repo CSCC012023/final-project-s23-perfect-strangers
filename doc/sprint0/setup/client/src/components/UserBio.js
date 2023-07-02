@@ -3,9 +3,11 @@ import Button from "react-bootstrap/Button";
 import Axios from "axios";
 import { Text } from "react-native"; // npm install react-native // npm install react-native-web
 
-import "./UserBio.css";
+//import "./UserBio.css";
 
 import Form from "react-bootstrap/Form"; //npm install react-bootstrap
+
+import styles from "../styles/common_styles.module.css";
 
 const UserBio = (props) => {
   const username = props.username;
@@ -45,49 +47,51 @@ const UserBio = (props) => {
   const EditOrAbout = () => {
     if (editAbout) {
       return (
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>
-              <h4>Edit About</h4>
-            </Form.Label>
-            <Form.Control
-              as="textarea"
-              defaultValue={aboutText}
-              type="text"
-              style={{fontSize: 20}}
-              onChange={(e) => setEditedText(e.target.value)}
-              rows={10}
-            />
-          </Form.Group>
-        </Form>
+        <textarea 
+          className={styles.maxInputField}
+          onChange={(e) => setEditedText(e.target.value)} defaultValue={aboutText}></textarea>
       );
     } else {
-      return <Text style={{ color: "white", fontSize: 20 }}>{aboutText}</Text>;
+      return <div className={styles.flexWrappableText}>{aboutText}</div>;
     }
   };
   return (
     <>
-      <div className="AboutMe">
-        <h2><b>About Me</b></h2>
-        <br />
-        <div className="EditSaveButton" style={{ marginLeft: "auto" }}>
-          {editAbout && (
-            <Button
-              variant="light"
+      <div className={styles.verticalContent}>
+      {editAbout && (
+            <div className={styles.horizontalContent}>
+            <div className={styles.flexWrappableText} />
+            <button
+              className={styles.smallPurpleButton}
+              onClick={onEditSaveButtonClick}
+            >
+              Save
+            </button>
+            <button
+              className={styles.smallPurpleButton}
               onClick={() => {
                 setEditAbout(false);
                 setEditedText(aboutText);
               }}
             >
               Cancel Edit
-            </Button>
+            </button>
+            </div>
+            
           )}
-          <Button variant="light" onClick={onEditSaveButtonClick}>
-            {!editAbout ? "Edit" : "Save"}
-          </Button>
-        </div>
+      <div className={styles.horizontalContent}>
+        {EditOrAbout()}
+        {
+            !editAbout && <button 
+            className={styles.smallTransparentButton}
+            onClick={onEditSaveButtonClick}>
+              🖉
+            </button>
+          }
       </div>
-      <div className="EditOrAbout">{EditOrAbout()}</div>
+        
+      </div>
+      
     </>
   );
 };

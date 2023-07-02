@@ -22,7 +22,6 @@ const userDetails = new mongoose.Schema({
             message: 'invalid gender',
         },
         default: ['secret'],
-
     }
 })
 

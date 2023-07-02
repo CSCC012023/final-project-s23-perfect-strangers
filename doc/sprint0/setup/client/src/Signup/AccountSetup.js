@@ -3,12 +3,14 @@ import { useState } from "react";
 import styles from "../styles/common_styles.module.css";
 
 import Axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AccountSetup = ({ accountSetupCallback, email, username }) => {
   // state for age and gender
   const [age, setAge] = useState(18);
   const [gender, setGender] = useState("");
+
+  const navigate = useNavigate();
 
   // function to check age when a user enters it
   const checkAndSetAge = (val) => {
@@ -25,7 +27,8 @@ const AccountSetup = ({ accountSetupCallback, email, username }) => {
       age: age,
       gender: gender,
     }).then((res) => {
-      //console.log(res);
+      console.log(res);
+      navigate(accountSetupCallback, {});
       //accountSetupCallback();
     });
   };
@@ -69,12 +72,12 @@ const AccountSetup = ({ accountSetupCallback, email, username }) => {
             <option value="secret">Prefer not to say</option>
           </select>
         </div>
-
-        <Link to={accountSetupCallback} className={styles.division}>
+        <div className={styles.division}>
           <button type="submit" className={styles.purpleButton}>
             Submit
           </button>
-        </Link>
+        </div>
+          
       </form>
     </div>
   ) : (
