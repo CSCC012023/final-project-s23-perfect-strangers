@@ -74,7 +74,7 @@ const BioPage = (props) => {
           <br />
         </div>
       </div>
-      <UserBio username={userName} />
+      <UserBio useremail={useremail} />
       <div className={styles.line} />
     </div>
   );
