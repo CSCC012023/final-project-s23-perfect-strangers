@@ -26,7 +26,6 @@ const loginRouter = require("./routes/login.routes");
 const usersRouter = require("./routes/users");
 const interestRouter = require("./routes/interests");
 const userEventsRouter = require("./routes/userEvents");
-const requestsRouter = require("./routes/request.routes");
 
 //connect routers
 app.use("/email-auth", emailAuthRouter);
@@ -35,7 +34,6 @@ app.use("/api", interestRouter);
 app.use("/login", loginRouter);
 app.use("/api", usersRouter);
 app.use("/api", userEventsRouter);
-app.use("/requests", requestsRouter);
 /* 
     - If more API_End_Point files (routes) have been added in the routes folder, only need to make changes in this section
     - Currently, routers for only two routes have been set up
