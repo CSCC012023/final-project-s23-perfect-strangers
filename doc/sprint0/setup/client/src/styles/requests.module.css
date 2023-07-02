@@ -1,0 +1,9 @@
+.request {
+    background-color: #AD03DE;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}

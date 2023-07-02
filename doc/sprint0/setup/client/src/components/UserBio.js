@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
 import Axios from "axios";
-import { Text } from "react-native"; // npm install react-native // npm install react-native-web
 
-import "./UserBio.css";
+import styles from "../styles/common_styles.module.css";
 
-import Form from "react-bootstrap/Form"; //npm install react-bootstrap
-
-const UserBio = (props) => {
-  const username = props.username;
-  const url = "http://localhost:5000/api/";
+const UserBio = ({ useremail }) => {
+  const url = "http://localhost:5000/user-details/biography/";
+  const maxChar = 200;
   let [aboutText, setAboutText] = useState("");
   let [editedText, setEditedText] = useState(aboutText);
   let [editAbout, setEditAbout] = useState(false);
@@ -18,8 +14,8 @@ const UserBio = (props) => {
     if (editAbout) {
       setAboutText(editedText);
 
-      Axios.post(url + "biography/", {
-        username: username,
+      Axios.post(url, {
+        useremail: useremail,
         biography: editedText,
       })
         .then((response) => {
@@ -34,7 +30,7 @@ const UserBio = (props) => {
   }
 
   useEffect(() => {
-    Axios.get(url + "biography/" + username)
+    Axios.get(url + useremail)
       .then((response) => {
         setAboutText(response.data.biography);
         console.log(response);
@@ -45,49 +41,52 @@ const UserBio = (props) => {
   const EditOrAbout = () => {
     if (editAbout) {
       return (
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>
-              <h4>Edit About</h4>
-            </Form.Label>
-            <Form.Control
-              as="textarea"
-              defaultValue={aboutText}
-              type="text"
-              style={{fontSize: 20}}
-              onChange={(e) => setEditedText(e.target.value)}
-              rows={10}
-            />
-          </Form.Group>
-        </Form>
+        <textarea
+          maxlength="200"
+          className={styles.maxInputField}
+          onChange={(e) => setEditedText(e.target.value)}
+          defaultValue={aboutText}
+        ></textarea>
       );
     } else {
-      return <Text style={{ color: "white", fontSize: 20 }}>{aboutText}</Text>;
+      return <div className={styles.flexWrappableText}>{aboutText}</div>;
     }
   };
   return (
     <>
-      <div className="AboutMe">
-        <h2><b>About Me</b></h2>
-        <br />
-        <div className="EditSaveButton" style={{ marginLeft: "auto" }}>
-          {editAbout && (
-            <Button
-              variant="light"
+      <div className={styles.verticalContent}>
+        {editAbout && (
+          <div className={styles.horizontalContent}>
+            <div className={styles.flexWrappableText}>Edit About</div>
+            <button
+              className={styles.smallPurpleButton}
+              onClick={onEditSaveButtonClick}
+            >
+              Save
+            </button>
+            <button
+              className={styles.smallPurpleButton}
               onClick={() => {
                 setEditAbout(false);
                 setEditedText(aboutText);
               }}
             >
               Cancel Edit
-            </Button>
+            </button>
+          </div>
+        )}
+        <div className={styles.horizontalContent}>
+          {EditOrAbout()}
+          {!editAbout && (
+            <button
+              className={styles.smallTransparentButton}
+              onClick={onEditSaveButtonClick}
+            >
+              🖉
+            </button>
           )}
-          <Button variant="light" onClick={onEditSaveButtonClick}>
-            {!editAbout ? "Edit" : "Save"}
-          </Button>
         </div>
       </div>
-      <div className="EditOrAbout">{EditOrAbout()}</div>
     </>
   );
 };
