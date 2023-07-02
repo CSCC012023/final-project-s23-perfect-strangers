@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
+//import Button from "react-bootstrap/Button";
 import Axios from "axios";
-import { Text } from "react-native"; // npm install react-native // npm install react-native-web
+//import { Text } from "react-native"; // npm install react-native // npm install react-native-web
 
 //import "./UserBio.css";
 
-import Form from "react-bootstrap/Form"; //npm install react-bootstrap
+//import Form from "react-bootstrap/Form"; //npm install react-bootstrap
 
 import styles from "../styles/common_styles.module.css";
 
@@ -60,7 +60,7 @@ const UserBio = (props) => {
       <div className={styles.verticalContent}>
       {editAbout && (
             <div className={styles.horizontalContent}>
-            <div className={styles.flexWrappableText} />
+            <div className={styles.flexWrappableText}>Edit About</div>
             <button
               className={styles.smallPurpleButton}
               onClick={onEditSaveButtonClick}

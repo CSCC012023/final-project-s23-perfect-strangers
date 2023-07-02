@@ -58,6 +58,7 @@ const BioPage = (props) => {
         </div>
       </div>
       <UserBio username={userName} />
+      <div className={styles.line} />
     </div>
   );
 };
