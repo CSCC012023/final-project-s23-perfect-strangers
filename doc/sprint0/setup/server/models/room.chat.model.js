@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-let ChatModel = require("./chat.model");
+// let ChatModel = require("./chat.model");
 
 const roomSchema = new mongoose.Schema({
     participants: {
@@ -15,15 +15,15 @@ const roomSchema = new mongoose.Schema({
         unique: true,
     },
     chatHistory: {
-        type: [ChatModel],
+        type: Array,
         default: [],
         required: true,
     },
 });
 
 
-trk : { type : Array , "default" : [] }
+// trk : { type : Array , "default" : [] }
 
 const RoomModel = mongoose.model("chatrooms", roomSchema);
 module.exports = RoomModel;
-module.exports = CgatModel;
+// module.exports = CgatModel;

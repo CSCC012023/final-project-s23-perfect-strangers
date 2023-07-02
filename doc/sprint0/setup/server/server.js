@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 
-// Need this because socket server can be directlylinked to socketv servers
+// Need this because socket server can be directly linked to socketv servers
 
 
 const http = require('http');
@@ -23,9 +23,9 @@ const io = new Server(httpServer, {
   }
 }); // Link the socket server to our http server // Socket server
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + '/index.html'); // make backend tunnel
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(__dirname + '/index.html'); // make backend tunnel
+// });
 
 const sockets_bioler_plate = (socket) => {
     
@@ -61,32 +61,33 @@ io.on("connection", sockets_bioler_plate);
 
 
 
-// app.use(cors());
-// app.use(express.json());
+app.use(cors());
+app.use(express.json());
 
-// const dbUri = process.env.ATLAS_URI;
-// mongoose.connect(dbUri);
+const dbUri = process.env.ATLAS_URI;
+mongoose.connect(dbUri);
 
-// const connection = mongoose.connection;
-// connection.once("open", () => {
-//   console.log("MongoDB connection established");
-// });
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log("MongoDB connection established");
+});
 
 // //define routers
-// const emailAuthRouter = require("./routes/emailAuth.routes");
-// const userDetailsRouter = require("./routes/userDetails.routes");
-// const loginRouter = require("./routes/login.routes");
-// const usersRouter = require("./routes/users");
-// const interestRouter = require("./routes/interests");
-// const userEventsRouter = require("./routes/userEvents");
-
+const emailAuthRouter = require("./routes/emailAuth.routes");
+const userDetailsRouter = require("./routes/userDetails.routes");
+const loginRouter = require("./routes/login.routes");
+const usersRouter = require("./routes/users");
+const interestRouter = require("./routes/interests");
+const userEventsRouter = require("./routes/userEvents");
+const chatRouter = require("./routes/room.chat.routes");
+app.use("/api", chatRouter);
 // //connect routers
-// app.use("/email-auth", emailAuthRouter);
-// app.use("/user-details", userDetailsRouter);
-// app.use("/api", interestRouter);
-// app.use("/login", loginRouter);
-// app.use("/api", usersRouter);
-// app.use("/api", userEventsRouter);
+app.use("/email-auth", emailAuthRouter);
+app.use("/user-details", userDetailsRouter);
+app.use("/api", interestRouter);
+app.use("/login", loginRouter);
+app.use("/api", usersRouter);
+app.use("/api", userEventsRouter);
 // /* 
 //     - If more API_End_Point files (routes) have been added in the routes folder, only need to make changes in this section
 //     - Currently, routers for only two routes have been set up
@@ -94,14 +95,14 @@ io.on("connection", sockets_bioler_plate);
 // */
 
 // //
-// app.use(
-//   session({
-//     secret: "keyboard cat",
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: true },
-//   })
-// );
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
 
 httpServer.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

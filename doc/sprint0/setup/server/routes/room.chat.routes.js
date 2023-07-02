@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-let ChatModel = require('../models/room.chat.model');
+// let ChatModel = require('../models/room.chat.model');
 let RoomModel = require('../models/chat.model');
 
 
@@ -23,13 +23,14 @@ router.route("/chatrooms/:roomID").get(async (req, res) => {
 // Post a chatRoom
 router.route("/chatrooms").post(async (req, res) => {
 
-  
-    const newRoomDoc = new InterestModel({
+    const newRoomDoc = new RoomModel({
       chatHistory: req.body.chatHistory,
       participants: req.body.partipants,
       roomID: req.body.roomID
     });
   
+    console.log("I am here");
+    
     const currentDatabaseRooms = await RoomModel.find({
       roomID: req.body.roomID,
     });
@@ -39,7 +40,7 @@ router.route("/chatrooms").post(async (req, res) => {
       console.log("chat room document posted");
       res.send(newRoomDoc);
     } else {
-      // res.status(400);
+      res.status(400);
       // res.send({error: "Interest already exists in database"});
       console.log("Room already exists in database");
     }
