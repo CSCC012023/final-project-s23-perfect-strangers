@@ -7,6 +7,7 @@ import { useEffect } from "react";
 //import { IconContext } from "react-icons"; // npm install react-icons --save
 //import { CiEdit } from "react-icons/ci";
 import Axios from "axios";
+
 //import "./Interests.css";
 //import "reactjs-popup/dist/index.css"; // npm i reactjs-popup
 
@@ -21,6 +22,7 @@ const InterestPopUp =
     setUserInterestList,
     popupTrigger,
     setPopupTrigger,
+    useremail
   }) => {
 
   //const [, forceUpdate] = useReducer((x) => x + 1, 0);    // why?
@@ -30,6 +32,7 @@ const InterestPopUp =
   */
 
   /* function changeInterestColorToPurple(colorList, index) {
+
     if (colorList[index] !== "#B14EFF") {
       var tempList = colorList;
       tempList[index] = "#B14EFE";
@@ -38,7 +41,7 @@ const InterestPopUp =
     }
   }
 
-  function changeInterestColorToWhite(colorList, index) {
+  const  changeInterestColorToWhite = (colorList, index) => {
     if (colorList[index] !== "#B14EFF") {
       var tempList = colorList;
       tempList[index] = "white";
@@ -47,7 +50,8 @@ const InterestPopUp =
     }
   }
 
-  function popUpInterestItemClickHandler(currentItem, index, colorList) {
+  // Add item to local copy of the user's interest list
+  const popUpInterestItemClickHandler = (currentItem, index, colorList) => {
     const isPresent = selectedInterests.indexOf(currentItem) > -1;
     var tempList = colorList;
 
@@ -79,18 +83,21 @@ const InterestPopUp =
     }
   } 
 
+
   async function interestPopupCloseHandler() {  // function to handle closing of popup
     setPopupTrigger(false);
 
-    await Axios.delete("http://localhost:5000/api/userInterests/faisalf4").then(
+
+    await Axios.delete("http://localhost:5000/api/userInterests/" + props.useremail).then(
       (response) => {
         console.log("User Interest document deleted!");
       }
     );
 
     await Axios.post("http://localhost:5000/api/userInterests/", {
-      username: "faisalf4",
-      interestList: userInterestList,
+
+      email: useremail,
+      interestList: selectedInterests,
     });
   }
 
@@ -129,6 +136,7 @@ const InterestPopUp =
     }
   );
 
+
   return popupTrigger ? (
     <div className={styles.popupbg}>
       <div className={styles.popup}>
@@ -145,6 +153,7 @@ const InterestPopUp =
 
         <br />
 
+
         <div className={styles.wrapContainer}>{globalInterestListUI}</div>
       </div>
     </div>
@@ -153,7 +162,9 @@ const InterestPopUp =
   );
 };
 
-const UserInterests = ({interestList}) => {
+
+const UserInterests = ({interestList, useremail}) => {
+
   // Get the user's interests from MongoDB
   // Limit to a maximum of 5 interests
   const [userInterestList, setUserInterestList] = useState([]);
@@ -171,7 +182,7 @@ const UserInterests = ({interestList}) => {
   */
 
   useEffect(() => {
-    Axios.get("http://localhost:5000/api/userInterests/faisalf4")
+    Axios.get("http://localhost:5000/api/userInterests/" + props.useremail)
       .then((response) => {
         // console.log("kikos");
         console.log(response);
@@ -229,11 +240,14 @@ const UserInterests = ({interestList}) => {
       </button>
 
       <InterestPopUp
+
         interestList={interestList}
         userInterestList={userInterestList}
         setUserInterestList={setUserInterestList}
         popupTrigger={popupTrigger}
         setPopupTrigger={setPopupTrigger}
+        useremail={useremail}
+
       />
     </div>
   );
