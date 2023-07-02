@@ -10,6 +10,7 @@ router.route("/userInterests").get(async (req, res) => {
 // Get userInterest document of one user
 router.route("/userInterests/:email").get(async (req, res) => {
 
+
     const userInterestDoc = await InterestModel.find({
       email: req.params.email,
     });

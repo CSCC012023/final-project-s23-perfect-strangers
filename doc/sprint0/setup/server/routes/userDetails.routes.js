@@ -5,6 +5,7 @@ router.route('/').post(
     (req, res) => {
         const newUserDetails = new UserDetailsModel({
             email: req.body.email,
+            username: req.body.username,
             age: req.body.age,
             gender: req.body.gender,
         })
