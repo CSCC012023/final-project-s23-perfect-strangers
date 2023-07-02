@@ -9,6 +9,12 @@ const userDetails = new mongoose.Schema({
         required: [true, 'Email address is required'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
     },
+    username: {
+        type: String,
+        trim: true,
+        required: [true, 'Username is required'],
+        minLength: [2, 'Username too short'],
+    },
     age: {
         type: Number,
         min: 18,

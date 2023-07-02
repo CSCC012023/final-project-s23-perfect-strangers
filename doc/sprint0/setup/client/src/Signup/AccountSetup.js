@@ -24,6 +24,7 @@ const AccountSetup = ({ accountSetupCallback, email, username }) => {
     e.preventDefault();
     Axios.post("http://localhost:5000/user-details/", {
       email: email,
+      username: username,
       age: age,
       gender: gender,
     }).then((res) => {
