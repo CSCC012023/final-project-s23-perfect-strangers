@@ -88,7 +88,7 @@ const InterestPopUp =
     setPopupTrigger(false);
 
 
-    await Axios.delete("http://localhost:5000/api/userInterests/" + props.useremail).then(
+    await Axios.delete("http://localhost:5000/api/userInterests/" + useremail).then(
       (response) => {
         console.log("User Interest document deleted!");
       }
@@ -97,7 +97,7 @@ const InterestPopUp =
     await Axios.post("http://localhost:5000/api/userInterests/", {
 
       email: useremail,
-      interestList: selectedInterests,
+      interestList: userInterestList,
     });
   }
 
@@ -182,7 +182,7 @@ const UserInterests = ({interestList, useremail}) => {
   */
 
   useEffect(() => {
-    Axios.get("http://localhost:5000/api/userInterests/" + props.useremail)
+    Axios.get("http://localhost:5000/api/userInterests/" + useremail)
       .then((response) => {
         // console.log("kikos");
         console.log(response);
