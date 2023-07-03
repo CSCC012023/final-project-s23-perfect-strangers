@@ -8,20 +8,70 @@ function RequestsSent() {
       </div>
       <ul className={styles.unorderedList}>
         <li className={styles.requestSentCard}>
-          <div className={styles.container}>
+          <div className={styles.requestSentCardContent}>
             <h4>
-              <b>John Doe</b>
+              <b>Event Name</b>
             </h4>
-            <p>Architect & Engineer</p>
+            <p>Event Date</p>
+            <p>Location</p>
+            <p>When</p>
           </div>
+          <div className={styles.requestCardStatus}>Request Status</div>
         </li>
         <li className={styles.requestSentCard}>
-          <div className={styles.container}>
+          <div className={styles.requestSentCardContent}>
             <h4>
-              <b>Deo John</b>
+              <b>Event Name</b>
             </h4>
-            <p>Architect & Engineer</p>
+            <p>Event Date</p>
+            <p>Location</p>
+            <p>When</p>
           </div>
+          <div className={styles.requestCardStatus}>Request Status</div>
+        </li>
+        <li className={styles.requestSentCard}>
+          <div className={styles.requestSentCardContent}>
+            <h4>
+              <b>Event Name</b>
+            </h4>
+            <p>Event Date</p>
+            <p>Location</p>
+            <p>When</p>
+          </div>
+          <div className={styles.requestCardStatus}>Request Status</div>
+        </li>
+        <li className={styles.requestSentCard}>
+          <div className={styles.requestSentCardContent}>
+            <h4>
+              <b>Event Name</b>
+            </h4>
+            <p>Event Date</p>
+            <p>Location</p>
+            <p>When</p>
+          </div>
+          <div className={styles.requestCardStatus}>Request Status</div>
+        </li>
+        <li className={styles.requestSentCard}>
+          <div className={styles.requestSentCardContent}>
+            <h4>
+              <b>Event Name</b>
+            </h4>
+            <p>Event Date</p>
+            <p>Location</p>
+            <p>When</p>
+          </div>
+          <div className={styles.requestCardStatus}>Request Status</div>
+        </li>
+        <li className={styles.requestSentCard}>
+          <div className={styles.requestSentCardContent}>
+            <h4>
+              <b>Event Name</b>
+            </h4>
+            <p>Event Date</p>
+            <p>Location</p>
+            <p>When</p>
+          </div>
+          <div className={styles.requestCardStatus}>Request Status</div>
         </li>
       </ul>
     </div>
