@@ -19,7 +19,6 @@ body {
 /* basic container class for parent div of a page */
 .rightContainer {
     background-color: #1e1e1e;
-    text-align: center;
     position: absolute;
     top: 0;
     right: 0;
@@ -366,4 +365,28 @@ body {
 
 .transparentButton:hover {
     background-color: #3e3e3e;
+}
+
+.unorderedList {
+    background-color: transparent;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.requestSentCard {
+    display: flex;
+    padding-bottom: 20px;
+    border: 1px dashed white;
+    flex-direction: column;
+    visibility: visible;
+    align-items: inherit;
+    position: relative;
+    opacity: 1;
+    transition: visibility .4s ease-in,opacity .4s ease-in;
+    color:#FFFFFF;
+}
+
+.container {
+    /* align-items: center; */
 }

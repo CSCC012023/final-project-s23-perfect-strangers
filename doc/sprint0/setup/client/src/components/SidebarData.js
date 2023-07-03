@@ -10,6 +10,11 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
+    title: "Requests Sent",
+    path: "/requests-sent",
+    cName: "nav-text",
+  },
+  {
     title: "Account",
     path: "/bio-page",
     cName: "nav-text",
