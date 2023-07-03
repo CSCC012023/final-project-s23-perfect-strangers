@@ -5,6 +5,10 @@ import styles from "../styles/common_styles.module.css";
 
 import { Link } from "react-router-dom";
 
+import { Icon } from 'react-icons-kit'
+import {eye} from 'react-icons-kit/ionicons/eye'
+import {eyeDisabled} from 'react-icons-kit/ionicons/eyeDisabled'
+
 const Signup = ({ signedUpCallback, loginRedirect }) => {
   // signedUpCallBack = (JSON object) => {...do stuff, doesn't care for the return value}
   // signedUpCallBack is a function passed to Signup as a prop
@@ -24,12 +28,25 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
   const [username, setUsername] = useState("");
   const [cantSignUp, setCantSignUp] = useState(false);
   const [Msg, setMsg] = useState("Sign Up"); // state for the content of the sign in button
+  const [visible, setVisible] = useState(false);
+  const [pwdIcon, setIcon] = useState(eye);
 
   const throwErrMsg = (emsg) => {
     // when user enters invalid info, this function is called
     setCantSignUp(true); // it changes the Signup button to display the error msg
     setMsg(emsg);
   };
+
+  const handleVisible=()=>{
+    if (visible){
+      setVisible(false);
+      setIcon(eye);
+    }
+    else{
+      setVisible(true);
+      setIcon(eyeDisabled);
+    }
+  }
 
   const onSubmit = (event) => {
     // called when the form is submitted
@@ -101,14 +118,18 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
           />
         </div>
         <div className={styles.division}>
-          <input
-            type="text"
-            value={password}
-            placeholder="Password"
-            disabled={cantSignUp}
-            onChange={(e) => setPassword(e.target.value)}
-            className={styles.inputField}
-          />
+          <div className={styles.inputWrapper}>
+            <input
+              type={visible ? "text" : "password"}
+              value={password}
+              placeholder="Password"
+              disabled={cantSignUp}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.inputField}
+            />
+            <i onClick={handleVisible}>
+              <Icon icon={pwdIcon} size={35}/></i>
+          </div>
         </div>
         <div className={styles.division}>
           <input
