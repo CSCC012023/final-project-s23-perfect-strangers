@@ -58,7 +58,7 @@ router.route('/by/:requester').get(
 /* 
     //example usage
 
-    Axios.get("http://localhost:5000/requests/for/requestee@mail.com", {})
+    Axios.get("http://localhost:5000/requests/for/requestee_id", {})
     .then(res => {
         // do stuff...
     })
@@ -83,7 +83,7 @@ router.route('/for/:requestee').get(
 /* 
     //example usage
 
-    Axios.get("http://localhost:5000/requests/event/rand_event_id", {})
+    Axios.get("http://localhost:5000/requests/event/event_id", {})
     .then(res => {
         // do stuff...
     })
@@ -134,6 +134,12 @@ router.route('/search').post(
 
 // DELETE REQUEST: delete a request object by its _id
 /* 
+    //example usage
+
+    Axios.post("http://localhost:5000/requests/delete/request_id")
+    .then(res => {
+        // do stuff...
+    })
  */
 router.route('/delete/:_id').delete(
     (req, res) => {

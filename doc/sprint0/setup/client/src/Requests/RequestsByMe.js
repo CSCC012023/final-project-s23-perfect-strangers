@@ -4,16 +4,19 @@ import RequestItemByMe from "./RequestItemByMe";
 import Axios from "axios";
 
 import styles from "../styles/common_styles.module.css";
+import jwtDecode from "jwt-decode";
 
-const RequestsByMe = ({email}) => {
+const RequestsByMe = () => {
+
+    const token = jwtDecode(localStorage.getItem('token'));
+    console.log(token);
 
     const [requests, setRequests] = useState([]);
 
     useEffect(() => {
-        Axios.post("http://localhost:5000/requests/search", {
-            requester: email
-        }).then(res => {
-            setRequests(res.data)
+        Axios.get("http://localhost:5000/requests/by/" + token.id).then(res => {
+            setRequests(res.data);
+            console.log(res.data);
         }).catch(err => console.log(err));
     }, []);
 
