@@ -122,6 +122,7 @@ router.route('/event/:event').get(
         // do stuff...
     })
 
+
 router.route('/search').post(
     (req, res) => {
         //console.log(req.body.requester);
