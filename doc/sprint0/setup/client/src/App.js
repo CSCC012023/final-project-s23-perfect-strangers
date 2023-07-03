@@ -10,6 +10,8 @@ import CreateEvents from "./pages/CreateEvents";
 import SignupHub from "./Signup/SignupHub";
 import Login from "./Login/Login";
 import ExamplePage from "./ExamplePage/ExamplePage";
+import RequestsPage from "./Requests/RequestsPage";
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -41,6 +43,7 @@ function App() {
             }
           />
           <Route path="/examplepage" element={<ExamplePage />} />
+          <Route path="/requests" element={<RequestsPage /> } />
         </Routes>
       </Router>
 

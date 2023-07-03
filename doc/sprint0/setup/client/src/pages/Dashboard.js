@@ -42,6 +42,7 @@ function Dashboard() {
         {events &&
           events.map((event) => (
             <>
+              <div style={{margin: "10px"}}>
               <div key={event._id} className={eventStyles.eventDetails}>
                 <div className={eventStyles.eventPhoto}>
                   <p>Photo</p>
@@ -54,6 +55,8 @@ function Dashboard() {
 
                 </div>
               </div>
+              </div>
+              
               <br></br>
             </>
           ))}

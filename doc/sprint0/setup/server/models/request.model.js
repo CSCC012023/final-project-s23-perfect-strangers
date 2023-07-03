@@ -2,18 +2,9 @@ const mongoose = require('mongoose');
 
 const request = new mongoose.Schema({
     requester: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        required: [true, 'Requester email address is required'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
-    },
-    requestee: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        required: [true, 'Requestee email address is required'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, 'Requester info is required'],
+        ref: 'user-details',
     },
     status: {
         type: String,
@@ -22,11 +13,12 @@ const request = new mongoose.Schema({
             values: ['pending', 'accepted', 'rejected'],
             message: 'invalid status',
         },
-        default: ['pending'],
+        default: 'pending',
     },
-    event_id: {
-        type: String,
-        required: [true, 'Event is required'],
+    event: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, 'Event info is required'],
+        ref: 'userevents',
     }
 })
 

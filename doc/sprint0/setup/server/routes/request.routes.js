@@ -6,9 +6,8 @@ let RequestModel = require('../models/request.model');
     //example usage
 
     Axios.post("http://localhost:5000/requests/", {
-        requester: requester@mail.com
-        requestee: requestee@mail.com
-        event_id: rand_event_id
+        requester: rand_email_id
+        event: rand_event_id
     })
     .then(res => {
         // do stuff...
@@ -18,13 +17,12 @@ router.route('/').post(
     (req, res) => {
         const newRequest = new RequestModel({
             requester: req.body.requester,
-            requestee: req.body.requestee,
             status: 'pending',
-            event_id: req.body.event_id
+            event: req.body.event
         })
 
         newRequest.save()
-        .then(() => res.json({msg: 'request created'}))
+        .then(() => res.status(201).json({msg: 'request created'}))
         .catch(err => {
             res.json({msg: "request was not created", err: err})
         })
@@ -35,9 +33,9 @@ router.route('/').post(
 
 // GET REQUEST: get a list of requests by who issued them
 /* 
-    //example usage
+    //example usage (take requester_id from the session token)
 
-    Axios.get("http://localhost:5000/requests/by/requester@mail.com", {})
+    Axios.get("http://localhost:5000/requests/by/requester_id", {})
     .then(res => {
         // do stuff...
     })
@@ -45,7 +43,11 @@ router.route('/').post(
 router.route('/by/:requester').get(
     (req, res) => {
         RequestModel.find({requester: req.params.requester})
-        .then(r => res.json(r))
+        .populate(['requester', {
+            path: 'event',
+            populate: {path: 'creator'}
+        }])
+        .then(r => res.status(202).json(r))
         .catch(err => res.json({err: err}))
     }
 )
@@ -63,8 +65,14 @@ router.route('/by/:requester').get(
 */
 router.route('/for/:requestee').get(
     (req, res) => {
-        RequestModel.find({requestee: req.params.requestee})
-        .then(r => res.json(r))
+        RequestModel.find()
+        .populate(['requestor', {
+            path: 'event',
+            populate: {path: 'creator'}
+        }])
+        .then(r => res.status(202).json(
+            r.filter(request => request.event.creator._id === req.params.requestee)
+        )) // remove unmatched requests
         .catch(err => res.json({err: err}))
     }
 )
@@ -80,21 +88,25 @@ router.route('/for/:requestee').get(
         // do stuff...
     })
 */
-router.route('/event/:event_id').get(
+router.route('/event/:event').get(
     (req, res) => {
-        RequestModel.find({event_id: req.params.event_id})
-        .then(r => res.json(r))
+        RequestModel.find({event: req.params.event})
+        .populate(['requester', {
+            path: 'event',
+            populate: {path: 'creator'}
+        }])
+        .then(r => res.status(202).json(r))
         .catch(err => res.json({err: err}))
     }
 )
 
-
-
-// GET REQUEST: get a list of requests based on a filter passed in the body
 /* 
+
+// POST REQUEST: get a list of requests based on a filter passed in the body
+
     //example usage
 
-    Axios.get("http://localhost:5000/requests/search", {
+    Axios.post("http://localhost:5000/requests/search", {
         requester: requester@mail.com
         requestee: requestss@mail.com
         event_id: rand_email_id
@@ -104,16 +116,30 @@ router.route('/event/:event_id').get(
 
     // all filters are optional, here's another example
 
-    Axios.get("http://localhost:5000/requests/search", {
+    Axios.post("http://localhost:5000/requests/search", {
         requester: requester@mail.com
     }).then(res => {
         // do stuff...
     })
-*/
-router.route('/search').get(
+
+router.route('/search').post(
     (req, res) => {
+        //console.log(req.body.requester);
         RequestModel.find(req.body)
-        .then(r => res.json(r))
+        .then(r => res.status(202).json(r))
+        .catch(err => res.json({err: err}))
+    }
+)
+ */
+
+// DELETE REQUEST: delete a request object by its _id
+/* 
+ */
+router.route('/delete/:_id').delete(
+    (req, res) => {
+        //console.log(req.body.requester);
+        RequestModel.deleteOne({_id: req.params._id})
+        .then(r => res.status(203).json(r))
         .catch(err => res.json({err: err}))
     }
 )
