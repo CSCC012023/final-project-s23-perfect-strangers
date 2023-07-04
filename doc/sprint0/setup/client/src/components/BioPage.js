@@ -13,6 +13,7 @@ import UserBio from "./UserBio";
 
 import styles from "../styles/common_styles.module.css";
 import bioPageStyles from "../styles/bio_page.module.css";
+import UserCreatedEvents from "./UserCreatedEvents";
 
 const ProfilePicture = (props) => {
   return <div className={bioPageStyles.ProfilePicture}></div>;

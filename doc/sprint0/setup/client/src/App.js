@@ -13,6 +13,7 @@ import ExamplePage from "./ExamplePage/ExamplePage";
 import RequestsPage from "./Requests/RequestsPage";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import UserCreatedEvents from "./components/UserCreatedEvents";
 
 function App() {
   return (
