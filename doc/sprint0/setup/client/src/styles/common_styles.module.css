@@ -382,3 +382,7 @@ body {
 .transparentButton:hover {
     background-color: #3e3e3e;
 }
+
+::-ms-reveal {
+    display: none;
+}
