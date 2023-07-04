@@ -12,6 +12,7 @@ function Dashboard() {
   useEffect(() => {
     Axios.get("http://localhost:5000/api/userevents").then((response) => {
       setEvents(response.data);
+      console.log(response.data);
     });
   }, []);
   return (
