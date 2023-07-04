@@ -4,14 +4,14 @@
     padding-left: 10px;
     border-radius: 5px;
     display: inline-block;
-    margin: 10px;
+    border-width: 0;
 }
 
-.eventPhoto{
-    float: left ;
-    width: 100px ;
-    background-color: #df6cff ;
-    margin-top: 50px ;
-    height: 100px ;
-    text-align: center ;
+.eventPhoto {
+    float: left;
+    width: 100px;
+    background-color: #df6cff;
+    margin-top: 50px;
+    height: 100px;
+    text-align: center;
 }
