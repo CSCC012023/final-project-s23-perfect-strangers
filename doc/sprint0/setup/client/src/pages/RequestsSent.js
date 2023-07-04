@@ -1,4 +1,6 @@
 import styles from "../styles/common_styles.module.css";
+import requestSentStyles from "../styles/RequestsSent.module.css";
+
 function RequestsSent() {
   const requestSent = [];
   return (
@@ -6,9 +8,12 @@ function RequestsSent() {
       <div className={styles.horizontalContent}>
         <div className={styles.squishHeading}>Requests Sent</div>
       </div>
-      <ul className={styles.unorderedList}>
-        <li className={styles.requestSentCard}>
-          <div className={styles.requestSentCardContent}>
+      <ul className={requestSentStyles.unorderedList}>
+        <li className={requestSentStyles.requestSentCard}>
+          <div className={requestSentStyles.eventPhoto}>
+            <p>Photo</p>
+          </div>
+          <div className={requestSentStyles.requestSentCardContent}>
             <h4>
               <b>Event Name</b>
             </h4>
@@ -16,10 +21,15 @@ function RequestsSent() {
             <p>Location</p>
             <p>When</p>
           </div>
-          <div className={styles.requestCardStatus}>Request Status</div>
+          <div className={requestSentStyles.requestCardStatus}>
+            Request Status
+          </div>
         </li>
-        <li className={styles.requestSentCard}>
-          <div className={styles.requestSentCardContent}>
+        <li className={requestSentStyles.requestSentCard}>
+          <div className={requestSentStyles.eventPhoto}>
+            <p>Photo</p>
+          </div>
+          <div className={requestSentStyles.requestSentCardContent}>
             <h4>
               <b>Event Name</b>
             </h4>
@@ -27,10 +37,15 @@ function RequestsSent() {
             <p>Location</p>
             <p>When</p>
           </div>
-          <div className={styles.requestCardStatus}>Request Status</div>
+          <div className={requestSentStyles.requestCardStatus}>
+            Request Status
+          </div>
         </li>
-        <li className={styles.requestSentCard}>
-          <div className={styles.requestSentCardContent}>
+        <li className={requestSentStyles.requestSentCard}>
+          <div className={requestSentStyles.eventPhoto}>
+            <p>Photo</p>
+          </div>
+          <div className={requestSentStyles.requestSentCardContent}>
             <h4>
               <b>Event Name</b>
             </h4>
@@ -38,10 +53,15 @@ function RequestsSent() {
             <p>Location</p>
             <p>When</p>
           </div>
-          <div className={styles.requestCardStatus}>Request Status</div>
+          <div className={requestSentStyles.requestCardStatus}>
+            Request Status
+          </div>
         </li>
-        <li className={styles.requestSentCard}>
-          <div className={styles.requestSentCardContent}>
+        <li className={requestSentStyles.requestSentCard}>
+          <div className={requestSentStyles.eventPhoto}>
+            <p>Photo</p>
+          </div>
+          <div className={requestSentStyles.requestSentCardContent}>
             <h4>
               <b>Event Name</b>
             </h4>
@@ -49,10 +69,15 @@ function RequestsSent() {
             <p>Location</p>
             <p>When</p>
           </div>
-          <div className={styles.requestCardStatus}>Request Status</div>
+          <div className={requestSentStyles.requestCardStatus}>
+            Request Status
+          </div>
         </li>
-        <li className={styles.requestSentCard}>
-          <div className={styles.requestSentCardContent}>
+        <li className={requestSentStyles.requestSentCard}>
+          <div className={requestSentStyles.eventPhoto}>
+            <p>Photo</p>
+          </div>
+          <div className={requestSentStyles.requestSentCardContent}>
             <h4>
               <b>Event Name</b>
             </h4>
@@ -60,10 +85,15 @@ function RequestsSent() {
             <p>Location</p>
             <p>When</p>
           </div>
-          <div className={styles.requestCardStatus}>Request Status</div>
+          <div className={requestSentStyles.requestCardStatus}>
+            Request Status
+          </div>
         </li>
-        <li className={styles.requestSentCard}>
-          <div className={styles.requestSentCardContent}>
+        <li className={requestSentStyles.requestSentCard}>
+          <div className={requestSentStyles.eventPhoto}>
+            <p>Photo</p>
+          </div>
+          <div className={requestSentStyles.requestSentCardContent}>
             <h4>
               <b>Event Name</b>
             </h4>
@@ -71,7 +101,9 @@ function RequestsSent() {
             <p>Location</p>
             <p>When</p>
           </div>
-          <div className={styles.requestCardStatus}>Request Status</div>
+          <div className={requestSentStyles.requestCardStatus}>
+            Request Status
+          </div>
         </li>
       </ul>
     </div>
