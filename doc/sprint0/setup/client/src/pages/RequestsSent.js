@@ -9,102 +9,24 @@ function RequestsSent() {
         <div className={styles.squishHeading}>Requests Sent</div>
       </div>
       <ul className={requestSentStyles.unorderedList}>
-        <li className={requestSentStyles.requestSentCard}>
-          <div className={requestSentStyles.eventPhoto}>
-            <p>Photo</p>
-          </div>
-          <div className={requestSentStyles.requestSentCardContent}>
-            <h4>
-              <b>Event Name</b>
-            </h4>
-            <p>Event Date</p>
-            <p>Location</p>
-            <p>When</p>
-          </div>
-          <div className={requestSentStyles.requestCardStatus}>
-            Request Status
-          </div>
-        </li>
-        <li className={requestSentStyles.requestSentCard}>
-          <div className={requestSentStyles.eventPhoto}>
-            <p>Photo</p>
-          </div>
-          <div className={requestSentStyles.requestSentCardContent}>
-            <h4>
-              <b>Event Name</b>
-            </h4>
-            <p>Event Date</p>
-            <p>Location</p>
-            <p>When</p>
-          </div>
-          <div className={requestSentStyles.requestCardStatus}>
-            Request Status
-          </div>
-        </li>
-        <li className={requestSentStyles.requestSentCard}>
-          <div className={requestSentStyles.eventPhoto}>
-            <p>Photo</p>
-          </div>
-          <div className={requestSentStyles.requestSentCardContent}>
-            <h4>
-              <b>Event Name</b>
-            </h4>
-            <p>Event Date</p>
-            <p>Location</p>
-            <p>When</p>
-          </div>
-          <div className={requestSentStyles.requestCardStatus}>
-            Request Status
-          </div>
-        </li>
-        <li className={requestSentStyles.requestSentCard}>
-          <div className={requestSentStyles.eventPhoto}>
-            <p>Photo</p>
-          </div>
-          <div className={requestSentStyles.requestSentCardContent}>
-            <h4>
-              <b>Event Name</b>
-            </h4>
-            <p>Event Date</p>
-            <p>Location</p>
-            <p>When</p>
-          </div>
-          <div className={requestSentStyles.requestCardStatus}>
-            Request Status
-          </div>
-        </li>
-        <li className={requestSentStyles.requestSentCard}>
-          <div className={requestSentStyles.eventPhoto}>
-            <p>Photo</p>
-          </div>
-          <div className={requestSentStyles.requestSentCardContent}>
-            <h4>
-              <b>Event Name</b>
-            </h4>
-            <p>Event Date</p>
-            <p>Location</p>
-            <p>When</p>
-          </div>
-          <div className={requestSentStyles.requestCardStatus}>
-            Request Status
-          </div>
-        </li>
-        <li className={requestSentStyles.requestSentCard}>
-          <div className={requestSentStyles.eventPhoto}>
-            <p>Photo</p>
-          </div>
-          <div className={requestSentStyles.requestSentCardContent}>
-            <h4>
-              <b>Event Name</b>
-            </h4>
-            <p>Event Date</p>
-            <p>Location</p>
-            <p>When</p>
-          </div>
-          <div className={requestSentStyles.requestCardStatus}>
-            Request Status
-          </div>
-        </li>
+        {[...Array(10)].map((e, i) => (
+          <li className={requestSentStyles.requestSentCard}>
+            <div className={requestSentStyles.eventPhoto}>
+              <p>Photo</p>
+            </div>
+            <div className={requestSentStyles.requestSentCardContent}>
+              <h4>
+                <b>Event Name</b>
+              </h4>
+              <p>Event Date</p>
+              <p>Location</p>
+              <p>When</p>
+            </div>
+            <div className={requestSentStyles.requestCardStatus}>
+              Request Status
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );
