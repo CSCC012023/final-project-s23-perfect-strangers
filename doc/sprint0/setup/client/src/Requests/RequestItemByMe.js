@@ -1,10 +1,11 @@
 import requestStyles from "../styles/requests.module.css";
 import styles from "../styles/common_styles.module.css";
-import eventStyles from "../styles/event.module.css";
+
 import axios from "axios";
 
+import EventItem from '../pages/EventItem';
 
-const RequestItemByMe = ({_id, requestee, event_id, status, setRequests}) => {
+const RequestItemByMe = ({_id, event, status, setRequests}) => {
 
     //TODO: DELETE REQUEST to delete the request
     const deleteRequest = () => {
@@ -16,11 +17,7 @@ const RequestItemByMe = ({_id, requestee, event_id, status, setRequests}) => {
     }
 
     return ( <div className={requestStyles.request}>
-        <div className={styles.text}>{requestee}</div>
-        <div className={styles.line} />
-        <div className={eventStyles.eventDetails}>
-            <div className={styles.text}>{event_id}</div>
-        </div>
+        <EventItem event={event} disableRequest={true} />
         <div className={styles.horizontalContent}>
             <div style={{marginTop: "10px", marginLeft: "5px", marginRight: "auto"}}>
                 <div className={styles.smalltext}>

@@ -27,7 +27,7 @@ const RequestsByMe = () => {
                 key={req._id}
                 _id={req._id}
                 requestee={req.requestee}
-                event_id={req.event_id}
+                event={req.event}
                 status={req.status}
                 setRequests={setRequests}
             />

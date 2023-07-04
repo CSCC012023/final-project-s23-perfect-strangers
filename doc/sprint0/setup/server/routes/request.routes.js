@@ -6,7 +6,7 @@ let RequestModel = require('../models/request.model');
     //example usage
 
     Axios.post("http://localhost:5000/requests/", {
-        requester: rand_email_id
+        requester: rand_email_id,
         event: rand_event_id
     })
     .then(res => {
@@ -15,16 +15,27 @@ let RequestModel = require('../models/request.model');
 */
 router.route('/').post(
     (req, res) => {
-        const newRequest = new RequestModel({
+
+        RequestModel.findOne({
             requester: req.body.requester,
-            status: 'pending',
             event: req.body.event
         })
-
-        newRequest.save()
-        .then(() => res.status(201).json({msg: 'request created'}))
-        .catch(err => {
-            res.json({msg: "request was not created", err: err})
+        .then(ans => {
+            if (ans === null) {
+                const newRequest = new RequestModel({
+                    requester: req.body.requester,
+                    status: 'pending',
+                    event: req.body.event
+                })
+        
+                newRequest.save()
+                .then(r => res.status(201).json({msg: 'request issued', request: r}))
+                .catch(err => {
+                    res.json({msg: "request was not issued", err: err})
+                })
+            } else {
+                res.json({msg: "request already exists"})
+            }
         })
     }
 )
@@ -71,7 +82,7 @@ router.route('/for/:requestee').get(
             populate: {path: 'creator'}
         }])
         .then(r => res.status(202).json(
-            r.filter(request => request.event.creator._id === req.params.requestee)
+            r.filter(request => request.event.creator === req.params.requestee)
         )) // remove unmatched requests
         .catch(err => res.json({err: err}))
     }
