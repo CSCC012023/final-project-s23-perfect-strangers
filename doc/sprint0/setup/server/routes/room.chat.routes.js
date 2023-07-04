@@ -1,7 +1,6 @@
 const router = require('express').Router();
 
-// let ChatModel = require('../models/room.chat.model');
-let RoomModel = require('../models/chat.model');
+let RoomModel = require('../models/room.chat.model');
 
 
 // Get all chatRoom documents
@@ -21,7 +20,7 @@ router.route("/chatrooms/:roomID").get(async (req, res) => {
   
 
 // Post a chatRoom
-router.route("/chatrooms").post(async (req, res) => {
+router.route("/chats").post(async (req, res) => {
 
     const newRoomDoc = new RoomModel({
       chatHistory: req.body.chatHistory,
@@ -35,6 +34,7 @@ router.route("/chatrooms").post(async (req, res) => {
       roomID: req.body.roomID,
     });
     
+
     if (currentDatabaseRooms.length === 0) {
       await newRoomDoc.save();
       console.log("chat room document posted");
@@ -67,13 +67,20 @@ router.route("/chats/:roomID").patch(async (req, res) => {
   var newChatHistory = req.body.currentChatHistory;
   newChatHistory.push(newMessage);
 
+  console.log("I am here too!");
+    console.log(newMessage);
+    console.log(newChatHistory);
+    // console.log(req.body.roomID);
+    // console.log(newRoomDoc);
+
+
   try {
-    RoomModel.updateOne({roomID: req.body.roomID},{$set:{ chatHistory: newChatHistory}})
+    await RoomModel.updateOne({roomID: req.params.roomID},{$set:{ chatHistory: newChatHistory}})
+    console.log("This is the confirmed rom id " + req.params.roomID)
+    console.log("patching doneee");
     res.status(204).send();
   }
   catch{
-      // res.status(404)
-      // res.send({ error: "Post doesn't exist!" })
       console.log("Error updating chat room");
   }
 });
