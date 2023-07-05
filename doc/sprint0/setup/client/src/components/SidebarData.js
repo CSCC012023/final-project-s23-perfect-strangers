@@ -10,8 +10,8 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Requests Sent",
-    path: "/requests-sent",
+    title: "Requests",
+    path: "/requests",
     cName: "nav-text",
   },
   {
@@ -22,11 +22,6 @@ export const SidebarData = [
   {
     title: "Logout",
     path: "/logout",
-    cName: "nav-text",
-  },
-  {
-    title: "Requests",
-    path: "/requests",
     cName: "nav-text",
   },
 ];

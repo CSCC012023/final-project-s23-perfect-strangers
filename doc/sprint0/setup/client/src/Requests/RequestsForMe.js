@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
-import RequestItemByMe from "./RequestItemByMe";
+import RequestItemForMe from "./RequestItemForMe";
 
 import Axios from "axios";
 
@@ -10,26 +10,33 @@ const RequestsForMe = () => {
   const token = jwtDecode(localStorage.getItem("token"));
   console.log(token);
 
+  const [myEvents, setMyEvents] = useState([]);
   const [forMeRequests, setForMeRequests] = useState([]);
 
+  // useEffect(() => {
+  //   Axios.get("http://localhost:5000/requests/for/" + token.id)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setForMeRequests(res.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
+
   useEffect(() => {
-    Axios.get("http://localhost:5000/requests/for/" + token.id)
+    Axios.get("http://localhost:5000/api/myevent/" + token.id)
       .then((res) => {
         console.log(res.data);
-        setForMeRequests(res.data);
+        setMyEvents(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  
   return (
     <div className={styles.wrapContainer}>
-      {forMeRequests.map((req) => (
-        <RequestItemByMe
-          key={req._id}
-          _id={req._id}
-          requestee={req.requestee}
-          event={req.event}
-          status={req.status}
-          setRequests={setForMeRequests}
+      {myEvents.map((event) => (
+        <RequestItemForMe
+          event={event}
         />
       ))}{" "}
     </div>
