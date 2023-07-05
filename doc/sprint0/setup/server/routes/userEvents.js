@@ -7,17 +7,19 @@ router.get('/userevents', (req, res) => {
             .catch(err => res.status(401).json('Error: ' + err));
 });
 
-router.route("/userevents/:eventID").get(async (req, res) => {
-    const userEventDoc = await UserEventsModel.find({
-      eventID: req.params.eventID,
-    });
-    res.send(userEventDoc);
-});
+// this one was messing with the :email one, not sure why. It isn't used
+// router.route("/userevents/:eventID").get(async (req, res) => {
+//     const userEventDoc = await UserEventsModel.find({
+//       eventID: req.params.eventID,
+//     });
+//     res.send(userEventDoc);
+// });
 
 router.route("/userevents/:email").get(async (req, res) => {
     const userEventDoc = await UserEventsModel.find({
       creator: req.params.email,
     });
+    // console.log(userEventDoc);
     res.send(userEventDoc);
 });
 
