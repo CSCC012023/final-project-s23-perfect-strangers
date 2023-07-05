@@ -21,7 +21,7 @@ router.post('/userevents', (req, res) => {
 
     newEvent.save()
         .then(() => res.json('User Event added!'))
-        .catch(err => alert("Couldn't create user"));
+        .catch(err => res.status(400).json("Couldn't create user: " + err));
 
 });
 

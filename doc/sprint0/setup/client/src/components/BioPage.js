@@ -34,7 +34,7 @@ const BioPage = (props) => {
   
   // Get the user Email by decoding JWT
   const token = localStorage.getItem("token");
-  var useremail = jwt_decode(token).email;
+  var useremail = jwt_decode(token).userDetail.email;
 
   // // Get user details
   // useEffect(() => {

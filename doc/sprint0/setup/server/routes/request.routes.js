@@ -14,29 +14,29 @@ let RequestModel = require("../models/request.model");
     })
 */
 router.route("/").post((req, res) => {
-    RequestModel.findOne({
+  RequestModel.findOne({
+    requester: req.body.requester,
+    event: req.body.event,
+  }).then((ans) => {
+    if (ans === null) {
+      const newRequest = new RequestModel({
         requester: req.body.requester,
+        status: "pending",
         event: req.body.event,
-    }).then(ans => {
-        if (ans === null) {
-            const newRequest = new RequestModel({
-                requester: req.body.requester,
-                status: "pending",
-                event: req.body.event,
-            });
+      });
 
-            newRequest
-                .save()
-                .then(r =>
-                    res.status(201).json({ msg: "request issued", request: r })
-                )
-                .catch(err => {
-                    res.json({ msg: "request was not issued", err: err });
-                });
-        } else {
-            res.json({ msg: "request already exists" });
-        }
-    });
+      newRequest
+        .save()
+        .then((r) =>
+          res.status(201).json({ msg: "request issued", request: r })
+        )
+        .catch((err) => {
+          res.json({ msg: "request was not issued", err: err });
+        });
+    } else {
+      res.json({ msg: "request already exists" });
+    }
+  });
 });
 
 // GET REQUEST: get a list of requests by who issued them
@@ -49,16 +49,16 @@ router.route("/").post((req, res) => {
     })
 */
 router.route("/by/:requester").get((req, res) => {
-    RequestModel.find({ requester: req.params.requester })
-        .populate([
-            "requester",
-            {
-                path: "event",
-                populate: { path: "creator" },
-            },
-        ])
-        .then(r => res.status(202).json(r))
-        .catch(err => res.json({ err: err }));
+  RequestModel.find({ requester: req.params.requester })
+    .populate([
+      "requester",
+      {
+        path: "event",
+        populate: { path: "creator" },
+      },
+    ])
+    .then((r) => res.status(202).json(r))
+    .catch((err) => res.json({ err: err }));
 });
 
 // GET REQUEST: get a list of requests by who received them
@@ -71,25 +71,23 @@ router.route("/by/:requester").get((req, res) => {
     })
 */
 router.route("/for/:requestee").get((req, res) => {
-    RequestModel.find()
-        .populate([
-            "requestor",
-            {
-                path: "event",
-                populate: { path: "creator" },
-            },
-        ])
-        .then(r =>
-            res
-                .status(202)
-                .json(
-                    r.filter(
-                        request =>
-                            request.event.creator === req.params.requestee
-                    )
-                )
-        ) // remove unmatched requests
-        .catch(err => res.json({ err: err }));
+  console.log("For");
+  RequestModel.find()
+    .populate({
+      path: "event",
+      populate: { path: "creator", model: "user-details" },
+    })
+    .then((r) =>
+      res
+        .status(202)
+        .json(
+          r.filter((request) => request.event.creator && request.event.creator.equals(req.params.requestee))
+        )
+    ) // remove unmatched requests
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // GET REQUEST: get a list of requests by event_id
@@ -102,16 +100,16 @@ router.route("/for/:requestee").get((req, res) => {
     })
 */
 router.route("/event/:event").get((req, res) => {
-    RequestModel.find({ event: req.params.event })
-        .populate([
-            "requester",
-            {
-                path: "event",
-                populate: { path: "creator" },
-            },
-        ])
-        .then(r => res.status(202).json(r))
-        .catch(err => res.json({ err: err }));
+  RequestModel.find({ event: req.params.event })
+    .populate([
+      "requester",
+      {
+        path: "event",
+        populate: { path: "creator" },
+      },
+    ])
+    .then((r) => res.status(202).json(r))
+    .catch((err) => res.status(400).json({ err: err }));
 });
 
 /* 
@@ -157,10 +155,10 @@ router.route('/search').post(
     })
  */
 router.route("/delete/:_id").delete((req, res) => {
-    //console.log(req.body.requester);
-    RequestModel.deleteOne({ _id: req.params._id })
-        .then(r => res.status(203).json(r))
-        .catch(err => res.json({ err: err }));
+  //console.log(req.body.requester);
+  RequestModel.deleteOne({ _id: req.params._id })
+    .then((r) => res.status(203).json(r))
+    .catch((err) => res.json({ err: err }));
 });
 
 module.exports = router;

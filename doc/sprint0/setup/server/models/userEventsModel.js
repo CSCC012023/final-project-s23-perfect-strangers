@@ -2,10 +2,9 @@ const mongoose = require("mongoose");
 
 const eventSchema = new mongoose.Schema({
     creator: {
-        type: String,
-        //type: mongoose.Schema.Types.ObjectId,
-        //ref: 'users',
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, 'Creator info is required'],
+        ref: 'user-details',
     },
     title: {
         type: String,

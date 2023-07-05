@@ -9,7 +9,7 @@ import jwt_decode from "jwt-decode";
 
 function CreateEvents() {
     const token = localStorage.getItem('token');
-    const [creator, setCreator] = useState(jwt_decode(token).email);
+    const [creator, setCreator] = useState(jwt_decode(token).userDetail);
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
@@ -23,7 +23,7 @@ function CreateEvents() {
             creator, title, date, location, price, description, ticketLink, onMe
         }).then(() => {
             alert("Event Created!");
-        });
+        }).catch((err) => console.log(err));
     };
 
 
