@@ -1,18 +1,23 @@
 const router = require("express").Router();
 let UserDetailsModel = require("../models/userDetails.model");
+
+/* Multer Configuration
+  - Stores the picture in a front end directory
+  - Stores file metadata in the Database
+*/
 const multer = require('multer');
 const fs = require('fs');
-const path = require('path');
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, 'uploads')
+const multerStorage = multer. diskStorage( {
+  destination: (req, file,cb) => {
+    cb(null, '../server/uploads');
   },
+  
   filename: (req, file, cb) => {
-      cb(null, file.fieldname + '-' + Date.now())
+    const ext = file.mimetype.split('/')[1]
+    cb(null, file.originalname)
   }
 });
-
-const upload = multer({storage: storage});
+const upload = multer ({storage: multerStorage});
 
 router.route("/").post((req, res) => {
   const newUserDetails = new UserDetailsModel({
@@ -76,17 +81,20 @@ router.route("/image/:useremail").get(async (req, res) => {
 });
 
 router.route("/image").post(upload.single("profilePic"), async(req, res) => {
+  console.log("At least the request is made");
+  console.log(req.file.filename);
+
   const userPic = {
-    data: fs.readFileSync(
-      path.join(__dirname + "/uploads/" + req.file.filename)
-    ),
+    data: fs.readFileSync('../server/uploads/' + req.file.filename),
     contentType: "image/png",
   };
-  const useremail = req.body.useremail;
+
+  const useremail = req.body.email;
 
   try{
     let user = await UserDetailsModel.findOne({ email: useremail });
     user.image = userPic;
+    
     await user.save();
     res.send(user);
   } catch (err) {

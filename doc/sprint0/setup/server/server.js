@@ -11,6 +11,16 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+
+/* Need this as part of Multer Configuration */
+const bodyParser = require('body-parser');
+app.use(
+  bodyParser .urlencoded({ 
+    extended: true,
+  })
+);
+
+
 const dbUri = process.env.ATLAS_URI;
 mongoose.connect(dbUri);
 
