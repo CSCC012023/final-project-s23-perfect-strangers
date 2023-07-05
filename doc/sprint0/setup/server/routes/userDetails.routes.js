@@ -1,5 +1,18 @@
 const router = require("express").Router();
 let UserDetailsModel = require("../models/userDetails.model");
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'uploads')
+  },
+  filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now())
+  }
+});
+
+const upload = multer({storage: storage});
 
 router.route("/").post((req, res) => {
   const newUserDetails = new UserDetailsModel({
@@ -43,6 +56,37 @@ router.route("/biography").post(async (req, res) => {
   try {
     let user = await UserDetailsModel.findOne({ email: useremail });
     user.biography = userBio;
+    await user.save();
+    res.send(user);
+  } catch (err) {
+    console.log(err);
+    res.status(404);
+    res.send(err);
+  }
+});
+
+router.route("/image/:useremail").get(async (req, res) => {
+  try {
+    const user = await UserDetailsModel.findOne({ email: req.params.useremail });
+    res.send(user);
+  } catch {
+    res.status(404);
+    res.send({ error: "User does not exist" });
+  }
+});
+
+router.route("/image").post(upload.single("profilePic"), async(req, res) => {
+  const userPic = {
+    data: fs.readFileSync(
+      path.join(__dirname + "/uploads/" + req.file.filename)
+    ),
+    contentType: "image/png",
+  };
+  const useremail = req.body.useremail;
+
+  try{
+    let user = await UserDetailsModel.findOne({ email: useremail });
+    user.image = userPic;
     await user.save();
     res.send(user);
   } catch (err) {

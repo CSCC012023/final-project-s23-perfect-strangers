@@ -1,8 +1,8 @@
 import React from "react";
-//import Axios from "axios";
+import Axios from "axios";
 
 import { useState } from "react";
-//import { useEffect } from "react";
+import { useEffect } from "react";
 
 //import "./BioPage.css";
 import UserInterests from "./Interests";
@@ -14,8 +14,86 @@ import UserBio from "./UserBio";
 import styles from "../styles/common_styles.module.css";
 import bioPageStyles from "../styles/bio_page.module.css";
 
-const ProfilePicture = (props) => {
-  return <div className={bioPageStyles.ProfilePicture}></div>;
+
+const ProfilePicture = () => {
+  const [profilePic, setProfilePic] = useState([]);
+  const [profileClicked, setProfileClicked] = useState(false);
+  const token = localStorage.getItem("token");
+  var useremail = jwt_decode(token).userDetail.email;
+
+  const changeProfilePic = () => {
+      Axios.post("http://localhost:5000/user-details/image/",
+    {
+      email: useremail,
+      image: profilePic,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
+  }
+  
+  useEffect(() => {
+    Axios.get("http://localhost:5000/user-details/image/" + useremail)
+      .then((response) => {
+        setProfilePic(response.data.image);
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  return (
+    <>
+      {profileClicked === true ? (
+        <div className={styles.popupbg}>
+          <div className={styles.popup}>
+            <div
+              style={{
+                  marginLeft: "auto",
+                  marginRight: "0",
+                  width: "min-content",
+              }}
+            >
+              <button
+                  onClick={() => {
+                      setProfileClicked(false);
+                  }}
+                  className={styles.smallTransparentButton}
+              >
+                  x
+              </button>
+            </div>
+
+              
+            <>
+                <div className={styles.flexWrappableText}>
+                    Change profile picture?
+                </div>
+                <form action="/" encType="multipart/form-data" method="post">
+                  <input class="choose-file-btn" type="file" name="profilePic" style={{color: "white"}}/>
+                  <input class="upload-btn" type="submit" value="Upload Photo" />
+                </form>
+                <button
+                    className={styles.smallTransparentButton}
+                    onClick={changeProfilePic}
+                >
+                    Change
+                </button>
+            </>
+              
+          </div>
+        </div>
+      ) : (
+          ""
+      )}
+      <button
+        className={bioPageStyles.ProfilePicture}
+        onClick={() => setProfileClicked(true)}
+      >
+        {profilePic}
+      </button>
+    </>
+  );
 };
 
 const BioPage = (props) => {
