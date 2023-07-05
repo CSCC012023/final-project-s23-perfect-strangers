@@ -6,13 +6,14 @@ import './CreateEvents.css';
 import styles from "../styles/common_styles.module.css";
 import ceStyles from "../styles/create_events.module.css";
 import jwt_decode from "jwt-decode";
-import UserCreatedEvents from "../components/UserCreatedEvents";
 
 
 function CreateEvents() {
     const token = localStorage.getItem('token');
     const decoded = jwt_decode(token);
-    const [creator, setCreator] = useState(decoded.email);
+
+    
+    const [creator, setCreator] = useState(decoded.userDetail.email);
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
@@ -20,49 +21,57 @@ function CreateEvents() {
     const [description, setDescription] = useState("");
     const [ticketLink, setTicketLink] = useState("");
     const [onMe, setOnMe] = useState(false);
-    const [createdUserEvents, setCreatedUserEvents] = useState([]);
+    // const [createdUserEvents, setCreatedUserEvents] = useState([]);
 
-    useEffect(() => {
-        Axios.get("http://localhost:5000/api/eventlink/" + decoded.email)
-            .then((response) => {
-            if (response.length === 0) {
-                setCreatedUserEvents([]);
-            } else {
-                setCreatedUserEvents(response.data[0].eventList);
-            }
-            })
-            .catch((error) => {
-                setCreatedUserEvents([]);
-            });
-    }, []);
+    // didn't use any of this, but it can be revived if needed
 
-    useEffect(() => {
-        updateEvents();
-    }, [createdUserEvents]);
+    // useEffect(() => {
+    //     console.log(decoded);
+    //     Axios.get("http://localhost:5000/api/eventlink/" + decoded.userDetail.email)
+    //         .then((response) => {
+    //         if (response.length === 0) {
+    //             setCreatedUserEvents([]);
+    //         } else {
+    //             setCreatedUserEvents(response.data[0].eventList);
+    //         }
+    //         })
+    //         .catch((error) => {
+    //             setCreatedUserEvents([]);
+    //         });
+    // }, []);
 
-    async function updateEvents() {
-        console.log(createdUserEvents);
-        await Axios.delete("http://localhost:5000/api/eventLink/" + decoded.email).then(
-            (response) => {
-            console.log("Event link document deleted!");
-        });
-        await Axios.post("http://localhost:5000/api/eventLink", {
-            email: decoded.email,
-            eventList: createdUserEvents,
-        }).then(response => {
-            console.log(response);
-        });
-    }
+    // useEffect(() => {
+    //     updateEvents();
+    // }, [createdUserEvents]);
+
+    // async function updateEvents() {
+    //     console.log(createdUserEvents);
+    //     await Axios.delete("http://localhost:5000/api/eventLink/" + decoded.userDetail.email).then(
+    //         (response) => {
+    //         console.log("Event link document deleted!");
+    //     });
+    //     await Axios.post("http://localhost:5000/api/eventLink", {
+    //         email: decoded.userDetail.email,
+    //         eventList: createdUserEvents,
+    //     }).then(response => {
+    //         console.log(response);
+    //     });
+    // }
 
     async function createUserEvent() {
+        // create a unique ID for the event
         const newUUID = uuidv4();//uuid();
+        
+        // post the event
         await Axios.post("http://localhost:5000/api/userevents", {
             eventID: newUUID,
             creator, title, date, location, price, description, ticketLink, onMe
         }).then(() => {
             alert("Event Created!");
-            console.log([...createdUserEvents, newUUID]);
-            setCreatedUserEvents([...createdUserEvents, newUUID]);
+
+            // this is for the unused portion above, and is probably buggy if it is revived
+            // console.log([...createdUserEvents, newUUID]);
+            // setCreatedUserEvents([...createdUserEvents, newUUID]);
         });
     }
 

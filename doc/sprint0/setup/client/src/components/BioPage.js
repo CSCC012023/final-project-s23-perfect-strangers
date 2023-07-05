@@ -1,5 +1,5 @@
-import React from "react";
-//import Axios from "axios";
+import React, { useEffect } from "react";
+import Axios from "axios";
 
 import { useState } from "react";
 //import { useEffect } from "react";
@@ -10,10 +10,10 @@ import UserInterests from "./Interests";
 import jwt_decode from "jwt-decode";
 
 import UserBio from "./UserBio";
+import EventItem from "../pages/EventItem";
 
 import styles from "../styles/common_styles.module.css";
 import bioPageStyles from "../styles/bio_page.module.css";
-import UserCreatedEvents from "./UserCreatedEvents";
 
 const ProfilePicture = (props) => {
   return <div className={bioPageStyles.ProfilePicture}></div>;
@@ -32,10 +32,12 @@ const BioPage = (props) => {
 
   // Set the interest master list
   const [interestList, setInterestList] = useState(["Hockey", "Gaming", "Coding", "Yoga", "Movies", "Burger", "Books"]);
+  const [events, setEvents] = useState([]);
   
   // Get the user Email by decoding JWT
   const token = localStorage.getItem("token");
-  var useremail = jwt_decode(token).email;
+  var useremail = jwt_decode(token).userDetail.email;
+  console.log(useremail);
 
   // // Get user details
   // useEffect(() => {
@@ -54,7 +56,12 @@ const BioPage = (props) => {
   //   });
   // }, []);
 
-
+  useEffect(() => {
+    Axios.get("http://localhost:5000/api/userevents/" + useremail).then(response => {
+      setEvents(response.data);
+      console.log(response.data);
+    });
+  }, []);
 
   return (
     // <div clasName='BioPage'>
@@ -77,6 +84,17 @@ const BioPage = (props) => {
       </div>
       <UserBio useremail={useremail} />
       <div className={styles.line} />
+      <div className={styles.horizontalContent}>
+        <div className={styles.squishHeading}>My Events</div>
+      </div>
+      <div className={styles.wrapContainer}>
+        {events &&
+          events.map((event) => (
+            <div key={event._id} style={{margin: "10px"}}>
+              <EventItem event={event} />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
