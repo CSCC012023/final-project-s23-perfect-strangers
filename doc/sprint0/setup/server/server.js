@@ -8,6 +8,51 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+const http = require('http'); // Need this because socket server can be directly linked to HTTP servers
+const httpServer = http.createServer(app); // App is used to create the httpServer
+const { Server } = require("socket.io"); // Import server from socke.io
+
+// Link the socket server to our http server // Socket server
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:3000", // Client side
+    allowedHeaders: ["my-custom-header"], credentials: true
+  }
+}); 
+
+const sockets_bioler_plate = (socket) => {
+    
+  // This is working
+  socket.on('send-message', ({message, roomID}) => {
+    console.log("Message received by server")
+    console.log(message)
+    socket.broadcast.to(roomID).emit('message-from-server', message);
+  });
+
+  // This is working
+  socket.on('start-typing', ({roomID}) => {
+    let logMessage = "Typing began: " + roomID;
+    socket.broadcast.to(roomID).emit('typing-started-from-server', logMessage);
+  });
+
+
+  socket.on('end-typing', ({roomID}) => {
+    let logMessage = "Typing stopped: " + roomID;
+    socket.broadcast.to(roomID).emit('typing-ended-from-server', logMessage);
+  });
+
+  socket.on("join-room", ({roomID}) => {
+    socket.join(roomID);
+  });
+
+  socket.on("disconnect", (socket) => {
+    console.log("User left");
+  });
+}
+
+io.on("connection", sockets_bioler_plate);
+
+
 app.use(cors());
 app.use(express.json());
 
@@ -27,6 +72,7 @@ const usersRouter = require("./routes/users");
 const interestRouter = require("./routes/interests");
 const userEventsRouter = require("./routes/userEvents");
 const requestsRouter = require("./routes/request.routes");
+const chatRouter = require("./routes/room.chat.routes");
 
 //connect routers
 app.use("/email-auth", emailAuthRouter);
@@ -36,6 +82,8 @@ app.use("/login", loginRouter);
 app.use("/api", usersRouter);
 app.use("/api", userEventsRouter);
 app.use("/requests", requestsRouter);
+app.use("/api", chatRouter);
+
 /* 
     - If more API_End_Point files (routes) have been added in the routes folder, only need to make changes in this section
     - Currently, routers for only two routes have been set up
@@ -52,6 +100,6 @@ app.use(
   })
 );
 
-app.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });

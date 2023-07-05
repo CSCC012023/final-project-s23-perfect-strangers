@@ -12,6 +12,8 @@ import Login from "./Login/Login";
 import ExamplePage from "./ExamplePage/ExamplePage";
 import RequestsPage from "./Requests/RequestsPage";
 
+import Socket from "./Socket";
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
           <Route path="/logout" exact element={<Logout />} />
           <Route path="/create-events" exact element={<CreateEvents />} />
           <Route path="/bio-page" exact element={<BioPage/>} />
+          <Route path="/chats" exact element={<Socket />} />
           <Route
             path="/"
             element={
