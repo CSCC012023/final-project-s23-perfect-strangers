@@ -55,7 +55,7 @@ const RequestItemForMe = ({ event }) => {
 
   function forMeRequestsCallback() {
     return (
-      <div className={styles.popupbg}>
+      <div className={requestStyles.popupNonCenterItems}>
         <div className={styles.popup}>
           {popupClose()}
           <div className={requestStyles.popupHeading}>Requests: </div>
