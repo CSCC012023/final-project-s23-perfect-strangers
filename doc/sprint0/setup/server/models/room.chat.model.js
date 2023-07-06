@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 
 const roomSchema = new mongoose.Schema({
+    participantsUsernames: {
+        type: [String],
+        required: true,
+        maxItems: 2
+    },
     participants: {
         type: [String],
         required: true,
-        unique: true,
         maxItems: 2
     },
     roomID:{

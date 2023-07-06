@@ -8,11 +8,18 @@ const port = process.env.PORT || 5000;
 require("dotenv").config();
 
 
-const http = require('http'); // Need this because socket server can be directly linked to HTTP servers
-const httpServer = http.createServer(app); // App is used to create the httpServer
-const { Server } = require("socket.io"); // Import server from socke.io
+/*
+  - Create an HTTP server using app
+  - Need an HTTP server as socket server can only be connected to this
+*/
+const http = require('http'); 
+const httpServer = http.createServer(app);
 
-// Link the socket server to our http server // Socket server
+/*
+  - Import socket server
+  - Link socket server to HTTP server
+*/
+const { Server } = require("socket.io"); 
 const io = new Server(httpServer, {
   cors: {
     origin: "http://localhost:3000", // Client side
@@ -20,17 +27,18 @@ const io = new Server(httpServer, {
   }
 }); 
 
+/*
+  Boiler plate code to respond to socket events sent from client
+    - send-message || start-typing || end-typing || join-room || disconnect
+*/ 
 const sockets_bioler_plate = (socket) => {
-    
   socket.on('send-message', ({message, roomID}) => {
-    console.log("Typing started")
-    console.log(message)
+    // console.log("Message received by server") // console.log(message)
     socket.broadcast.to(roomID).emit('message-from-server', message);
   });
 
   socket.on('start-typing', ({roomID}) => {
     let logMessage = "Typing began: " + roomID;
-    console.log(logMessage);
     socket.broadcast.to(roomID).emit('typing-started-from-server', logMessage);
   });
 
@@ -48,13 +56,10 @@ const sockets_bioler_plate = (socket) => {
   });
 }
 
+/* Start the socket server using boiler place configurations */
 io.on("connection", sockets_bioler_plate);
 
-
-
-
-
-
+/* Boiler plate code to connect to mongoDB */
 app.use(cors());
 app.use(express.json());
 
@@ -78,6 +83,7 @@ const userEventsRouter = require("./routes/userEvents");
 const chatRouter = require("./routes/room.chat.routes");
 const requestsRouter = require("./routes/request.routes");
 const eventLinkRouter = require("./routes/eventLink.routes");
+const chatRouter = require("./routes/room.chat.routes");
 
 // connect routers
 app.use("/api", chatRouter);
@@ -94,8 +100,9 @@ app.use("/api", eventLinkRouter);
     - Currently, routers for only two routes have been set up
     - In the routers below, need to give path to the js file containing the routes/API_End_Points
 */
+app.use("/api", chatRouter);
 
-
+/* Listen on port 5000 */
 app.use(
   session({
     secret: "keyboard cat",
