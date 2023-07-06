@@ -1,6 +1,5 @@
 const router = require("express").Router();
 let EmailAuthModel = require("../models/emailAuth.model");
-let UserDetailModel = require("../models/userDetails.model");
 const jwt = require("jsonwebtoken");
 
 router.route("/").post(async (req, res) => {
@@ -11,14 +10,10 @@ router.route("/").post(async (req, res) => {
     email: email,
     password: password,
   });
-
   if (emailAuth) {
     // Login successful
     try {
-      const userDetail = await UserDetailModel.findOne({
-        email: emailAuth.email
-      });
-      const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {
+      const token = jwt.sign({ id: emailAuth._id }, "shhhhh", {
         expiresIn: "2h",
       });
       console.log("User Saved " + token);
@@ -32,8 +27,6 @@ router.route("/").post(async (req, res) => {
     // Invalid credentials
     res.json({ err: "Invalid email or password" });
   }
-
-
 });
 
 router.route("/").get((req, res) => {

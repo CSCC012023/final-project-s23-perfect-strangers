@@ -2,37 +2,21 @@ import React from "react";
 
 import { useState } from "react";
 import { useEffect } from "react";
-//import { useReducer } from "react";
+import { useReducer } from "react";
 
-//import { IconContext } from "react-icons"; // npm install react-icons --save
-//import { CiEdit } from "react-icons/ci";
+import { IconContext } from "react-icons"; // npm install react-icons --save
+import { CiEdit } from "react-icons/ci";
 import Axios from "axios";
+import "./Interests.css";
+import "reactjs-popup/dist/index.css"; // npm i reactjs-popup
 
-//import "./Interests.css";
-//import "reactjs-popup/dist/index.css"; // npm i reactjs-popup
+const InterestPopUp = (props) => {
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [selectedInterests, setSelectedInterests] = useState(
+    props.userInterestList
+  );
 
-import styles from "../styles/common_styles.module.css";
-
-/* const InterestPopUp = (props) => { 
-  please destructure your props so we know what inputs it needs
-*/
-const InterestPopUp = 
-  ( {interestList,
-    userInterestList, 
-    setUserInterestList,
-    popupTrigger,
-    setPopupTrigger,
-    useremail
-  }) => {
-
-  //const [, forceUpdate] = useReducer((x) => x + 1, 0);    // why?
-  
-  /* const [selectedInterests, setSelectedInterests] = useState( userInterestList ); 
-    unnecessary, we already get the state and setter of userInterestList
-  */
-
-  /* function changeInterestColorToPurple(colorList, index) {
-
+  function changeInterestColorToPurple(colorList, index) {
     if (colorList[index] !== "#B14EFF") {
       var tempList = colorList;
       tempList[index] = "#B14EFE";
@@ -41,7 +25,7 @@ const InterestPopUp =
     }
   }
 
-  const  changeInterestColorToWhite = (colorList, index) => {
+  function changeInterestColorToWhite(colorList, index) {
     if (colorList[index] !== "#B14EFF") {
       var tempList = colorList;
       tempList[index] = "white";
@@ -50,8 +34,7 @@ const InterestPopUp =
     }
   }
 
-  // Add item to local copy of the user's interest list
-  const popUpInterestItemClickHandler = (currentItem, index, colorList) => {
+  function popUpInterestItemClickHandler(currentItem, index, colorList) {
     const isPresent = selectedInterests.indexOf(currentItem) > -1;
     var tempList = colorList;
 
@@ -71,48 +54,27 @@ const InterestPopUp =
       forceUpdate();
     }
   }
-    these functions only exist to change colors, which can be acheived easily with conditional css
-  */
 
-  const toggleInterest = (interest) => {  // function to add/remove interests form userInterestList
-    console.log(`toggling ${interest}`);
-    if (userInterestList.includes(interest) === true) {
-      setUserInterestList(prevList => prevList.filter(i => i !== interest));
-    } else {
-      setUserInterestList(prevList => [...prevList, interest]);
-    }
-  } 
+  async function interestPopupCloseHandler() {
+    props.setPopupTrigger(false);
+    props.setUserInterestList(selectedInterests);
 
-
-  async function interestPopupCloseHandler() {  // function to handle closing of popup
-    setPopupTrigger(false);
-
-
-    await Axios.delete("http://localhost:5000/api/userInterests/" + useremail).then(
+    await Axios.delete("http://localhost:5000/api/userInterests/faisalf4").then(
       (response) => {
         console.log("User Interest document deleted!");
       }
     );
 
     await Axios.post("http://localhost:5000/api/userInterests/", {
-
-      email: useremail,
-      interestList: userInterestList,
+      username: "faisalf4",
+      interestList: selectedInterests,
     });
   }
 
-
-  const globalInterestListUI = interestList.map(
+  const globalInterestListUI = props.interestList.map(
     (interestItem, interestIndex) => {
       return (
-        <div className={
-          (userInterestList.includes(interestItem) === true)
-          ? styles.smallPurpleButton 
-          : styles.smallTransparentButton}
-        onClick={()=> toggleInterest(interestItem)}
-        key={interestIndex}>
-
-        {/* <div
+        <div
           className="GlobalIndvInterest"
           style={{ backgroundColor: props.interestColorList[interestIndex] }}
           onMouseEnter={(event) => {
@@ -129,32 +91,28 @@ const InterestPopUp =
             );
           }}
         >
-        obsolete*/}
           {interestItem}
         </div>
       );
     }
   );
 
-
-  return popupTrigger ? (
-    <div className={styles.popupbg}>
-      <div className={styles.popup}>
-        <div style={{marginRight:"10px", marginLeft: "auto", width:"fit-content"}}>
-          <button
-            className={`${styles.transparentButton}`}
-            onClick={(event) => {
-              interestPopupCloseHandler();
-            }}
-          >
-            Save changes
-          </button>
-        </div>
+  return props.popupTrigger ? (
+    <div className="InterestPopup">
+      <div className="InterestPopup-inner">
+        <button
+          className="InterestPopupCloseBtn"
+          onClick={(event) => {
+            interestPopupCloseHandler();
+          }}
+        >
+          Save changes
+        </button>
 
         <br />
+        <br />
 
-
-        <div className={styles.wrapContainer}>{globalInterestListUI}</div>
+        <div>{globalInterestListUI}</div>
       </div>
     </div>
   ) : (
@@ -162,13 +120,11 @@ const InterestPopUp =
   );
 };
 
-
-const UserInterests = ({interestList, useremail}) => {
-
+const UserInterests = (props) => {
   // Get the user's interests from MongoDB
   // Limit to a maximum of 5 interests
   const [userInterestList, setUserInterestList] = useState([]);
-  /* const [interestColorList, setInterestColorList] = useState(
+  const [interestColorList, setInterestColorList] = useState(
     props.interestList.map((interest, interestIndex) => {
       const isPresent = userInterestList.indexOf(interest) > -1;
       if (!isPresent) {
@@ -177,12 +133,10 @@ const UserInterests = ({interestList, useremail}) => {
         return "#B14EFF";
       }
     })
-  ); 
-  obsolete
-  */
+  );
 
   useEffect(() => {
-    Axios.get("http://localhost:5000/api/userInterests/" + useremail)
+    Axios.get("http://localhost:5000/api/userInterests/faisalf4")
       .then((response) => {
         // console.log("kikos");
         console.log(response);
@@ -190,7 +144,7 @@ const UserInterests = ({interestList, useremail}) => {
           setUserInterestList([]);
         } else {
           setUserInterestList(response.data[0].interestList);
-          /* setInterestColorList(
+          setInterestColorList(
             props.interestList.map((interest, interestIndex) => {
               const isPresent = userInterestList.indexOf(interest) > -1;
               if (!isPresent) {
@@ -200,8 +154,6 @@ const UserInterests = ({interestList, useremail}) => {
               }
             })
           );
-          obsolete
-          */
         }
       })
       .catch((error) => {
@@ -214,7 +166,7 @@ const UserInterests = ({interestList, useremail}) => {
   const userinterestListUI = userInterestList.map(
     (interestItem, interestIndex) => {
       return (
-        <div className={styles.smallPurpleButton} key={interestIndex}>
+        <div className="UserIndvInterest" key={interestIndex}>
           {interestItem}
         </div>
       );
@@ -222,32 +174,23 @@ const UserInterests = ({interestList, useremail}) => {
   );
 
   return (
-    <div className={styles.horizontalContent}>
+    <div className="UserInterestList">
       {userinterestListUI}
 
-      {/* <button className="InterestEditBtn" onClick={() => setPopupTrigger(true)}>
+      <button className="InterestEditBtn" onClick={() => setPopupTrigger(true)}>
         <IconContext.Provider value={{ color: "white", size: 25 }}>
           <CiEdit />
         </IconContext.Provider>
       </button>
-      obsolete */}
-
-      <button 
-        className={styles.smallTransparentButton}
-        onClick={() => setPopupTrigger(true)}
-      >
-      🖉
-      </button>
 
       <InterestPopUp
-
-        interestList={interestList}
-        userInterestList={userInterestList}
-        setUserInterestList={setUserInterestList}
         popupTrigger={popupTrigger}
         setPopupTrigger={setPopupTrigger}
-        useremail={useremail}
-
+        userInterestList={userInterestList}
+        setUserInterestList={setUserInterestList}
+        interestList={props.interestList}
+        interestColorList={interestColorList}
+        setInterestColorList={setInterestColorList}
       />
     </div>
   );
