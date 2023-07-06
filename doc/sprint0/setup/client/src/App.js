@@ -16,18 +16,19 @@ import RequestsPage from "./Requests/RequestsPage";
 import ChatPage from "./Chat/ChatPage";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import RequestsSent from "./pages/RequestsSent";
 
 
 import Socket from "./Socket";
 function App() {
   return (
     <div>
-
       <Router>
         <Sidebar />
         <Routes>
           <Route path="/dashboard" exact element={<Dashboard />} />
           <Route path="/invites" exact element={<Invites />} />
+          <Route path="/requests-sent" exact element={<RequestsSent />} />
           <Route path="/account" exact element={<Account />} />
           <Route path="/logout" exact element={<Logout />} />
           <Route path="/create-events" exact element={<CreateEvents />} />
@@ -52,9 +53,7 @@ function App() {
           <Route path="/requests" element={<RequestsPage /> } />
         </Routes>
       </Router>
-
     </div>
-
   );
 }
 

@@ -10,10 +10,7 @@ import jwt_decode from "jwt-decode";
 
 function CreateEvents() {
     const token = localStorage.getItem('token');
-    const decoded = jwt_decode(token);
-
-    
-    const [creator, setCreator] = useState(decoded.userDetail.email);
+    const [creator, setCreator] = useState(jwt_decode(token).userDetail);
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
@@ -68,12 +65,8 @@ function CreateEvents() {
             creator, title, date, location, price, description, ticketLink, onMe
         }).then(() => {
             alert("Event Created!");
-
-            // this is for the unused portion above, and is probably buggy if it is revived
-            // console.log([...createdUserEvents, newUUID]);
-            // setCreatedUserEvents([...createdUserEvents, newUUID]);
-        });
-    }
+        }).catch((err) => console.log(err));
+    };
 
 
     return (
