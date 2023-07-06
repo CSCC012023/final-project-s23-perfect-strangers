@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Axios from "axios";
 
 import { useState, useReducer} from "react";
-import { useEffect } from "react";
 
 //import "./BioPage.css";
 import UserInterests from "./Interests";
