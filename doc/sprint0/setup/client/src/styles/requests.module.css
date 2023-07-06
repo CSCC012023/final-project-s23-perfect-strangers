@@ -20,3 +20,21 @@
     background-color: #FF0000;
     border-color: #FF0000;
 }
+
+.unorderedList {
+    display: flex;
+    background-color: #3e3e3e;
+    text-align: start;
+    list-style-type: none;
+    flex-direction: column;
+    margin: 10px;
+    padding: 0px;
+}
+
+.popupHeading {
+    text-align: center;
+    color: #FFFFFF;
+    font-family: 'Advent Pro', sans-serif;
+    font-size: 30px;
+    font-weight: 300;
+}
