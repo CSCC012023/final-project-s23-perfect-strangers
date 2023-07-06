@@ -83,7 +83,6 @@ const userEventsRouter = require("./routes/userEvents");
 const chatRouter = require("./routes/room.chat.routes");
 const requestsRouter = require("./routes/request.routes");
 const eventLinkRouter = require("./routes/eventLink.routes");
-const chatRouter = require("./routes/room.chat.routes");
 
 // connect routers
 app.use("/api", chatRouter);
