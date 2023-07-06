@@ -25,7 +25,6 @@ const RequestsForMe = () => {
   useEffect(() => {
     Axios.get("http://localhost:5000/api/myevent/" + token.id)
       .then((res) => {
-        console.log(res.data);
         setMyEvents(res.data);
       })
       .catch((err) => console.log(err));
