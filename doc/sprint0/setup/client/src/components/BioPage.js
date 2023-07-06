@@ -20,8 +20,20 @@ const ProfilePicture = () => {
   const [profilePic, setProfilePic] = useState('');
 
   const [profileClicked, setProfileClicked] = useState(false);
+  const [base64String, setBase64String] = useState("");
   const token = localStorage.getItem("token");
   var useremail = jwt_decode(token).userDetail.email;
+
+  function getBase64(file) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      console.log(reader.result);
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+ }
 
   const changeProfilePic =  (e) => {
     e.preventDefault();
@@ -39,16 +51,29 @@ const ProfilePicture = () => {
           console.log(response);
       })
       .catch((err) => console.log(err));
+      console.log("Image uploaded");
+      setProfileClicked(false);
     }
+
   }
+
+  function _arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return btoa( binary );
+}
 
 
   // Sets profile picture to existing picture in mongoDB
   useEffect(() => {
     Axios.get("http://localhost:5000/user-details/image/" + useremail)
       .then((response) => {
-        setProfilePic(response.data.image);
-        console.log(response);
+        localStorage.setItem("userPic", _arrayBufferToBase64(response.data.image.data.data));
+        //console.log(response);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -93,7 +118,7 @@ const ProfilePicture = () => {
         className={bioPageStyles.ProfilePicture}
         onClick={() => setProfileClicked(true)}
       >
-        {/* {profilePic} */}
+        <img className={bioPageStyles.ProfilePicture} src={`data:image/png;base64,${localStorage.getItem("userPic")}`} alt=""/>
       </button>
     </>
   );
