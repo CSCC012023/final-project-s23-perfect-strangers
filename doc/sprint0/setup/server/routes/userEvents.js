@@ -34,6 +34,22 @@ router.post("/userevents", (req, res) => {
     .catch((err) => res.status(400).json("Couldn't create user: " + err));
 });
 
+// this one was messing with the :email one, not sure why. It isn't used
+// router.route("/userevents/:eventID").get(async (req, res) => {
+//     const userEventDoc = await UserEventsModel.find({
+//       eventID: req.params.eventID,
+//     });
+//     res.send(userEventDoc);
+// });
+router.route("/userevents/:email").get(async (req, res) => {
+  console.log(req.params.email);
+  const userEventDoc = await UserEventsModel.find({
+    creator: req.params.email,
+  });
+  // console.log(userEventDoc);
+  res.send(userEventDoc);
+});
+
 router.route("/myevent/:creator").get(async (req, res) => {
     try {
       const event = await UserEventsModel.find({

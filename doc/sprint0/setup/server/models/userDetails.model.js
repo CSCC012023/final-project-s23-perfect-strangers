@@ -36,6 +36,10 @@ const userDetails = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  image: {
+    data: Buffer,
+    contentType: String
+  }
 });
 
 const UserDetailsModel = mongoose.model("user-details", userDetails);
