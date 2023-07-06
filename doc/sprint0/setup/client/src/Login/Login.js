@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import styles from "../styles/common_styles.module.css";
 import React, { component } from "react";
 import { Link } from "react-router-dom";
+import { Icon } from 'react-icons-kit'
+import {eye} from 'react-icons-kit/ionicons/eye'
+import {eyeDisabled} from 'react-icons-kit/ionicons/eyeDisabled'
+
 
 //const jwt = require("jsonwebtoken");
 
@@ -13,12 +17,25 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
   const [username, setUsername] = useState("");
   const [cantLogin, setcantLogin] = useState(false);
   const [Msg, setMsg] = useState("Login");
+  const [visible, setVisible] = useState(false);
+  const [pwdIcon, setIcon] = useState(eye);
 
   const throwErrMsg = (emsg) => {
     // when user enters invalid info, this function is called
     setcantLogin(true); // it changes the Signup button to display the error msg
     setMsg(emsg);
   };
+
+  const handleVisible=()=>{
+    if (visible){
+      setVisible(false);
+      setIcon(eye);
+    }
+    else{
+      setVisible(true);
+      setIcon(eyeDisabled);
+    }
+  }
 
   const navigate = useNavigate();
   const onSubmit = (event) => {
@@ -82,24 +99,19 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
           />
         </div>
         <div className={styles.division}>
-          <input
-            type="text"
-            value={password}
-            placeholder="Password"
-            disabled={cantLogin}
-            onChange={(e) => setPassword(e.target.value)}
-            className={styles.inputField}
-          />
+          <div className={styles.inputWrapper}>
+            <input
+              type={visible ? "text" : "password"}
+              value={password}
+              placeholder="Password"
+              disabled={cantLogin}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.inputField}
+            />
+            <i onClick={handleVisible}>
+              <Icon icon={pwdIcon} size={35}/></i>
+          </div>
         </div>
-
-        {/* <input 
-                type="text"
-                value={username}
-                placeholder="Username"
-                disabled={cantLogin}
-                onChange={(e) => setUsername(e.target.value)}
-                className={styles.inputField} /> */}
-        {/* <Link to={loggedInCallBack}> */}
 
         <div className={styles.division}>
           <button

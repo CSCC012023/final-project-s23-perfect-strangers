@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Axios from 'axios';
 import './CreateEvents.css';
 
 import styles from "../styles/common_styles.module.css";
 import ceStyles from "../styles/create_events.module.css";
+import jwt_decode from "jwt-decode";
 
 
 function CreateEvents() {
-    const [creator, setCreator] = useState("Jeremy");
+    const token = localStorage.getItem('token');
+    const decoded = jwt_decode(token);
+
+    
+    const [creator, setCreator] = useState(decoded.userDetail.email);
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
@@ -15,14 +21,59 @@ function CreateEvents() {
     const [description, setDescription] = useState("");
     const [ticketLink, setTicketLink] = useState("");
     const [onMe, setOnMe] = useState(false);
+    // const [createdUserEvents, setCreatedUserEvents] = useState([]);
 
-    const createUserEvent = () => {
-        Axios.post("http://localhost:5000/api/userevents", {
+    // didn't use any of this, but it can be revived if needed
+
+    // useEffect(() => {
+    //     console.log(decoded);
+    //     Axios.get("http://localhost:5000/api/eventlink/" + decoded.userDetail.email)
+    //         .then((response) => {
+    //         if (response.length === 0) {
+    //             setCreatedUserEvents([]);
+    //         } else {
+    //             setCreatedUserEvents(response.data[0].eventList);
+    //         }
+    //         })
+    //         .catch((error) => {
+    //             setCreatedUserEvents([]);
+    //         });
+    // }, []);
+
+    // useEffect(() => {
+    //     updateEvents();
+    // }, [createdUserEvents]);
+
+    // async function updateEvents() {
+    //     console.log(createdUserEvents);
+    //     await Axios.delete("http://localhost:5000/api/eventLink/" + decoded.userDetail.email).then(
+    //         (response) => {
+    //         console.log("Event link document deleted!");
+    //     });
+    //     await Axios.post("http://localhost:5000/api/eventLink", {
+    //         email: decoded.userDetail.email,
+    //         eventList: createdUserEvents,
+    //     }).then(response => {
+    //         console.log(response);
+    //     });
+    // }
+
+    async function createUserEvent() {
+        // create a unique ID for the event
+        const newUUID = uuidv4();//uuid();
+        
+        // post the event
+        await Axios.post("http://localhost:5000/api/userevents", {
+            eventID: newUUID,
             creator, title, date, location, price, description, ticketLink, onMe
         }).then(() => {
             alert("Event Created!");
+
+            // this is for the unused portion above, and is probably buggy if it is revived
+            // console.log([...createdUserEvents, newUUID]);
+            // setCreatedUserEvents([...createdUserEvents, newUUID]);
         });
-    };
+    }
 
 
     return (
