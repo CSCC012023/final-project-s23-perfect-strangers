@@ -1,29 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Axios from "axios";
 
 import { useState } from "react";
-import { useEffect } from "react";
+//import { useEffect } from "react";
 
-import "./BioPage.css";
+//import "./BioPage.css";
 import UserInterests from "./Interests";
 
+import jwt_decode from "jwt-decode";
+
 import UserBio from "./UserBio";
+import EventItem from "../pages/EventItem";
+
+import styles from "../styles/common_styles.module.css";
+import bioPageStyles from "../styles/bio_page.module.css";
 
 const ProfilePicture = (props) => {
-  return <div className="ProfilePicture"></div>;
-};
-
-const DisplayName = (props) => {
-  return <div className="DisplayName">{props.displayName}</div>;
-};
-
-const AgeGender = (props) => {
-  return (
-    <div className="AgeGender">
-      {props.age}, {"           "}
-      {props.gender}
-    </div>
-  );
+  return <div className={bioPageStyles.ProfilePicture}></div>;
 };
 
 const BioPage = (props) => {
@@ -37,12 +30,25 @@ const BioPage = (props) => {
 
   // Get user's profile picture from MongoDB
 
-  // Get all possible interests from MongoDB
+  // Set the interest master list
   const [interestList, setInterestList] = useState(["Hockey", "Gaming", "Coding", "Yoga", "Movies", "Burger", "Books"]);
+  const [events, setEvents] = useState([]);
+  
+  // Get the user Email by decoding JWT
+  const token = localStorage.getItem("token");
+  var useremail = jwt_decode(token).userDetail.email;
+  console.log(useremail);
 
+  // // Get user details
   // useEffect(() => {
+  //   // Get the user token
+  //   const token = localStorage.getItem("token");
+
+  //   // Decode this to get user email
+  //   var useremail = jwt_decode(token).email;
+
   //   Axios.get(
-  //     "http://localhost:5000/api/userInterests/masterInterestList"
+  //     "http://localhost:5000/user-details"
   //   ).then((response) => {
   //     setInterestList(response.data[0].interestList);
 
@@ -50,24 +56,45 @@ const BioPage = (props) => {
   //   });
   // }, []);
 
+  useEffect(() => {
+    Axios.get("http://localhost:5000/api/userevents/" + useremail).then(response => {
+      setEvents(response.data);
+      console.log(response.data);
+    });
+  }, []);
+
   return (
     // <div clasName='BioPage'>
-    <div className="BioPage">
-        <div className="page-title">
-            <h1>ACCOUNT</h1>
-        </div>
-
-      <div className="BioPageTop">
+    <div className={styles.rightContainer}>
+      <div className={styles.horizontalContent}>
         <ProfilePicture />
 
-        <div className="BioPageTopRight">
-          <DisplayName displayName={displayName} />
-          <AgeGender age={age} gender={gender} />
+
+        <div className={styles.verticalContent}>
+          <div className={`${styles.boldtext} ${styles.alignleft}`}>
+            {displayName}
+          </div>
+          <div className={`${styles.smalltext} ${styles.alignleft}`}>
+            {age}, {gender}
+          </div>
           <UserInterests interestList={interestList} />
+
           <br />
         </div>
       </div>
-      <UserBio username={userName} />
+      <UserBio useremail={useremail} />
+      <div className={styles.line} />
+      <div className={styles.horizontalContent}>
+        <div className={styles.squishHeading}>My Events</div>
+      </div>
+      <div className={styles.wrapContainer}>
+        {events &&
+          events.map((event) => (
+            <div key={event._id} style={{margin: "10px"}}>
+              <EventItem event={event} />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
