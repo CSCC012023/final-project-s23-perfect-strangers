@@ -73,9 +73,6 @@ const EventItem = ({ event, disableRequest, onClickCallBack }) => {
       ) : (
         ""
       )}
-      {eventClicked === true && disableRequest && onClickCallBack
-        ? onClickCallBack(popupClose)
-        : ""}
       <button
         className={eventStyles.eventDetails}
         onClick={() => setEventClicked(true)}

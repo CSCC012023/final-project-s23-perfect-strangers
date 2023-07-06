@@ -2,10 +2,9 @@ import requestStyles from "../styles/requests.module.css";
 import styles from "../styles/common_styles.module.css";
 import { useEffect, useState } from "react";
 import requestSentStyles from "../styles/RequestsSent.module.css";
+import eventStyles from "../styles/event.module.css";
 
 import Axios from "axios";
-
-import EventItem from "../pages/EventItem";
 
 const RequestItemForMe = ({ event }) => {
   //TODO: DELETE REQUEST to delete the request
@@ -17,30 +16,51 @@ const RequestItemForMe = ({ event }) => {
   //       })
   //       .catch((err) => console.log(err));
   //   };
-  const [forMeRequests, setForMeRequests] = useState([]);
-  const fetchRequest = () => {
-    Axios.get("http://localhost:5000/requests/event/" + event._id)
-      .then((res) => {
-        console.log("ForMeReq called: " + res.data);
-        setForMeRequests(res.data);
-      })
-      .catch((err) => console.log(err));
+  const [requestData, setRequestData] = useState([]);
+  const [eventClicked, setEventClicked] = useState(false);
+  const popupClose = () => {
+    return (
+      <div
+        style={{
+          marginLeft: "auto",
+          marginRight: "0",
+          width: "min-content",
+        }}
+      >
+        <button
+          onClick={() => {
+            setEventClicked(false);
+          }}
+          className={styles.smallTransparentButton}
+        >
+          x
+        </button>
+      </div>
+    );
   };
+  async function fetchRequest() {
+    try {
+      const res = await Axios.get(
+        "http://localhost:5000/requests/event/" + event._id
+      );
+      return res.data;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   function makeFirstLetterCapital(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  const forMeRequestsCallback = (popupClose) => {
-    fetchRequest();
-    console.log("called");
+  function forMeRequestsCallback() {
     return (
       <div className={styles.popupbg}>
         <div className={styles.popup}>
           {popupClose()}
           <div className={requestStyles.popupHeading}>Requests: </div>
           <ul className={requestStyles.unorderedList}>
-            {forMeRequests.map((req) => (
+            {requestData.map((req) => (
               <li className={requestSentStyles.requestSentCard}>
                 <div className={requestSentStyles.eventPhoto}>
                   <p>Photo</p>
@@ -63,31 +83,28 @@ const RequestItemForMe = ({ event }) => {
         </div>
       </div>
     );
-  };
+  }
 
   return (
     <div className={requestStyles.request}>
-      <EventItem
-        event={event}
-        disableRequest={true}
-        onClickCallBack={forMeRequestsCallback}
-      />
-      {/* <div className={styles.horizontalContent}>
-        <div
-          style={{
-            marginTop: "10px",
-            marginLeft: "5px",
-            marginRight: "auto",
-          }}
-        >
-          <div className={styles.smalltext}>
-            <div style={{ fontWeight: 700 }}>{status}</div>
-          </div>
+      {eventClicked === true && forMeRequestsCallback()}
+      <button
+        className={eventStyles.eventDetails}
+        onClick={() => {
+          setEventClicked(true);
+          fetchRequest().then((data) => setRequestData(data));
+        }}
+      >
+        <div className={eventStyles.eventPhoto}>
+          <p>Photo</p>
         </div>
-        <button className={styles.smallPurpleButton} onClick={deleteRequest}>
-          Cancel Request
-        </button>
-      </div> */}
+        <div className={styles.verticalContent}>
+          <h1 className={styles.boldtext}>{event.title}</h1>
+          <p className={styles.smalltext}>{event.date}</p>
+          <p className={styles.smalltext}>{event.location}</p>
+          <p className={styles.smalltext}>from ${event.price}</p>
+        </div>
+      </button>
     </div>
   );
 };
