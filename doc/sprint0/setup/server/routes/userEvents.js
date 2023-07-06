@@ -7,24 +7,7 @@ router.get('/userevents', (req, res) => {
             .catch(err => res.status(401).json('Error: ' + err));
 });
 
-// this one was messing with the :email one, not sure why. It isn't used
-// router.route("/userevents/:eventID").get(async (req, res) => {
-//     const userEventDoc = await UserEventsModel.find({
-//       eventID: req.params.eventID,
-//     });
-//     res.send(userEventDoc);
-// });
-
-router.route("/userevents/:email").get(async (req, res) => {
-    const userEventDoc = await UserEventsModel.find({
-      creator: req.params.email,
-    });
-    // console.log(userEventDoc);
-    res.send(userEventDoc);
-});
-
 router.post('/userevents', (req, res) => {
-    const eventID = req.body.eventID
     const creator = req.body.creator;
     const title = req.body.title;
     const date = req.body.date;
@@ -34,10 +17,10 @@ router.post('/userevents', (req, res) => {
     const ticketLink = req.body.ticketLink;
     const onMe = req.body.onMe;
 
-    const newEvent = new UserEventsModel({eventID: eventID, creator: creator, title: title, date: date, location: location, price: price, description: description, ticketLink: ticketLink, onMe: onMe});
+    const newEvent = new UserEventsModel({creator: creator, title: title, date: date, location: location, price: price, description: description, ticketLink: ticketLink, onMe: onMe});
 
     newEvent.save()
-        .then(() => res.json(newEvent))
+        .then(() => res.json('User Event added!'))
         .catch(err => alert("Couldn't create user"));
 
 });

@@ -9,16 +9,9 @@ import Logout from "./pages/Logout";
 import CreateEvents from "./pages/CreateEvents";
 import SignupHub from "./Signup/SignupHub";
 import Login from "./Login/Login";
-
 import ExamplePage from "./ExamplePage/ExamplePage";
-import RequestsPage from "./Requests/RequestsPage";
-
-import ChatPage from "./Chat/ChatPage";
-
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-
-import Socket from "./Socket";
 function App() {
   return (
     <div>
@@ -32,7 +25,6 @@ function App() {
           <Route path="/logout" exact element={<Logout />} />
           <Route path="/create-events" exact element={<CreateEvents />} />
           <Route path="/bio-page" exact element={<BioPage/>} />
-          <Route path="/chats" exact element={<ChatPage />} />
           <Route
             path="/"
             element={
@@ -49,7 +41,6 @@ function App() {
             }
           />
           <Route path="/examplepage" element={<ExamplePage />} />
-          <Route path="/requests" element={<RequestsPage /> } />
         </Routes>
       </Router>
 
