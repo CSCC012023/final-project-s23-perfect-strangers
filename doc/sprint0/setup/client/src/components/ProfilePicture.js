@@ -109,7 +109,7 @@ const ProfilePicture = () => {
           ""
         )}
         <button
-          className={bioPageStyles.ProfilePicture}
+          className={bioPageStyles.ProfilePictureButton}
           onClick={() => setProfileClicked(true)}
         >
           <img
