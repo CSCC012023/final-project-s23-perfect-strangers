@@ -72,7 +72,6 @@ app.use(
   })
 );
 
-
 // Connect to MongoDB
 const dbUri = process.env.ATLAS_URI;
 mongoose.connect(dbUri);
