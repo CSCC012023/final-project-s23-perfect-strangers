@@ -48,10 +48,7 @@ This workflow lets us separate the working code from the previous iteration from
 
 ## Product
 
-
-
 #### Goals and tasks
-
 
  We will aim to implement the "request" functionality so that users can request event creators to attend events with them. We will also aim to give event creators the ability to manage requests and track attendance. We will also add more functionality to customize user profiles. We will do our best to complete the following user stories ordered from most to less important:
 
