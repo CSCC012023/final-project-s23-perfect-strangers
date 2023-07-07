@@ -1,13 +1,12 @@
 import Axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/common_styles.module.css";
 import React, { component } from "react";
 import { Link } from "react-router-dom";
-import { Icon } from 'react-icons-kit'
-import {eye} from 'react-icons-kit/ionicons/eye'
-import {eyeDisabled} from 'react-icons-kit/ionicons/eyeDisabled'
-
+import { Icon } from "react-icons-kit";
+import { eye } from "react-icons-kit/ionicons/eye";
+import { eyeDisabled } from "react-icons-kit/ionicons/eyeDisabled";
 
 //const jwt = require("jsonwebtoken");
 
@@ -20,22 +19,25 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
   const [visible, setVisible] = useState(false);
   const [pwdIcon, setIcon] = useState(eye);
 
+  useEffect(() => {
+    localStorage.removeItem("userPic");
+  }, []);
+
   const throwErrMsg = (emsg) => {
     // when user enters invalid info, this function is called
     setcantLogin(true); // it changes the Signup button to display the error msg
     setMsg(emsg);
   };
 
-  const handleVisible=()=>{
-    if (visible){
+  const handleVisible = () => {
+    if (visible) {
       setVisible(false);
       setIcon(eye);
-    }
-    else{
+    } else {
       setVisible(true);
       setIcon(eyeDisabled);
     }
-  }
+  };
 
   const navigate = useNavigate();
   const onSubmit = (event) => {
@@ -109,7 +111,8 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
               className={styles.inputField}
             />
             <i onClick={handleVisible}>
-              <Icon icon={pwdIcon} size={35}/></i>
+              <Icon icon={pwdIcon} size={35} />
+            </i>
           </div>
         </div>
 

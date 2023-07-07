@@ -15,9 +15,10 @@ router.route("/").post(async (req, res) => {
   if (emailAuth) {
     // Login successful
     try {
-      const userDetail = await UserDetailModel.findOne({
+      var userDetail = await UserDetailModel.findOne({
         email: emailAuth.email
       });
+      userDetail.image = "";
       const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {
         expiresIn: "2h",
       });
