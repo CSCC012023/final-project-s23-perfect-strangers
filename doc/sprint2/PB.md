@@ -21,20 +21,6 @@ As a logged-in user, I want to find events that match my interests by applying f
 ​
 Given an event searching user who is logged in, when they put in an event type in the event search bar, then they should be able to see a list of posted events matching that category in the search results.
 
-
-## User Story 7 (Modified)
-​
-As a logged-in user, I want to send requests to join events listed on the app, so that I can attend the event with the event creator.
-
-Given the user is logged in, when they request to join events created by other users, then they should be able to see their event request on their Requests Page.
-
-
-## User Story 8
-​
-As a logged-in user, I want to chat with the user I accepted to go to the event with so that I can communicate with them.
-
-Given that the user accepted the invitation, when the invitee and the user who extended the invitation send messages to each other, then these messages should be visible to both parties.
-
 ​
 ## User Story 9
 ​
@@ -48,35 +34,12 @@ Given the user is logged in, when they create an event, then​ they should have
 As a logged-in user, I want to edit event descriptions and pictures so that I can correct mistakes or improve the event listing.
 
 Given the user is logged in, when they navigate to an event page that they listed, then​ they should be able to edit the event descriptions and pictures associated with the event.
-
-​
-## User Story 11
-​
-As a logged-in user, I want to see the events I created so that I can better manage my events.
-
-Given the user is logged in, when they navigate to the “Listed events” tab in the “My events” page, then they should be able to see all the events they have created.
-
 ​
 ## User Story 12
 ​
 As a logged-in user, I want to see all the events I am scheduled to go to so that I can better track these events.
 
 Given the user is logged in, when they navigate to the “Attending events” tab in the “My events” page, then they should be able to see all the events they are scheduled to go to.
-
-​
-## User Story 13
-​
-As a logged-in user interested in attending an event, I want to see all the events I requested to attend so that I can track my requests better.
-
-Given the user is logged in, when they navigate to the “Sent” tab in the “Event Requests” page, then they should be able to see all the requests they sent. 
-
-​
-
-## User Story 14
-​
-As a logged-in user, I want to edit my profile picture so that other users get to see my latest pictures.
-
-Given the user is logged in, when the user completes editing their profile picture, then the user profile should reflect the change in profile picture.  
 
 ​
 ## User Story 16
