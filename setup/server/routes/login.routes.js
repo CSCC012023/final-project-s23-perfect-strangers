@@ -18,6 +18,8 @@ router.route("/").post(async (req, res) => {
       var userDetail = await UserDetailModel.findOne({
         email: emailAuth.email
       });
+      console.log("User Found " + userDetail);
+      userDetail.biography = "";
       userDetail.image = "";
       const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {
         expiresIn: "2h",
@@ -27,7 +29,7 @@ router.route("/").post(async (req, res) => {
       await emailAuth.save(); // Save the user with the updated token
       res.json({ user: emailAuth });
     } catch (error) {
-      throw new Error("Failed to generate token");
+      throw new Error("Failed to generate token", error);
     }
   } else {
     // Invalid credentials
