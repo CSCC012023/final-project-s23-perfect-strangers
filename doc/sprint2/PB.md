@@ -22,11 +22,11 @@ As a logged-in user, I want to find events that match my interests by applying f
 Given an event searching user who is logged in, when they put in an event type in the event search bar, then they should be able to see a list of posted events matching that category in the search results.
 
 
-## User Story 7
+## User Story 7 (Modified)
 ​
-As a logged-in user, I want to send invites to other people to accompany me to an event listed on the app, so that I have a buddy to attend the event with.   
+As a logged-in user, I want to send requests to join events listed on the app, so that I can attend the event with the event creator.
 
-Given the user is logged in, when they invite other users to accompany them to the event, then they should be able to see the invitation on their sent invitations list.
+Given the user is logged in, when they request to join events created by other users, then they should be able to see their event request on their Requests Page.
 
 
 ## User Story 8
