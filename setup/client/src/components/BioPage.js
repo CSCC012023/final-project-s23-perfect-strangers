@@ -217,9 +217,6 @@ const BioPage = (props) => {
       </div>
       <UserBio useremail={useremail} />
       <div className={styles.line} />
-      <div className={styles.horizontalContent}>
-        <div className={styles.squishHeading}>My Events</div>
-      </div>
       <div className={styles.wrapContainer}>
         {events &&
           events.map((event) => (
