@@ -49,6 +49,27 @@ const RequestItemForMe = ({ event }) => {
     }
   }
 
+  const rejectRequest  = (reqId) => {
+    try {
+      console.log(reqId);
+      Axios.patch(
+        "http://localhost:5000/requests/reject/" + reqId
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const acceptRequest  = (reqId) => {
+    try {
+      Axios.patch(
+        "http://localhost:5000/requests/accept/" + reqId
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   function makeFirstLetterCapital(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -77,6 +98,18 @@ const RequestItemForMe = ({ event }) => {
                 <div className={requestSentStyles.requestCardStatus}>
                   {makeFirstLetterCapital(req.status)}
                 </div>
+                <button
+                  className={styles.smallPurpleButton}
+                  onClick={() => rejectRequest(req._id)}
+                >
+                  Reject
+                </button>
+                <button
+                  className={styles.smallPurpleButton}
+                  onClick={() => acceptRequest(req._id)}
+                >
+                  Accept
+                </button>
               </li>
             ))}
           </ul>
@@ -110,3 +143,4 @@ const RequestItemForMe = ({ event }) => {
 };
 
 export default RequestItemForMe;
+
