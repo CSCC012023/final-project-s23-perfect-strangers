@@ -7,21 +7,21 @@ import Axios from "axios";
 
 import styles from "../styles/common_styles.module.css";
 
-import Popup from "../CommonItems/Popup";
+import StatelessPopup from "../CommonItems/StatelessPopup";
 
 const InterestPopUp = ({
   interestList,
   userInterestList,
   setUserInterestList,
   useremail,
-  children,
+  popupTrigger,
+  setPopupTrigger,
 }) => {
   const [selectedInterests, setSelectedInterests] = useState([]);
-  const [popupTrigger, setPopupTrigger] = useState(false);
 
   useEffect(() => {
     setSelectedInterests(userInterestList);
-  }, [userInterestList]);
+  }, [popupTrigger]);
 
   const toggleInterest = interest => {
     // function to add/remove interests form userInterestList
@@ -48,6 +48,9 @@ const InterestPopUp = ({
     await Axios.post("http://localhost:5000/api/userInterests/", {
       email: useremail,
       interestList: selectedInterests,
+    }).then(res => {
+      setUserInterestList(res.data.interestList);
+      setSelectedInterests(res.data.interestList);
     });
   }
 
@@ -68,51 +71,25 @@ const InterestPopUp = ({
   );
 
   return (
-    <>
-      {popupTrigger ? (
-        <div className={styles.popupbg}>
-          <div className={styles.popup}>
-            <div
-              style={{
-                marginLeft: "auto",
-                marginRight: "0",
-                width: "min-content",
-              }}
-            >
-              <button
-                onClick={() => setPopupTrigger(false)}
-                className={styles.smallTransparentButton}
-              >
-                x
-              </button>
-            </div>
-
-            <div className={styles.wrapContainer}>{globalInterestListUI}</div>
-            <div
-              style={{
-                marginRight: "10px",
-                marginLeft: "auto",
-                width: "fit-content",
-              }}
-            >
-              <button
-                className={`${styles.transparentButton}`}
-                onClick={event => {
-                  interestPopupCloseHandler();
-                }}
-              >
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-      <div onClick={() => setPopupTrigger(true)}>
-        {children}
+    <StatelessPopup trigger={popupTrigger} setTrigger={setPopupTrigger}>
+      <div className={styles.wrapContainer}>{globalInterestListUI}</div>
+      <div
+        style={{
+          marginRight: "10px",
+          marginLeft: "auto",
+          width: "fit-content",
+        }}
+      >
+        <button
+          className={`${styles.transparentButton}`}
+          onClick={event => {
+            interestPopupCloseHandler();
+          }}
+        >
+          Save changes
+        </button>
       </div>
-    </>
+    </StatelessPopup>
   );
 };
 
@@ -120,6 +97,7 @@ const UserInterests = ({ interestList, useremail }) => {
   // Get the user's interests from MongoDB
   // Limit to a maximum of 5 interests
   const [userInterestList, setUserInterestList] = useState([]);
+  const [popupTrigger, setPopupTrigger] = useState(false);
 
   useEffect(() => {
     console.log({ useremail, interestList });
@@ -156,10 +134,17 @@ const UserInterests = ({ interestList, useremail }) => {
         interestList={interestList}
         userInterestList={userInterestList}
         setUserInterestList={setUserInterestList}
-        useremail={useremail}>
-        <div className={styles.smallTransparentButton}>🖉</div>
-      </InterestPopUp>
-        
+        useremail={useremail}
+        popupTrigger={popupTrigger}
+        setPopupTrigger={setPopupTrigger}
+      ></InterestPopUp>
+
+      <div
+        className={styles.smallTransparentButton}
+        onClick={() => setPopupTrigger(true)}
+      >
+        🖉
+      </div>
     </div>
   );
 };
