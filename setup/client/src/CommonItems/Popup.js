@@ -31,7 +31,7 @@ const Popup = ({ content, popupState, children }) => {
             ) : (
                 ""
             )}
-            <div onClick={() => setIsOpen(true)}>
+            <div style={{cursor: "pointer"}} onClick={() => setIsOpen(true)}>
                 {children}
             </div>
         </>

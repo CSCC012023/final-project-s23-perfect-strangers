@@ -5,7 +5,7 @@ const EventItem = ({ event }) => {
 
   return (
     <>
-      <button
+      <div
         className={eventStyles.eventDetails}
       >
         <div className={eventStyles.eventPhoto}>
@@ -17,7 +17,7 @@ const EventItem = ({ event }) => {
           <p className={styles.smalltext}>{event.location}</p>
           <p className={styles.smalltext}>from ${event.price}</p>
         </div>
-      </button>
+      </div>
     </>
   );
 };
