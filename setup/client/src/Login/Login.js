@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Icon } from "react-icons-kit";
 import { eye } from "react-icons-kit/ionicons/eye";
 import { eyeDisabled } from "react-icons-kit/ionicons/eyeDisabled";
+import StatelessPopup from "../CommonItems/StatelessPopup";
 
 //const jwt = require("jsonwebtoken");
 
@@ -15,7 +16,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [cantLogin, setcantLogin] = useState(false);
-  const [Msg, setMsg] = useState("Login");
+  const [Msg, setMsg] = useState("");
   const [visible, setVisible] = useState(false);
   const [pwdIcon, setIcon] = useState(eye);
 
@@ -43,13 +44,6 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
   const onSubmit = (event) => {
     // called when the form is submitted
     event.preventDefault(); // don't update page
-
-    if (cantLogin) {
-      // if button is already showing an error, remove the error
-      setcantLogin(false);
-      setMsg("Login");
-      return;
-    }
 
     //     // preprocessing errors
 
@@ -89,6 +83,12 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
     <div className={styles.container}>
       <h1 className={styles.heading}>LOGIN</h1>
 
+      <StatelessPopup trigger={cantLogin} setTrigger={setcantLogin}>
+        <div className={styles.wrappableText}>
+          {Msg}
+        </div>
+      </StatelessPopup>
+
       <form onSubmit={onSubmit} className={styles.verticalContent}>
         <div className={styles.division}>
           <input
@@ -119,9 +119,9 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
         <div className={styles.division}>
           <button
             type="submit"
-            className={cantLogin ? styles.redButton : styles.purpleButton}
+            className={styles.purpleButton}
           >
-            {Msg}
+            Log in
           </button>
         </div>
 
