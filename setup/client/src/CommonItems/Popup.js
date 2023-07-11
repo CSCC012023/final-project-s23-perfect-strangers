@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styles from "../styles/common_styles.module.css";
 
-const Popup = ({ content, children }) => {
-    const [isOpen, setIsOpen] = useState(false);
+const Popup = ({ content, popupState, children }) => {
+    const [isOpen, setIsOpen] = useState(popupState === true);
 
     const c = content(() => setIsOpen(false));
 

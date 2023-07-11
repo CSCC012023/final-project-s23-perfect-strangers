@@ -1,11 +1,6 @@
 import eventStyles from "../styles/event.module.css";
 import styles from "../styles/common_styles.module.css";
 import { useState } from "react";
-
-import jwtDecode from "jwt-decode";
-
-import Axios from "axios";
-
 const EventItem = ({ event }) => {
 
   return (
