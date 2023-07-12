@@ -61,6 +61,19 @@ router.route("/by/:requester").get((req, res) => {
     .catch((err) => res.json({ err: err }));
 });
 
+router.route("/accepted/:requester").get((req, res) => {
+  RequestModel.find({ requester: req.params.requester, status: "accepted" })
+    .populate([
+      "requester",
+      {
+        path: "event",
+        populate: { path: "creator" },
+      },
+    ])
+    .then((r) => res.status(202).json(r))
+    .catch((err) => res.json({ err: err }));
+});
+
 // GET REQUEST: get a list of requests by who received them
 /* 
     //example usage
