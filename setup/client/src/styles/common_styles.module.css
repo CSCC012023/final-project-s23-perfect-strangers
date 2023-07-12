@@ -184,7 +184,6 @@ body {
     border-width: 0;
     padding: 0 10px;
     width: min-content;
-    transition-duration: 0.4s;
     white-space: nowrap;
     border-radius: 5px;
     text-decoration: none;

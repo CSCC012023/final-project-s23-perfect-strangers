@@ -4,8 +4,10 @@ import Axios from 'axios';
 import './CreateEvents.css';
 
 import styles from "../styles/common_styles.module.css";
-import ceStyles from "../styles/create_events.module.css";
+import ceStyles from "./CreateEvents.module.css";
 import jwt_decode from "jwt-decode";
+
+import EventTags from "./CreateEvents.Tags"
 
 
 function CreateEvents() {
@@ -18,6 +20,12 @@ function CreateEvents() {
     const [description, setDescription] = useState("");
     const [ticketLink, setTicketLink] = useState("");
     const [onMe, setOnMe] = useState(false);
+
+    // DEV-CGP-9
+    const [selectedTags, setSelectedTags] = useState(["Other"]);
+    const [popupTrigger, setPopupTrigger] = useState(false);
+    
+
     // const [createdUserEvents, setCreatedUserEvents] = useState([]);
 
     // didn't use any of this, but it can be revived if needed
@@ -62,7 +70,8 @@ function CreateEvents() {
         // post the event
         await Axios.post("http://localhost:5000/api/userevents", {
             eventID: newUUID,
-            creator, title, date, location, price, description, ticketLink, onMe
+            creator, title, date, location, price, description, ticketLink, onMe,
+            tags: selectedTags // DEV-CGP-9
         }).then(() => {
             alert("Event Created!");
         }).catch((err) => console.log(err));
@@ -77,6 +86,7 @@ function CreateEvents() {
             </div>
             <div>
                 <div className={styles.horizontalContent}>
+                    
                     <div className={styles.verticalContent}>
                         <div className={styles.division}>
                             <p className={styles.text}>Give the event a name</p><br />
@@ -85,6 +95,7 @@ function CreateEvents() {
                             <input type='text' className={styles.inputField} placeholder='name' onChange={(event) => setTitle(event.target.value)}></input>
                         </div>
                     </div>
+
                     <div className={styles.verticalContent}>
                         <div className={styles.division}>
                             <p className={styles.text}>When is your event?</p><br/>
@@ -94,6 +105,8 @@ function CreateEvents() {
                         </div>
                     </div>
                 </div>
+
+
                 <div className={styles.horizontalContent}>
                     <div className={styles.verticalContent}>
                         <div className={styles.division}>
@@ -132,14 +145,34 @@ function CreateEvents() {
                         </div>
                     </div>
                 </div>
-                <div className={styles.division}>
+                <div className={styles.horizontalContent}>
                     <div className={styles.verticalContent}>
-                        <p className={styles.text}>Describe the event for others</p><br/>
-                        <textarea className={styles.inputField} style={{width: '500px'}}placeholder="type of event, genre of music..." onChange={(event) => setDescription(event.target.value)}></textarea>
+                        <div className={styles.division}>
+                          <p className={styles.text}>Describe the event for others</p><br/>
+                        </div>
+                        <div className={styles.division}>
+                          <textarea className={styles.inputField} style={{width: '500px'}}placeholder="type of event, genre of music..." onChange={(event) => setDescription(event.target.value)}></textarea>
+                        </div>
                     </div>
+
+                    {/* DEV-CGP-9 */}
+                    <div className={styles.verticalContent}>
+                      <div className={styles.division} onClick={(e) => {setPopupTrigger(true)}}>
+                        <p className={styles.text}>Event Tags</p><br/>
+                      </div>
+                      
+                      <div className={ceStyles.division}>
+                        <EventTags selectedTags={selectedTags} setSelectedTags={setSelectedTags}
+                            popupTrigger={popupTrigger} setPopupTrigger={setPopupTrigger}
+                        />
+                      </div>
+                    </div>
+
                 </div>
                 <div className={styles.division}>
-                    <button className={styles.purpleButton} onClick={createUserEvent}>Create Event</button>
+                    <button className={styles.purpleButton} onClick={createUserEvent}>
+                        Create Event
+                    </button>
                 </div>
 
             </div>
