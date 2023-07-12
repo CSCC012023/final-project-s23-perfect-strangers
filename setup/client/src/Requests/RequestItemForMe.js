@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import requestSentStyles from "../styles/RequestsSent.module.css";
 import eventStyles from "../styles/event.module.css";
 
+import jwt_decode from "jwt-decode";
+
 import Axios from "axios";
 
 const RequestItemForMe = ({ event }) => {
@@ -62,10 +64,31 @@ const RequestItemForMe = ({ event }) => {
 
   const acceptRequest  = (reqId) => {
     try {
-      Axios.patch(
-        "http://localhost:5000/requests/accept/" + reqId
-      );
-    } catch (e) {
+
+      // Get username and password
+      const token = localStorage.getItem("token")
+      const useremail = jwt_decode(token).userDetail.email;
+      const username = jwt_decode(token).userDetail.username;
+
+      // Post the chat room
+      var participants = [useremail, requestData[0].requester.email];
+      participants.sort(function (a, b) {
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+      });
+
+      Axios.post("http://localhost:5000/api/chats/", {
+        participants: [useremail, requestData[0].requester.email],
+        participantsUsernames: [username, requestData[0].requester.username],
+        chatHistory: [],
+        roomID: participants[0] + participants[1]
+      }).then((response) => {console.log(response) })
+        .catch((err) => console.log(err));
+
+      Axios.patch("http://localhost:5000/requests/accept/" + reqId);
+    } 
+    catch (e) {
       console.log(e);
     }
   }
@@ -125,7 +148,7 @@ const RequestItemForMe = ({ event }) => {
         className={eventStyles.eventDetails}
         onClick={() => {
           setEventClicked(true);
-          fetchRequest().then((data) => setRequestData(data));
+          fetchRequest().then((data) => {setRequestData(data); console.log(requestData);});
         }}
       >
         <div className={eventStyles.eventPhoto}>
