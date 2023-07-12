@@ -9,9 +9,17 @@ const EventsFilter = ({
   selectedTags, setSelectedTags, 
   popupTrigger, setPopupTrigger, getEventsList}) => {
 
+  const deleteFilterOnClick = (e, updatedFilters) => {
+    localStorage.setItem("tags", JSON.stringify(updatedFilters));
+    getEventsList(false); // Reloads List of events
+    setSelectedTags(updatedFilters); // Reloads displayed filters
+  }
+
   const selectedFiltersUI = selectedTags.map((currfilter, filterIndex) => {
     return (
-      <div className={styles.smallPurpleButton} key={filterIndex}>
+      <div className={styles.smallPurpleButton} key={filterIndex}
+        onClick={(e) => deleteFilterOnClick(e, selectedTags.filter(tag => tag !== currfilter))}
+      >
         {currfilter}
       </div>
     );

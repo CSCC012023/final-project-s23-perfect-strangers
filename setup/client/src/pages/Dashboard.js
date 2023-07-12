@@ -8,6 +8,7 @@ import EventItem from "./EventItem";
 import EventsFilter from "./EventsFilter";
 
 const Dashboard = () => {
+
   const [events, setEvents] = useState([]);
 
   // DEV-CGP-9
@@ -20,8 +21,7 @@ const Dashboard = () => {
     if (localTags !== null)
       setSelectedTags(JSON.parse(localTags));
 
-    /* Get events list while accounting for query tags if any */
-    getEventsList(false);
+    getEventsList(false); // Get events list accounting for query tags
   }, []);
 
   const getEventsList = (placeHolder) => {
@@ -35,12 +35,10 @@ const Dashboard = () => {
       })
     }
     else{
-      // Gets all events
       Axios.get("http://localhost:5000/api/userevents").then((response) => {
         setEvents(response.data);
       })
     }
-
     setPopupTrigger(placeHolder); // Closes the popup
   }
 
@@ -70,7 +68,7 @@ const Dashboard = () => {
 
       {/* DEV-CGP-9 */}
       <div className={styles.Division}>
-        <div className={styles.horizontalContent}>
+        <div className={styles.horizontalContent} style={{marginLeft: 10}}>
           <EventsFilter 
             selectedTags={selectedTags} setSelectedTags={setSelectedTags} getEventsList={getEventsList}
             popupTrigger={popupTrigger} setPopupTrigger={getEventsList}       

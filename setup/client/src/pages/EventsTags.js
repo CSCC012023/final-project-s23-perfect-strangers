@@ -22,12 +22,10 @@ const EventTagsPopup = ({ popupTrigger, setPopupTrigger, selectedTags, setSelect
 
     const tagsMasterlistUI = tagsMasterlist.map((tag, tagIndex) => {
         return (
-          <div className={(selectedTags.includes(tag) === true)
-                  ? styles.smallPurpleButton 
+          <div className={(selectedTags.includes(tag) === true) ? styles.smallPurpleButton 
                   : styles.smallTransparentButton
               }
-              onClick={()=> toggleTag(tag)}
-              key={tagIndex}
+              onClick={()=> toggleTag(tag)} key={tagIndex}
           >
             {tag}
           </div>
@@ -40,7 +38,7 @@ const EventTagsPopup = ({ popupTrigger, setPopupTrigger, selectedTags, setSelect
       setPopupTrigger(false);
     }
 
-    return popupTrigger ? (
+    return popupTrigger && (
       <div className={ceStyles.popupbg}>
         <div className={ceStyles.popup}>
           <div style={{marginRight:"10px", marginLeft: "auto", width:"fit-content"}}>
@@ -48,19 +46,14 @@ const EventTagsPopup = ({ popupTrigger, setPopupTrigger, selectedTags, setSelect
               Save Tags
             </button>
           </div>
-
           <br />
-
           <div className={styles.wrapContainer}>
               {tagsMasterlistUI}
           </div>
-
         </div>
       </div>
-    ) : ( "" );
+    );
 };
-
-
 
 const EventTags = ({selectedTags, setSelectedTags, popupTrigger, setPopupTrigger}) => {
   const eventTagsUI = selectedTags.map((tag, tagIndex) => {
