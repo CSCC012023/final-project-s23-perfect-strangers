@@ -7,8 +7,7 @@ import styles from "../styles/common_styles.module.css";
 import ceStyles from "./CreateEvents.module.css";
 import jwt_decode from "jwt-decode";
 
-import EventTags from "./CreateEvents.Tags"
-
+import {EventTags} from "./EventsTags"
 
 function CreateEvents() {
     const token = localStorage.getItem('token');
@@ -65,8 +64,10 @@ function CreateEvents() {
 
     async function createUserEvent() {
         // create a unique ID for the event
-        const newUUID = uuidv4();//uuid();
-        
+        const newUUID = uuidv4(); //uuid();
+
+        localStorage.setItem("tags", JSON.stringify([])); // DEV-CGP-9
+
         // post the event
         await Axios.post("http://localhost:5000/api/userevents", {
             eventID: newUUID,

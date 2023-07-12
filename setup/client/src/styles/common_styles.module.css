@@ -84,6 +84,18 @@ body {
     text-align: center;
 }
 
+/* DEV-CGP-9 */
+/* Displaying large Messages */
+.largeMessage{
+    font-family: 'Advent Pro', sans-serif;
+    color: white;
+    flex: 10;
+    font-size: 50px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+}
+
 /* style for displaying vertically aligned content under the heading in the centre of the screen */
 .verticalContent {
     display: flex;

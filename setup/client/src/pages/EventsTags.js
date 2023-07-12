@@ -35,11 +35,16 @@ const EventTagsPopup = ({ popupTrigger, setPopupTrigger, selectedTags, setSelect
       }
     );
 
+    const saveChanges = () => {
+      localStorage.setItem("tags", JSON.stringify(selectedTags));
+      setPopupTrigger(false);
+    }
+
     return popupTrigger ? (
       <div className={ceStyles.popupbg}>
         <div className={ceStyles.popup}>
           <div style={{marginRight:"10px", marginLeft: "auto", width:"fit-content"}}>
-            <button className={styles.transparentButton} onClick={(event) => { setPopupTrigger(false)}}>
+            <button className={styles.transparentButton} onClick={(event) => { saveChanges()}}>
               Save Tags
             </button>
           </div>
@@ -58,7 +63,6 @@ const EventTagsPopup = ({ popupTrigger, setPopupTrigger, selectedTags, setSelect
 
 
 const EventTags = ({selectedTags, setSelectedTags, popupTrigger, setPopupTrigger}) => {
-
   const eventTagsUI = selectedTags.map((tag, tagIndex) => {
       return (
         <div className={styles.smallPurpleButton} key={tagIndex}>
@@ -85,4 +89,7 @@ const EventTags = ({selectedTags, setSelectedTags, popupTrigger, setPopupTrigger
   );
 };
 
-export default EventTags;
+export {
+  EventTags,
+  EventTagsPopup,
+}
