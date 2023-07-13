@@ -5,9 +5,10 @@ import styles from "../styles/common_styles.module.css";
 
 import { Link } from "react-router-dom";
 
-import { Icon } from 'react-icons-kit'
-import {eye} from 'react-icons-kit/ionicons/eye'
-import {eyeDisabled} from 'react-icons-kit/ionicons/eyeDisabled'
+import { Icon } from "react-icons-kit";
+import { eye } from "react-icons-kit/ionicons/eye";
+import { eyeDisabled } from "react-icons-kit/ionicons/eyeDisabled";
+import StatelessPopup from "../CommonItems/StatelessPopup";
 
 const Signup = ({ signedUpCallback, loginRedirect }) => {
   // signedUpCallBack = (JSON object) => {...do stuff, doesn't care for the return value}
@@ -27,40 +28,31 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [cantSignUp, setCantSignUp] = useState(false);
-  const [Msg, setMsg] = useState("Sign Up"); // state for the content of the sign in button
+  const [Msg, setMsg] = useState(""); // state for the content of the sign in button
   const [visible, setVisible] = useState(false);
   const [pwdIcon, setIcon] = useState(eye);
 
-  const throwErrMsg = (emsg) => {
+  const throwErrMsg = emsg => {
     // when user enters invalid info, this function is called
     setCantSignUp(true); // it changes the Signup button to display the error msg
     setMsg(emsg);
   };
 
-  const handleVisible=()=>{
-    if (visible){
+  const handleVisible = () => {
+    if (visible) {
       setVisible(false);
       setIcon(eye);
-    }
-    else{
+    } else {
       setVisible(true);
       setIcon(eyeDisabled);
     }
-  }
+  };
 
-  const onSubmit = (event) => {
+  const onSubmit = event => {
     // called when the form is submitted
     event.preventDefault(); // don't update page
 
-    if (cantSignUp) {
-      // if button is already showing an error, remove the error
-      setCantSignUp(false);
-      setMsg("Sign Up");
-      return;
-    }
-
     // preprocessing errors
-
     if (email === "") {
       throwErrMsg("Please enter a valid email address.");
       return;
@@ -73,12 +65,11 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
     }
 
     // attempt post operation
-
     Axios.post("http://localhost:5000/email-auth/", {
       email: email,
       password: password,
       username: username,
-    }).then((res) => {
+    }).then(res => {
       if (res.data.msg === "user created") {
         // new user is created
 
@@ -106,6 +97,10 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
     <div className={styles.container}>
       <h1 className={styles.heading}>SIGN UP</h1>
 
+      <StatelessPopup trigger={cantSignUp} setTrigger={setCantSignUp}>
+        <div className={styles.wrappableText}>{Msg}</div>
+      </StatelessPopup>
+
       <form onSubmit={onSubmit} className={styles.verticalContent}>
         <div className={styles.division}>
           <input
@@ -113,7 +108,7 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
             value={email}
             placeholder="Email"
             disabled={cantSignUp}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             className={styles.inputField}
           />
         </div>
@@ -124,11 +119,12 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
               value={password}
               placeholder="Password"
               disabled={cantSignUp}
-              onChange={(e) => setPassword(e.target.value)}
               className={styles.inputField}
+              onChange={e => setPassword(e.target.value)}
             />
             <i onClick={handleVisible}>
-              <Icon icon={pwdIcon} size={35}/></i>
+              <Icon icon={pwdIcon} size={35} />
+            </i>
           </div>
         </div>
         <div className={styles.division}>
@@ -137,17 +133,14 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
             value={username}
             placeholder="Username"
             disabled={cantSignUp}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
             className={styles.inputField}
           />
         </div>
 
         <div className={styles.division}>
-          <button
-            type="submit"
-            className={cantSignUp ? styles.redButton : styles.purpleButton}
-          >
-            {Msg}
+          <button type="submit" className={styles.purpleButton}>
+            Sign up
           </button>
         </div>
       </form>

@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const interestSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: true,
+    required: [true, "email is required"],
     unique: true,
     minlength: 2,
   },
   interestList: {
     type: [String],
-    required: true,
+    required: [true, "interests list is required"],
   },
 });
 

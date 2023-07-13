@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+<<<<<<< HEAD
 import Axios from "axios";
 import styles from "../styles/common_styles.module.css";
 
@@ -11,85 +12,114 @@ const InterestPopUp = ({interestList, useremail,
   }) => {
 
   const toggleInterest = (interest) => {  // function to add/remove interests form userInterestList
-    console.log(`toggling ${interest}`);
-    if (userInterestList.includes(interest) === true) {
-      setUserInterestList(prevList => prevList.filter(i => i !== interest));
-    } else {
-      setUserInterestList(prevList => [...prevList, interest]);
-    }
-  } 
+=======
 
+import Axios from "axios";
+
+import styles from "../styles/common_styles.module.css";
+
+import StatelessPopup from "../CommonItems/StatelessPopup";
+
+const InterestPopUp = ({
+  interestList,
+  userInterestList,
+  setUserInterestList,
+  useremail,
+  popupTrigger,
+  setPopupTrigger,
+}) => {
+  const [selectedInterests, setSelectedInterests] = useState([]);
+
+  useEffect(() => {
+    setSelectedInterests(userInterestList);
+  }, [popupTrigger]);
+
+  const toggleInterest = interest => {
+    // function to add/remove interests form userInterestList
+>>>>>>> develop
+    console.log(`toggling ${interest}`);
+    if (selectedInterests.includes(interest) === true) {
+      setSelectedInterests(prevList => prevList.filter(i => i !== interest));
+    } else {
+      setSelectedInterests(prevList => [...prevList, interest]);
+    }
+  };
+
+<<<<<<< HEAD
   // function to handle closing of popup
   async function interestPopupCloseHandler() {
+=======
+  async function interestPopupCloseHandler() {
+    // function to handle closing of popup
+>>>>>>> develop
     setPopupTrigger(false);
 
+    setUserInterestList(selectedInterests);
 
-    await Axios.delete("http://localhost:5000/api/userInterests/" + useremail).then(
-      (response) => {
-        console.log("User Interest document deleted!");
-      }
-    );
+    await Axios.delete(
+      "http://localhost:5000/api/userInterests/" + useremail
+    ).then(response => {
+      console.log({ msg: "User Interest document deleted!", response });
+    });
 
     await Axios.post("http://localhost:5000/api/userInterests/", {
-
       email: useremail,
-      interestList: userInterestList,
+      interestList: selectedInterests,
+    }).then(res => {
+      setUserInterestList(res.data.interestList);
+      setSelectedInterests(res.data.interestList);
     });
   }
 
-
   const globalInterestListUI = interestList.map(
-    (interestItem, interestIndex) => {
-      return (
-        <div className={
-          (userInterestList.includes(interestItem) === true)
-          ? styles.smallPurpleButton 
-          : styles.smallTransparentButton}
-        onClick={()=> toggleInterest(interestItem)}
-        key={interestIndex}>
-          {interestItem}
-        </div>
-      );
-    }
+    (interestItem, interestIndex) => (
+      <div
+        className={
+          selectedInterests.includes(interestItem) === true
+            ? styles.smallPurpleButton
+            : styles.smallTransparentButton
+        }
+        onClick={() => toggleInterest(interestItem)}
+        key={interestIndex}
+      >
+        {interestItem}
+      </div>
+    )
   );
 
-
-  return popupTrigger ? (
-    <div className={styles.popupbg}>
-      <div className={styles.popup}>
-        <div style={{marginRight:"10px", marginLeft: "auto", width:"fit-content"}}>
-          <button
-            className={`${styles.transparentButton}`}
-            onClick={(event) => {
-              interestPopupCloseHandler();
-            }}
-          >
-            Save changes
-          </button>
-        </div>
-
-        <br />
-
-
-        <div className={styles.wrapContainer}>{globalInterestListUI}</div>
+  return (
+    <StatelessPopup trigger={popupTrigger} setTrigger={setPopupTrigger}>
+      <div className={styles.wrapContainer}>{globalInterestListUI}</div>
+      <div
+        style={{
+          marginRight: "10px",
+          marginLeft: "auto",
+          width: "fit-content",
+        }}
+      >
+        <button
+          className={`${styles.transparentButton}`}
+          onClick={event => {
+            interestPopupCloseHandler();
+          }}
+        >
+          Save changes
+        </button>
       </div>
-    </div>
-  ) : (
-    ""
+    </StatelessPopup>
   );
 };
 
-
-const UserInterests = ({interestList, useremail}) => {
-
+const UserInterests = ({ interestList, useremail }) => {
   // Get the user's interests from MongoDB
   // Limit to a maximum of 5 interests
   const [userInterestList, setUserInterestList] = useState([]);
-
+  const [popupTrigger, setPopupTrigger] = useState(false);
 
   useEffect(() => {
+    console.log({ useremail, interestList });
     Axios.get("http://localhost:5000/api/userInterests/" + useremail)
-      .then((response) => {
+      .then(response => {
         // console.log("kikos");
         console.log(response);
         if (response.length === 0) {
@@ -98,12 +128,10 @@ const UserInterests = ({interestList, useremail}) => {
           setUserInterestList(response.data[0].interestList);
         }
       })
-      .catch((error) => {
+      .catch(error => {
         setUserInterestList([]);
       });
   }, []);
-
-  const [popupTrigger, setPopupTrigger] = useState(false);
 
   const userinterestListUI = userInterestList.map(
     (interestItem, interestIndex) => {
@@ -119,18 +147,21 @@ const UserInterests = ({interestList, useremail}) => {
     <div className={styles.horizontalContent}>
       {userinterestListUI}
 
-      <button 
+      <InterestPopUp
+        interestList={interestList}
+        userInterestList={userInterestList}
+        setUserInterestList={setUserInterestList}
+        useremail={useremail}
+        popupTrigger={popupTrigger}
+        setPopupTrigger={setPopupTrigger}
+      ></InterestPopUp>
+
+      <div
         className={styles.smallTransparentButton}
         onClick={() => setPopupTrigger(true)}
       >
-      🖉
-      </button>
-
-      <InterestPopUp
-        interestList={interestList} useremail={useremail}
-        userInterestList={userInterestList} setUserInterestList={setUserInterestList}
-        popupTrigger={popupTrigger} setPopupTrigger={setPopupTrigger}
-      />
+        🖉
+      </div>
     </div>
   );
 };
