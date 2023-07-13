@@ -1,18 +1,7 @@
 import React from "react";
+
 import { useState } from "react";
 import { useEffect } from "react";
-<<<<<<< HEAD
-import Axios from "axios";
-import styles from "../styles/common_styles.module.css";
-
-
-const InterestPopUp = ({interestList, useremail,
-    userInterestList,  setUserInterestList,
-    popupTrigger, setPopupTrigger,
-  }) => {
-
-  const toggleInterest = (interest) => {  // function to add/remove interests form userInterestList
-=======
 
 import Axios from "axios";
 
@@ -36,7 +25,6 @@ const InterestPopUp = ({
 
   const toggleInterest = interest => {
     // function to add/remove interests form userInterestList
->>>>>>> develop
     console.log(`toggling ${interest}`);
     if (selectedInterests.includes(interest) === true) {
       setSelectedInterests(prevList => prevList.filter(i => i !== interest));
@@ -45,13 +33,8 @@ const InterestPopUp = ({
     }
   };
 
-<<<<<<< HEAD
-  // function to handle closing of popup
-  async function interestPopupCloseHandler() {
-=======
   async function interestPopupCloseHandler() {
     // function to handle closing of popup
->>>>>>> develop
     setPopupTrigger(false);
 
     setUserInterestList(selectedInterests);
