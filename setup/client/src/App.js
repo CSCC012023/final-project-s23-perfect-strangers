@@ -17,6 +17,8 @@ import ChatPage from "./Chat/ChatPage";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+
+import Socket from "./Socket";
 function App() {
   return (
     <div>
