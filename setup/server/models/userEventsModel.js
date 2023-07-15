@@ -36,11 +36,6 @@ const eventSchema = new mongoose.Schema({
     onMe: {
         type: Boolean,
         required: false,
-    },
-    // For DEV-CGP-9
-    tags: {
-        type: [String],
-        required: true,
     }
 });
 
