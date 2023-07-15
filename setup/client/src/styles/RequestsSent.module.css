@@ -38,3 +38,53 @@
     height: 100px ;
     text-align: center;
 }
+
+.requestButtons button{
+    display:block;
+}
+
+.acceptButton {
+    font-family: 'Advent Pro', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    background-color: #AD03DE;
+    color: #FFFFFF;
+    border-width: 0;
+    padding: 0 10px;
+    width: min-content;
+    transition-duration: 0.4s;
+    white-space: nowrap;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 10px;
+    cursor: pointer;
+    position: absolute;
+    right:    0;
+    bottom:   0;
+}
+.acceptButton:hover {
+    background-color: #df6cff;
+}
+
+.rejectButton {
+    font-family: 'Advent Pro', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    background-color: #AD03DE;
+    color: #FFFFFF;
+    border-width: 0;
+    padding: 0 10px;
+    width: min-content;
+    transition-duration: 0.4s;
+    white-space: nowrap;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 10px;
+    cursor: pointer;
+    position: absolute;
+    right:    0;
+    top:   0;
+}
+.rejectButton:hover {
+    background-color: #df6cff;
+}

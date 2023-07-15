@@ -43,7 +43,7 @@ const RequestItemForMe = ({ event }) => {
   async function fetchRequest() {
     try {
       const res = await Axios.get(
-        "http://localhost:5000/requests/event/" + event._id
+        "http://localhost:5000/requests/pending/" + event._id
       );
       return res.data;
     } catch (e) {
@@ -121,18 +121,21 @@ const RequestItemForMe = ({ event }) => {
                 <div className={requestSentStyles.requestCardStatus}>
                   {makeFirstLetterCapital(req.status)}
                 </div>
-                <button
-                  className={styles.smallPurpleButton}
-                  onClick={() => rejectRequest(req._id)}
-                >
-                  Reject
-                </button>
-                <button
-                  className={styles.smallPurpleButton}
-                  onClick={() => acceptRequest(req._id)}
-                >
-                  Accept
-                </button>
+                <div className={requestSentStyles.requestButtons}>
+                  <button
+                    className={requestSentStyles.rejectButton}
+                    onClick={() => rejectRequest(req._id)}
+                  >
+                    Reject
+                  </button>
+                  <button
+                    className={requestSentStyles.acceptButton}
+                    onClick={() => acceptRequest(req._id)}
+                  >
+                    Accept
+                  </button>
+                </div>
+                
               </li>
             ))}
           </ul>

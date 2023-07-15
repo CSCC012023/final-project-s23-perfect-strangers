@@ -112,6 +112,19 @@ router.route("/event/:event").get((req, res) => {
     .catch((err) => res.status(400).json({ err: err }));
 });
 
+router.route("/pending/:event").get((req, res) => {
+  RequestModel.find({ event: req.params.event, status: "pending" })
+    .populate([
+      "requester",
+      {
+        path: "event",
+        populate: { path: "creator" },
+      },
+    ])
+    .then((r) => res.status(202).json(r))
+    .catch((err) => res.status(400).json({ err: err }));
+});
+
 /* 
 
 // POST REQUEST: get a list of requests based on a filter passed in the body
