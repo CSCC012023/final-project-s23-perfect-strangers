@@ -1,5 +1,6 @@
 import styles from "../styles/common_styles.module.css";
 import ceStyles from "./CreateEvents.module.css";
+import StatelessPopup from "../CommonItems/StatelessPopup";
 
 const EventTagsPopup = ({ popupTrigger, setPopupTrigger, selectedTags, setSelectedTags}) => {
 
@@ -22,7 +23,9 @@ const EventTagsPopup = ({ popupTrigger, setPopupTrigger, selectedTags, setSelect
 
     const tagsMasterlistUI = tagsMasterlist.map((tag, tagIndex) => {
         return (
-          <div className={(selectedTags.includes(tag) === true) ? styles.smallPurpleButton 
+          <div className={
+                  (selectedTags.includes(tag) === true) 
+                  ? styles.smallPurpleButton 
                   : styles.smallTransparentButton
               }
               onClick={()=> toggleTag(tag)} key={tagIndex}
@@ -38,20 +41,15 @@ const EventTagsPopup = ({ popupTrigger, setPopupTrigger, selectedTags, setSelect
       setPopupTrigger(false);
     }
 
-    return popupTrigger && (
-      <div className={ceStyles.popupbg}>
-        <div className={ceStyles.popup}>
-          <div style={{marginRight:"10px", marginLeft: "auto", width:"fit-content"}}>
+    return(
+      <StatelessPopup trigger={popupTrigger} setTrigger={setPopupTrigger}>
+        <div className={styles.wrapContainer}>{tagsMasterlistUI}</div>
+        <div style={{ marginRight: "10px", marginLeft: "auto", width: "fit-content" }} >
             <button className={styles.transparentButton} onClick={(event) => { saveChanges()}}>
               Save Tags
             </button>
-          </div>
-          <br />
-          <div className={styles.wrapContainer}>
-              {tagsMasterlistUI}
-          </div>
         </div>
-      </div>
+      </StatelessPopup>
     );
 };
 
