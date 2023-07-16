@@ -1,6 +1,7 @@
 const router = require("express").Router();
 let EmailAuthModel = require("../models/emailAuth.model");
 let UserDetailModel = require("../models/userDetails.model");
+let BusinessDetailsModel = require("../models/businessDetails.model");
 const jwt = require("jsonwebtoken");
 
 router.route("/").post(async (req, res) => {
@@ -12,7 +13,27 @@ router.route("/").post(async (req, res) => {
     password: password,
   });
 
-  if (emailAuth) {
+  if (emailAuth.isBusiness === true) {
+    // business login
+    try {
+      var businessDetail = await BusinessDetailsModel.findOne({
+        email: emailAuth.email
+      });
+      console.log(businessDetail);
+      businessDetail.biography = ""
+      businessDetail.image = ""
+      const token = jwt.sign({ id: businessDetail._id, businessDetail}, "shhhhh", {
+        expiresIn: "2h",
+      });
+      console.log("Business saved " + token);
+      businessDetail.token = token;
+      await businessDetail.save();
+      res.json({user: businessDetail});
+    } catch (error) {
+      throw new Error("Failed to generate token", error);
+    }
+  }
+  else if (emailAuth) {
     // Login successful
     try {
       var userDetail = await UserDetailModel.findOne({
@@ -25,9 +46,9 @@ router.route("/").post(async (req, res) => {
         expiresIn: "2h",
       });
       console.log("User Saved " + token);
-      emailAuth.token = token;
-      await emailAuth.save(); // Save the user with the updated token
-      res.json({ user: emailAuth });
+      userDetail.token = token;
+      await userDetail.save(); // Save the user with the updated token
+      res.json({ user: userDetail });
     } catch (error) {
       throw new Error("Failed to generate token", error);
     }
