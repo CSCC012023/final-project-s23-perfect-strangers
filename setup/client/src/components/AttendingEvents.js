@@ -22,36 +22,14 @@ function AttendingEvents() {
 
     return (
 
-        <div className={styles.rightContainer}>
-        <div className={styles.horizontalContent}>
-            <div className={styles.squishHeading}>
-                EVENTS
-            </div>
-            <div className={styles.smallDivision}>
-            <div className={styles.verticalContent}>
-                <input 
-                type="text" 
-                placeholder="Search"
-                className={styles.inputMin}>
-                </input>
-                <Link 
-                to="/create-events">
-                <button className={styles.purpleButton}>
-                    + Create
-                </button>
-                </Link>
-            </div>
-            </div>
-        </div>
+        
         <div className={styles.wrapContainer}>
             {requests &&
-            requests.map((event) => (
-                <div key={event._id} style={{margin: "10px"}}>
-                <EventItem event={event.event} />
-                </div>
-            ))}
-        </div>
-
+                requests.map((event) => (
+                    <div key={event._id} style={{margin: "10px"}}>
+                        <EventItem event={event.event} />
+                    </div>
+                ))}
         </div>
 
     );

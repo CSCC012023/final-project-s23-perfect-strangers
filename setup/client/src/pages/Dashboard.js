@@ -8,6 +8,8 @@ import EventItem from "./EventItem";
 import Popup from "../CommonItems/Popup";
 
 import jwtDecode from "jwt-decode";
+import AttendingEvents from "../components/AttendingEvents";
+import UpcomingEvents from "../components/UpcomingEvents";
 
 import EventsFilter from "./EventsFilter";
 
