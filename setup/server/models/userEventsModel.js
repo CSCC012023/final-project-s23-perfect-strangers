@@ -36,6 +36,10 @@ const eventSchema = new mongoose.Schema({
     onMe: {
         type: Boolean,
         required: false,
+    },
+    image: {
+        data: Buffer,
+        contentType: String
     }
 });
 

@@ -12,10 +12,24 @@ import jwtDecode from "jwt-decode";
 function Dashboard() {
     const [events, setEvents] = useState([]);
 
+    function _arrayBufferToBase64(buffer) {
+        var binary = "";
+        var bytes = new Uint8Array(buffer);
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        return btoa(binary);
+    }
+
     useEffect(() => {
         Axios.get("http://localhost:5000/api/userevents").then(response => {
             setEvents(response.data);
             console.log(response.data);
+            localStorage.setItem(
+                "eventPic",
+                _arrayBufferToBase64(response.data.image.data.data)
+            );
         });
     }, []);
 

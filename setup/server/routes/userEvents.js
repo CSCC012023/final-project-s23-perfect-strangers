@@ -1,13 +1,31 @@
 const router = require("express").Router();
 let UserEventsModel = require("../models/userEventsModel");
 
+const multer = require('multer');
+const fs = require('fs');
+const multerStorage = multer. diskStorage( {
+  destination: (req, file,cb) => {
+    cb(null, '../server/uploads');
+  },
+  
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1]
+    cb(null, file.originalname)
+  }
+});
+
+const upload = multer ({storage: multerStorage});
+
 router.get("/userevents", (req, res) => {
   UserEventsModel.find()
     .then((userEvents) => res.json(userEvents))
     .catch((err) => res.status(401).json("Error: " + err));
 });
 
-router.post("/userevents", (req, res) => {
+router.post("/userevents", upload.single("eventPic"), async (req, res) => {
+  console.log("At least the request is made");
+  console.log(req.file.filename);
+
   const creator = req.body.creator;
   const title = req.body.title;
   const date = req.body.date;
@@ -16,6 +34,10 @@ router.post("/userevents", (req, res) => {
   const description = req.body.description;
   const ticketLink = req.body.ticketLink;
   const onMe = req.body.onMe;
+  const image = {
+    data: fs.readFileSync('../server/uploads/' + req.file.filename),
+    contentType: "image/png",
+  };
 
   const newEvent = new UserEventsModel({
     creator: creator,
@@ -26,6 +48,7 @@ router.post("/userevents", (req, res) => {
     description: description,
     ticketLink: ticketLink,
     onMe: onMe,
+    image: image,
   });
 
   newEvent
@@ -61,5 +84,15 @@ router.route("/myevent/:creator").get(async (req, res) => {
       res.send({ error: "Event does not exist" });
     }
   });
+
+// router.route("/image/:creator").get(async (req, res) => {
+//   try {
+//     const event = await UserEventsModel.findOne({ creator: req.params.creator });
+//     res.send(event);
+//   } catch {
+//     res.status(404);
+//     res.send({ error: "Event does not exist" });
+//   }
+// });
 
 module.exports = router;

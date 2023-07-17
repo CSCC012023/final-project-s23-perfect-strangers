@@ -9,7 +9,10 @@ const EventItem = ({ event }) => {
         className={eventStyles.eventDetails}
       >
         <div className={eventStyles.eventPhoto}>
-          <p>Photo</p>
+        <img
+            src={`data:image/png;base64,${localStorage.getItem("eventPic")}`}
+            alt="No photo"
+        />
         </div>
         <div className={styles.verticalContent}>
           <h1 className={styles.boldtext}>{event.title}</h1>
