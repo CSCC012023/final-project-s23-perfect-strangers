@@ -5,16 +5,9 @@ import styles from "../styles/common_styles.module.css";
 
 import { Link } from "react-router-dom";
 
-<<<<<<< HEAD
 import { Icon } from 'react-icons-kit'
 import {eye} from 'react-icons-kit/ionicons/eye'
 import {eyeDisabled} from 'react-icons-kit/ionicons/eyeDisabled'
-=======
-import { Icon } from "react-icons-kit";
-import { eye } from "react-icons-kit/ionicons/eye";
-import { eyeDisabled } from "react-icons-kit/ionicons/eyeDisabled";
-import StatelessPopup from "../CommonItems/StatelessPopup";
->>>>>>> develop
 
 const Signup = ({ signedUpCallback, loginRedirect }) => {
   // signedUpCallBack = (JSON object) => {...do stuff, doesn't care for the return value}
@@ -34,11 +27,7 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [cantSignUp, setCantSignUp] = useState(false);
-<<<<<<< HEAD
-  const [Msg, setMsg] = useState("Sign Up"); // state for the content of the sign in button
-=======
   const [Msg, setMsg] = useState(""); // state for the content of the sign in button
->>>>>>> develop
   const [visible, setVisible] = useState(false);
   const [pwdIcon, setIcon] = useState(eye);
 
@@ -144,20 +133,12 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
               value={password}
               placeholder="Password"
               disabled={cantSignUp}
-<<<<<<< HEAD
-              onChange={(e) => setPassword(e.target.value)}
-              className={styles.inputField}
-            />
-            <i onClick={handleVisible}>
-              <Icon icon={pwdIcon} size={35}/></i>
-=======
               className={styles.inputField}
               onChange={e => setPassword(e.target.value)}
             />
             <i onClick={handleVisible}>
               <Icon icon={pwdIcon} size={35} />
             </i>
->>>>>>> develop
           </div>
         </div>
         <div className={styles.division}>
