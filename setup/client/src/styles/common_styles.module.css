@@ -114,9 +114,8 @@ body {
 }
 
 .inputWrapper {
-    min-width: 440px;
-    width: min-content;
-    margin: 10px;
+    margin: 10px 0;
+    flex: 1;
     padding: 9.5px;
     height: 56px;
     display: flex;
@@ -382,8 +381,6 @@ body {
 .transparentButton:hover {
     background-color: #3e3e3e;
 }
-
-
 
 ::-ms-reveal {
     display: none;

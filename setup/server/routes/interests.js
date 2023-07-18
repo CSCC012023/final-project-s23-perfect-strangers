@@ -44,6 +44,24 @@ router.route("/userInterests").post(async (req, res) => {
   }
 });
 
+router.route("/userInterests/post").post((req, res) => {
+  InterestModel.findOne({email: req.body.email})
+  .then(response => {
+    if(response === null) {
+      const newInterestDoc = new InterestModel({
+        email: req.body.email,
+        interestList: req.body.interestList,
+      });
+      newInterestDoc.save()                                     // new interest document is not saving
+      .then(response => res.json({msg: "created", response}))
+      .catch(err => res.json({err, msg: "inerr"}));
+    } else {
+      res.json("user already exists");
+    }
+  })
+  .catch(err => res.json({err, msg: "err"}));
+})
+
 // Delete the userInterest document of a particular user
 router.route("/userInterests/:email").delete(async (req, res) => {
   try {

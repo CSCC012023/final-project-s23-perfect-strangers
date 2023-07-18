@@ -27,9 +27,10 @@
     flex-direction: column;
 }
 
+
 .requestCardStatus {
     margin-left: auto;
-    margin-right: 150px;
+    margin-right: 150px; /* DEV-CGP-25 Confusion */
     align-self: center;
 }
 
