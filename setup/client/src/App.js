@@ -12,6 +12,7 @@ import Login from "./Login/Login";
 
 import ExamplePage from "./ExamplePage/ExamplePage";
 import RequestsPage from "./Requests/RequestsPage";
+import PromoterRequestsPage from "./Requests/PromoterRequests";
 
 import ChatPage from "./Chat/ChatPage";
 
@@ -49,6 +50,7 @@ function App() {
           />
           <Route path="/examplepage" element={<ExamplePage />} />
           <Route path="/requests" element={<RequestsPage /> } />
+          <Route path="/promoter-requests" element={<PromoterRequestsPage /> } />
         </Routes>
       </Router>
     </div>

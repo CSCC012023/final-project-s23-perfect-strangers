@@ -15,6 +15,11 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
+    title: "PromoterRequests",
+    path: "/promoter-requests",
+    cName: "nav-text",
+  },
+  {
     title: "Account",
     path: "/bio-page",
     cName: "nav-text",
