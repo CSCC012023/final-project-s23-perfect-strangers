@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 
 import Axios from "axios";
 
+
 const RequestItemForMe = ({ event }) => {
   //TODO: DELETE REQUEST to delete the request
   //   const deleteRequest = () => {
@@ -99,6 +100,7 @@ const RequestItemForMe = ({ event }) => {
       Axios.patch("http://localhost:5000/requests/accept/" + reqId);
       
       if (reqIndex !== -1) {
+        alert('Accepted Request from ' + requestData[0].requester.username);
         setRequestData([
           ...requestData.slice(0, reqIndex),...requestData.slice(reqIndex + 1)
         ]);
