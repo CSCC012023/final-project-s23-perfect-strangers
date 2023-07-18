@@ -1,6 +1,6 @@
 import requestStyles from "../styles/requests.module.css";
 import styles from "../styles/common_styles.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import requestSentStyles from "../styles/RequestsSent.module.css";
 import eventStyles from "../styles/event.module.css";
 
@@ -20,6 +20,7 @@ const RequestItemForMe = ({ event }) => {
   //   };
   const [requestData, setRequestData] = useState([]);
   const [eventClicked, setEventClicked] = useState(false);
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const popupClose = () => {
     return (
       <div
@@ -54,9 +55,17 @@ const RequestItemForMe = ({ event }) => {
   const rejectRequest  = (reqId) => {
     try {
       console.log(reqId);
+      const reqIndex = requestData.findIndex(({ _id }) => _id === reqId);
+
       Axios.patch(
         "http://localhost:5000/requests/reject/" + reqId
       );
+      
+      if (reqIndex !== -1) {
+        setRequestData([
+          ...requestData.slice(0, reqIndex),...requestData.slice(reqIndex + 1)
+        ]);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -69,7 +78,8 @@ const RequestItemForMe = ({ event }) => {
       const token = localStorage.getItem("token")
       const useremail = jwt_decode(token).userDetail.email;
       const username = jwt_decode(token).userDetail.username;
-
+      const reqIndex = requestData.findIndex(({ _id }) => _id === reqId);
+      
       // Post the chat room
       var participants = [useremail, requestData[0].requester.email];
       participants.sort(function (a, b) {
@@ -87,6 +97,13 @@ const RequestItemForMe = ({ event }) => {
         .catch((err) => console.log(err));
 
       Axios.patch("http://localhost:5000/requests/accept/" + reqId);
+      
+      if (reqIndex !== -1) {
+        setRequestData([
+          ...requestData.slice(0, reqIndex),...requestData.slice(reqIndex + 1)
+        ]);
+      }
+
     } 
     catch (e) {
       console.log(e);
@@ -124,13 +141,13 @@ const RequestItemForMe = ({ event }) => {
                 <div className={requestSentStyles.requestButtons}>
                   <button
                     className={requestSentStyles.rejectButton}
-                    onClick={() => rejectRequest(req._id)}
+                    onClick={() => {rejectRequest(req._id)}}
                   >
                     Reject
                   </button>
                   <button
                     className={requestSentStyles.acceptButton}
-                    onClick={() => acceptRequest(req._id)}
+                    onClick={() => {acceptRequest(req._id)}}
                   >
                     Accept
                   </button>

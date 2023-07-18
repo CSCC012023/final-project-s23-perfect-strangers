@@ -112,6 +112,7 @@ router.route("/event/:event").get((req, res) => {
     .catch((err) => res.status(400).json({ err: err }));
 });
 
+//Return pending 
 router.route("/pending/:event").get((req, res) => {
   RequestModel.find({ event: req.params.event, status: "pending" })
     .populate([
