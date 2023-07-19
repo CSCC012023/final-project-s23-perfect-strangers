@@ -12,6 +12,7 @@ import Login from "./Login/Login";
 
 import ExamplePage from "./ExamplePage/ExamplePage";
 import RequestsPage from "./Requests/RequestsPage";
+import PromoterRequestsPage from "./Requests/PromoterRequests";
 
 import ChatPage from "./Chat/ChatPage";
 
