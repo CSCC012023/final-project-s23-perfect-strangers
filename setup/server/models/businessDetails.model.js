@@ -15,8 +15,8 @@ const businessDetails = new mongoose.Schema({
   businessName: {
     type: String,
     trim: true,
-    required: [true, "Username is required"],
-    minLength: [2, "Username too short"],
+    required: [true, "Business name is required"],
+    minLength: [2, "Business name too short"],
   },
   token: {
     type: String,

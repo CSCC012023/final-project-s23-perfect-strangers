@@ -1,9 +1,11 @@
 import React from "react";
 
+import styles from "../styles/common_styles.module.css";
+
 function Logout(){
     return(
-        <div className="page-title">
-            <h1>LOGOUT</h1>
+        <div className={styles.rightContainer}>
+            <h1 className={styles.heading}>LOGOUT</h1>
         </div>
     );
 }

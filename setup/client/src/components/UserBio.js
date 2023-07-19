@@ -3,8 +3,7 @@ import Axios from "axios";
 
 import styles from "../styles/common_styles.module.css";
 
-const UserBio = ({ useremail }) => {
-  const url = "http://localhost:5000/user-details/biography/";
+const UserBio = ({ useremail, url }) => {
   const maxChar = 200;
   let [aboutText, setAboutText] = useState("");
   let [editedText, setEditedText] = useState(aboutText);

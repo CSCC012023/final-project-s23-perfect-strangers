@@ -13,42 +13,51 @@ router.route("/").post(async (req, res) => {
     password: password,
   });
 
-  if (emailAuth.isBusiness === true) {
+  if (emailAuth && emailAuth.isBusiness === true) {
     // business login
     try {
       var businessDetail = await BusinessDetailsModel.findOne({
-        email: emailAuth.email
+        email: emailAuth.email,
       });
       console.log(businessDetail);
-      businessDetail.biography = ""
-      businessDetail.image = ""
-      const token = jwt.sign({ id: businessDetail._id, businessDetail}, "shhhhh", {
-        expiresIn: "2h",
-      });
+      businessDetail.biography = "";
+      businessDetail.image = "";
+      businessDetail.token = "";
+      const token = jwt.sign(
+        { id: businessDetail._id, businessDetail, isBusiness: true },
+        "shhhhh",
+        {
+          expiresIn: "2h",
+        }
+      );
       console.log("Business saved " + token);
       businessDetail.token = token;
       await businessDetail.save();
-      res.json({user: businessDetail});
+      res.json({ user: businessDetail, isBusiness: true });
     } catch (error) {
       throw new Error("Failed to generate token", error);
     }
-  }
-  else if (emailAuth) {
+  } else if (emailAuth) {
     // Login successful
     try {
       var userDetail = await UserDetailModel.findOne({
-        email: emailAuth.email
+        email: emailAuth.email,
       });
       console.log("User Found " + userDetail);
       userDetail.biography = "";
       userDetail.image = "";
-      const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {
-        expiresIn: "2h",
-      });
+      userDetail.token = "";
+      const token = jwt.sign(
+        { id: userDetail._id, userDetail, isBusiness: false },
+        "shhhhh",
+        {
+          expiresIn: "2h",
+        }
+      );
       console.log("User Saved " + token);
       userDetail.token = token;
       await userDetail.save(); // Save the user with the updated token
-      res.json({ user: userDetail });
+      res.json({ user: userDetail, isBusiness: false });
     } catch (error) {
       throw new Error("Failed to generate token", error);
     }
@@ -56,8 +65,6 @@ router.route("/").post(async (req, res) => {
     // Invalid credentials
     res.json({ err: "Invalid email or password" });
   }
-
-
 });
 
 router.route("/").get((req, res) => {

@@ -3,38 +3,25 @@ import Axios from "axios";
 
 import { useState, useReducer } from "react";
 
-//import "./BioPage.css";
-import UserInterests from "./Interests";
-
 import jwt_decode from "jwt-decode";
-
-import UserBio from "./UserBio";
-import EventItem from "../pages/EventItem";
 
 import styles from "../styles/common_styles.module.css";
 import bioPageStyles from "../styles/bio_page.module.css";
+import jwtDecode from "jwt-decode";
 
-const ProfilePicture = () => {
-  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+import UserBio from "../components/UserBio";
+import EventItem from "../pages/EventItem";
+import UserInterests from "../components/Interests";
+import { useNavigate } from "react-router";
+
+const ProfilePicture = ({ token }) => {
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
   const [profilePic, setProfilePic] = useState("");
 
   const [profileClicked, setProfileClicked] = useState(false);
-  const [base64String, setBase64String] = useState("");
-  const token = localStorage.getItem("token");
-  var useremail = jwt_decode(token).userDetail.email;
+  var useremail = token.businessDetail.email;
 
-  function getBase64(file) {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      console.log(reader.result);
-    };
-    reader.onerror = function (error) {
-      console.log("Error: ", error);
-    };
-  }
-
-  const changeProfilePic = (e) => {
+  const changeProfilePic = e => {
     e.preventDefault();
     forceUpdate();
 
@@ -46,10 +33,10 @@ const ProfilePicture = () => {
       formData.append("profilePic", profilePic);
 
       Axios.post("http://localhost:5000/user-details/image/", formData)
-        .then((response) => {
+        .then(response => {
           console.log(response);
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
       console.log("Image uploaded");
       setProfileClicked(false);
     }
@@ -68,14 +55,14 @@ const ProfilePicture = () => {
   // Sets profile picture to existing picture in mongoDB
   useEffect(() => {
     Axios.get("http://localhost:5000/user-details/image/" + useremail)
-      .then((response) => {
+      .then(response => {
         localStorage.setItem(
           "userPic",
           _arrayBufferToBase64(response.data.image.data.data)
         );
         //console.log(response);
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   }, []);
 
   return (
@@ -110,7 +97,7 @@ const ProfilePicture = () => {
                   type="file"
                   accept=".png, .jpg, .jpeg"
                   name="profilePic"
-                  onChange={(e) => {
+                  onChange={e => {
                     setProfilePic(e.target.files[0]);
                     forceUpdate();
                   }}
@@ -143,19 +130,14 @@ const ProfilePicture = () => {
   );
 };
 
-const BioPage = (props) => {
-/*   // Get user name from MongoDB
-  const userName = "AVINCE";
-  const displayName = "Farhan";
+const BusinessDashboard = () => {
+  const token = jwtDecode(localStorage.getItem("token"));
+  const email = token.businessDetail.email;
+  const businessName = token.businessDetail.businessName;
 
-  // Get age and gender from MongoDB
-  const age = "19";
-  const gender = "Male"; */
-
-  // Get user's profile picture from MongoDB
-
-  // Set the interest master list
-  const [interestList, setInterestList] = useState([
+  const [events, setEvents] = useState([]);
+  const navigate = useNavigate();
+  const interestList = [
     "Hockey",
     "Gaming",
     "Coding",
@@ -163,38 +145,11 @@ const BioPage = (props) => {
     "Movies",
     "Burger",
     "Books",
-  ]);
-  const [events, setEvents] = useState([]);
-
-  // Get the user Email by decoding JWT
-  const token = jwt_decode(localStorage.getItem("token"));
-  var useremail = token.userDetail.email;
-  var userId = token.userDetail._id;
-
-  const displayName = token.userDetail.username;
-  const age = token.userDetail.age;
-  const gender = token.userDetail.gender;
-
-  // // Get user details
-  // useEffect(() => {
-  //   // Get the user token
-  //   const token = localStorage.getItem("token");
-
-  //   // Decode this to get user email
-  //   var useremail = jwt_decode(token).email;
-
-  //   Axios.get(
-  //     "http://localhost:5000/user-details"
-  //   ).then((response) => {
-  //     setInterestList(response.data[0].interestList);
-
-  //     console.log(response);
-  //   });
-  // }, []);
+  ];
 
   useEffect(() => {
-    Axios.get("http://localhost:5000/api/userevents/" + userId).then(
-      (response) => {
+    Axios.get("http://localhost:5000/api/userevents/" + token.id).then(
+      response => {
         setEvents(response.data);
         console.log(response.data);
       }
@@ -202,28 +157,33 @@ const BioPage = (props) => {
   }, []);
 
   return (
-    // <div clasName='BioPage'>
     <div className={styles.rightContainer}>
       <div className={styles.horizontalContent}>
-        <ProfilePicture />
-
+        <ProfilePicture token={token} />
         <div className={styles.verticalContent}>
           <div className={`${styles.boldtext} ${styles.alignleft}`}>
-            {displayName}
+            {businessName}
           </div>
-          <div className={`${styles.smalltext} ${styles.alignleft}`}>
-            {age}, {gender}
+          <div style={{height: "min-content"}}>
+            <UserInterests interestList={interestList} useremail={email}/>
           </div>
-          <UserInterests interestList={interestList} useremail={useremail}/>
-
-          <br />
         </div>
       </div>
-      <UserBio useremail={useremail} url="http://localhost:5000/user-details/biography/" />
+      <UserBio useremail={email} url="" />
       <div className={styles.line} />
+      <div
+        style={{ marginLeft: "auto", marginRight: "0px", width: "min-content" }}
+      >
+        <button
+          className={styles.smallPurpleButton}
+          onClick={() => navigate("/create-events")}
+        >
+          Create Events
+        </button>
+      </div>
       <div className={styles.wrapContainer}>
         {events &&
-          events.map((event) => (
+          events.map(event => (
             <div key={event._id} style={{ margin: "10px" }}>
               <EventItem event={event} />
             </div>
@@ -233,4 +193,4 @@ const BioPage = (props) => {
   );
 };
 
-export default BioPage;
+export default BusinessDashboard;
