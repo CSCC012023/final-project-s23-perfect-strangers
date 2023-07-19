@@ -11,7 +11,7 @@ import bioPageStyles from "../styles/bio_page.module.css";
 const ProfilePicture = () => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [profilePic, setProfilePic] = useState("");
-    const [profilePicObtained, setProfilePicObtained] = useState("");
+    const [profilePicName, setProfilePicName] = useState("");
   
     const [profileClicked, setProfileClicked] = useState(false);
     const token = localStorage.getItem("token");
@@ -56,7 +56,9 @@ const ProfilePicture = () => {
           //   "userPic",
           //   _arrayBufferToBase64(response.data.image.data.data)
           // );
-          setProfilePicObtained(response); // Get profile pic from file system
+          console.log("Image GET request");
+          console.log(response.data.image);
+          setProfilePicName(response.data.image); // Get profile pic from file system
         })
         .catch((err) => console.log(err));
     }, []);
@@ -120,8 +122,8 @@ const ProfilePicture = () => {
             className={bioPageStyles.ProfilePicture}
             // Unsure of how to display it
             // src={`data:image/png;base64,${localStorage.getItem("userPic")}`}
-            src={`${profilePicObtained}`}
-            alt=""
+            src={`/setup/server/uploads/${profilePicName}`}
+            alt="No image"
           />
         </button>
       </>

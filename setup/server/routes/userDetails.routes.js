@@ -73,10 +73,10 @@ router.route("/biography").post(async (req, res) => {
 router.route("/image/:useremail").get(async (req, res) => {
   try {
     const user = await UserDetailsModel.findOne({ email: req.params.useremail });
-    const userPicName = user.image; // Get image file name from the db
-    const userPic = fs.readFileSync('../server/uploads/' + userPicName); // Read file from file system
-    res.send(userPic);
-    // res.send(user);
+    // const userPicName = user.image;
+    // const userPic = fs.readFileSync('../server/uploads/' + userPicName);
+    // res.send(userPic);
+    res.send(user);
   } catch {
     res.status(404);
     res.send({ error: "User does not exist" });
@@ -84,7 +84,7 @@ router.route("/image/:useremail").get(async (req, res) => {
 });
 
 router.route("/image").post(upload.single("profilePic"), async(req, res) => {
-  console.log("At least the request is made");
+  console.log("POST request is made");
   console.log(req.file.filename);
 
   // const userPic = {
