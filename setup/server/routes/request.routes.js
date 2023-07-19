@@ -112,6 +112,20 @@ router.route("/event/:event").get((req, res) => {
     .catch((err) => res.status(400).json({ err: err }));
 });
 
+//Return pending 
+router.route("/pending/:event").get((req, res) => {
+  RequestModel.find({ event: req.params.event, status: "pending" })
+    .populate([
+      "requester",
+      {
+        path: "event",
+        populate: { path: "creator" },
+      },
+    ])
+    .then((r) => res.status(202).json(r))
+    .catch((err) => res.status(400).json({ err: err }));
+});
+
 /* 
 
 // POST REQUEST: get a list of requests based on a filter passed in the body
@@ -157,6 +171,20 @@ router.route('/search').post(
 router.route("/delete/:_id").delete((req, res) => {
   //console.log(req.body.requester);
   RequestModel.deleteOne({ _id: req.params._id })
+    .then((r) => res.status(203).json(r))
+    .catch((err) => res.json({ err: err }));
+});
+
+// PATCH REQUEST: accept the request by its _id
+router.route("/accept/:_id").patch((req, res) => {
+  RequestModel.findOneAndUpdate({_id: req.params._id}, {status: 'accepted'})
+    .then((r) => res.status(203).json(r))
+    .catch((err) => res.json({ err: err }));
+});
+
+// PATCH REQUEST: reject the request by its _id
+router.route("/reject/:_id").patch((req, res) => {
+  RequestModel.findOneAndUpdate({_id: req.params._id}, {status: 'rejected'})
     .then((r) => res.status(203).json(r))
     .catch((err) => res.json({ err: err }));
 });
