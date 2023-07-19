@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Icon } from 'react-icons-kit'
 import {eye} from 'react-icons-kit/ionicons/eye'
 import {eyeDisabled} from 'react-icons-kit/ionicons/eyeDisabled'
+import StatelessPopup from "../CommonItems/StatelessPopup";
 
 const Signup = ({ signedUpCallback, loginRedirect }) => {
   // signedUpCallBack = (JSON object) => {...do stuff, doesn't care for the return value}
@@ -37,20 +38,6 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
     setMsg(emsg);
   };
 
-<<<<<<< HEAD
-  const handleVisible=()=>{
-    if (visible){
-      setVisible(false);
-      setIcon(eye);
-    }
-    else{
-      setVisible(true);
-      setIcon(eyeDisabled);
-    }
-  }
-
-  const onSubmit = (event) => {
-=======
   const handleVisible = () => {
     if (visible) {
       setVisible(false);
@@ -62,7 +49,6 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
   };
 
   const onSubmit = event => {
->>>>>>> develop
     // called when the form is submitted
     event.preventDefault(); // don't update page
 

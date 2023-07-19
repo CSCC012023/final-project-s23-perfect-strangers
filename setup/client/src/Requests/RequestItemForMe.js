@@ -2,12 +2,10 @@ import requestStyles from "../styles/requests.module.css";
 import styles from "../styles/common_styles.module.css";
 import { useEffect, useState, useReducer } from "react";
 import requestSentStyles from "../styles/RequestsSent.module.css";
-
+import eventStyles from "../styles/event.module.css";
 import jwt_decode from "jwt-decode";
 
 import Axios from "axios";
-
-import requestSentStyles from "../styles/RequestsSent.module.css";
 
 const RequestItemForMe = ({ event }) => {
   //TODO: DELETE REQUEST to delete the request
