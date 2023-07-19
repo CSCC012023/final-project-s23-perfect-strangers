@@ -28,7 +28,7 @@ router.route("/chats").post(async (req, res) => {
     const newRoomDoc = new RoomModel({
       participantsUsernames: req.body.participantsUsernames,
       chatHistory: req.body.chatHistory,
-      participants: req.body.partipants,
+      participants: req.body.participants,
       roomID: req.body.roomID
     });
   
