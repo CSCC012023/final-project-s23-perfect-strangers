@@ -56,10 +56,12 @@ function CreateEvents() {
     //     });
     // }
 
-    async function createUserEvent() {
+    async function createUserEvent(e) {
         // create a unique ID for the event
+        e.preventDefault();
         const newUUID = uuidv4();//uuid();
 
+        console.log(creator);
         const formData = new FormData();
         formData.append("eventID", newUUID);
         formData.append("creator", creator);
@@ -85,8 +87,8 @@ function CreateEvents() {
             <div className={styles.horizontalContent}>
                 <div className={styles.squishHeading}>Create Your Event</div>
             </div>
-            
-            <form onSubmit={createUserEvent} encType="multipart/form-data">
+
+            <form onSubmit={(e) => createUserEvent(e)} encType="multipart/form-data">
                 <div>
                     <div className={styles.horizontalContent}>
                         <div className={styles.verticalContent}>
@@ -150,6 +152,8 @@ function CreateEvents() {
                             <textarea className={styles.inputField} style={{width: '500px'}}placeholder="type of event, genre of music..." onChange={(event) => setDescription(event.target.value)}></textarea>
                         </div>
                     </div>
+
+                    //For CGP-12
                     <div className={styles.division}>
                         <div className={styles.verticalContent}>
                             <p className={styles.text}>Add event picture</p><br/>

@@ -25,8 +25,9 @@ router.get("/userevents", (req, res) => {
 router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   console.log("At least the request is made");
   console.log(req.file.filename);
+  console.log(JSON.stringify(req.body.creator));
 
-  const creator = req.body.creator;
+ //const creator = req.body.creator;
   const title = req.body.title;
   const date = req.body.date;
   const location = req.body.location;
@@ -40,7 +41,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   };
 
   const newEvent = new UserEventsModel({
-    creator: creator,
+    //creator: creator,
     title: title,
     date: date,
     location: location,
@@ -84,15 +85,5 @@ router.route("/myevent/:creator").get(async (req, res) => {
       res.send({ error: "Event does not exist" });
     }
   });
-
-// router.route("/image/:creator").get(async (req, res) => {
-//   try {
-//     const event = await UserEventsModel.findOne({ creator: req.params.creator });
-//     res.send(event);
-//   } catch {
-//     res.status(404);
-//     res.send({ error: "Event does not exist" });
-//   }
-// });
 
 module.exports = router;
