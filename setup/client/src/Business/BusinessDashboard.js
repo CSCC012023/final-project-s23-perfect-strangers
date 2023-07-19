@@ -32,7 +32,7 @@ const ProfilePicture = ({ token }) => {
       formData.append("email", useremail);
       formData.append("profilePic", profilePic);
 
-      Axios.post("http://localhost:5000/user-details/image/", formData)
+      Axios.post("http://localhost:5000/business/image/", formData)
         .then(response => {
           console.log(response);
         })
@@ -54,7 +54,7 @@ const ProfilePicture = ({ token }) => {
 
   // Sets profile picture to existing picture in mongoDB
   useEffect(() => {
-    Axios.get("http://localhost:5000/user-details/image/" + useremail)
+    Axios.get("http://localhost:5000/business/image/" + useremail)
       .then(response => {
         localStorage.setItem(
           "userPic",
@@ -169,7 +169,7 @@ const BusinessDashboard = () => {
           </div>
         </div>
       </div>
-      <UserBio useremail={email} url="" />
+      <UserBio useremail={email} url="http://localhost:5000/business/biography/" />
       <div className={styles.line} />
       <div
         style={{ marginLeft: "auto", marginRight: "0px", width: "min-content" }}

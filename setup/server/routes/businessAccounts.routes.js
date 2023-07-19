@@ -2,6 +2,24 @@ const router = require("express").Router();
 const EmailAuthModel = require("../models/emailAuth.model");
 const BusinessDetailsModel = require("../models/businessDetails.model");
 
+/* Multer Configuration
+  - Stores the picture in a front end directory
+  - Stores file metadata in the Database
+*/
+const multer = require('multer');
+const fs = require('fs');
+const multerStorage = multer. diskStorage( {
+  destination: (req, file,cb) => {
+    cb(null, '../server/uploads');
+  },
+  
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1]
+    cb(null, file.originalname)
+  }
+});
+const upload = multer ({storage: multerStorage});
+
 router.route("/create").post((req, res) => {
     newEmailAuth = new EmailAuthModel({
         email: req.body.email,
@@ -25,6 +43,70 @@ router.route("/create").post((req, res) => {
                 .catch(err => res.json({ err: err })); // business info not saved
         })
         .catch(err => res.json({ err: err })); // email authorization not saved
+});
+
+// Get a user with their biography
+// Querying the cluster by username
+router.route("/biography/:useremail").get(async (req, res) => {
+    try {
+      const user = await BusinessDetailsModel.findOne({ email: req.params.useremail });
+      res.send(user);
+    } catch {
+      res.status(404);
+      res.send({ error: "User does not exist" });
+    }
+  });
+
+// Post a business with their biography
+router.route("/biography").post(async (req, res) => {
+    const useremail = req.body.useremail;
+    const userBio = req.body.biography;
+    try {
+        let user = await BusinessDetailsModel.findOne({ email: useremail });
+        user.biography = userBio;
+        await user.save();
+        res.send(user);
+    } catch (err) {
+        console.log(err);
+        res.status(404);
+        res.send(err);
+    }
+});
+
+router.route("/image/:useremail").get(async (req, res) => {
+    try {
+        const user = await BusinessDetailsModel.findOne({
+            email: req.params.useremail,
+        });
+        res.send(user);
+    } catch {
+        res.status(404);
+        res.send({ error: "User does not exist" });
+    }
+});
+
+router.route("/image").post(upload.single("profilePic"), async (req, res) => {
+    console.log("At least the request is made");
+    console.log(req.file.filename);
+
+    const userPic = {
+        data: fs.readFileSync("../server/uploads/" + req.file.filename),
+        contentType: "image/png",
+    };
+
+    const useremail = req.body.email;
+
+    try {
+        let user = await BusinessDetailsModel.findOne({ email: useremail });
+        user.image = userPic;
+
+        await user.save();
+        res.send(user);
+    } catch (err) {
+        console.log(err);
+        res.status(404);
+        res.send(err);
+    }
 });
 
 module.exports = router;
