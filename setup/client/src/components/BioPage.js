@@ -13,6 +13,7 @@ import EventItem from "../pages/EventItem";
 
 import styles from "../styles/common_styles.module.css";
 import bioPageStyles from "../styles/bio_page.module.css";
+import AttendingEvents from "./AttendingEvents";
 
 const ProfilePicture = () => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -248,16 +249,7 @@ const BioPage = (props) => {
         </div>
       </div>
 
-      {eventToggle ? (
-      
-        <div className={styles.wrapContainer}>
-          {attendingEvents &&
-            attendingEvents.map((event) => (
-              <div key={event._id} style={{ margin: "10px" }}>
-                <EventItem event={event.event} />
-              </div>
-            ))}
-        </div>) : (
+      {eventToggle ? <AttendingEvents /> : (
           <div className={styles.wrapContainer}>
           {events &&
               events.map((event) => (
