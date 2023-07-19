@@ -13,6 +13,7 @@ import EventItem from "../pages/EventItem";
 
 import styles from "../styles/common_styles.module.css";
 import bioPageStyles from "../styles/bio_page.module.css";
+import AttendingEvents from "./AttendingEvents";
 
 const ProfilePicture = () => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -165,6 +166,8 @@ const BioPage = (props) => {
     "Books",
   ]);
   const [events, setEvents] = useState([]);
+  const [attendingEvents, setAttendingEvents] = useState([]);
+  const [eventToggle, setEventToggle] = useState(false);
 
   // Get the user Email by decoding JWT
   const token = jwt_decode(localStorage.getItem("token"));
@@ -201,6 +204,13 @@ const BioPage = (props) => {
     );
   }, []);
 
+  useEffect(() => {
+    Axios.get("http://localhost:5000/requests/accepted/" + userId).then((response) => {
+        setAttendingEvents(response.data);
+        console.log(response.data);
+    });
+  }, []);
+
   return (
     // <div clasName='BioPage'>
     <div className={styles.rightContainer}>
@@ -221,14 +231,39 @@ const BioPage = (props) => {
       </div>
       <UserBio useremail={useremail} url="http://localhost:5000/user-details/biography/" />
       <div className={styles.line} />
-      <div className={styles.wrapContainer}>
-        {events &&
-          events.map((event) => (
-            <div key={event._id} style={{ margin: "10px" }}>
-              <EventItem event={event} />
-            </div>
-          ))}
+      <div className={styles.horizontalContent}>
+        <div style={{ flex: "1" }}>
+          <button
+            className={styles.smallTransparentButton}
+            onClick={() => setEventToggle(false)}
+            disabled={!eventToggle}
+          >
+            My Events
+          </button>
+        </div>
+
+        <div style={{ flex: "1" }}>
+          <button
+            className={styles.smallTransparentButton}
+            onClick={() => setEventToggle(true)}
+            disabled={eventToggle}
+          >
+            Events I'm Attending
+          </button>
+        </div>
       </div>
+
+      {eventToggle ? <AttendingEvents /> : (
+          <div className={styles.wrapContainer}>
+          {events &&
+              events.map((event) => (
+                  <div key={event._id} style={{margin: "10px"}}>
+                      <EventItem event={event} />
+                  </div>
+              ))}
+          </div>
+      )}
+      
     </div>
   );
 };

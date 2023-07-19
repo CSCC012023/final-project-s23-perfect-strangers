@@ -140,10 +140,10 @@ const UserInterests = ({ interestList, useremail }) => {
       ></InterestPopUp>
 
       <div
-        className={styles.smallTransparentButton}
+        className={styles.smallPurpleButton}
         onClick={() => setPopupTrigger(true)}
       >
-        🖉
+        {'\u270E'}
       </div>
     </div>
   );
