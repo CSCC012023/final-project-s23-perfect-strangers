@@ -24,7 +24,7 @@ const EventItem = ({ event }) => {
       <div
         className={eventStyles.eventDetails}
       >
-        // For CGP-12
+        {/* For CGP-12 */}
         <div className={eventStyles.eventPhotoContainer}>
         <img
             src={`data:image/png;base64,${localStorage.getItem("eventPic" + userEventID)}`}

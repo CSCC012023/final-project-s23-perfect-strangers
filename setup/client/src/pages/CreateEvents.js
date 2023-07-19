@@ -153,7 +153,7 @@ function CreateEvents() {
                         </div>
                     </div>
 
-                    //For CGP-12
+                    {/* For CGP-12 */}
                     <div className={styles.division}>
                         <div className={styles.verticalContent}>
                             <p className={styles.text}>Add event picture</p><br/>
