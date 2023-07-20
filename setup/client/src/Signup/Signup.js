@@ -5,9 +5,9 @@ import styles from "../styles/common_styles.module.css";
 
 import { Link } from "react-router-dom";
 
-import { Icon } from "react-icons-kit";
-import { eye } from "react-icons-kit/ionicons/eye";
-import { eyeDisabled } from "react-icons-kit/ionicons/eyeDisabled";
+import { Icon } from 'react-icons-kit'
+import {eye} from 'react-icons-kit/ionicons/eye'
+import {eyeDisabled} from 'react-icons-kit/ionicons/eyeDisabled'
 import StatelessPopup from "../CommonItems/StatelessPopup";
 
 const Signup = ({ signedUpCallback, loginRedirect }) => {

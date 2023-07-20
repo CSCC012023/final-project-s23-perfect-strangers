@@ -1,8 +1,9 @@
 import requestStyles from "../styles/requests.module.css";
 import styles from "../styles/common_styles.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import requestSentStyles from "../styles/RequestsSent.module.css";
 import eventStyles from "../styles/event.module.css";
+import jwt_decode from "jwt-decode";
 
 import Axios from "axios";
 
@@ -18,6 +19,7 @@ const RequestItemForMe = ({ event }) => {
   //   };
   const [requestData, setRequestData] = useState([]);
   const [eventClicked, setEventClicked] = useState(false);
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const popupClose = () => {
     return (
       <div
@@ -41,10 +43,69 @@ const RequestItemForMe = ({ event }) => {
   async function fetchRequest() {
     try {
       const res = await Axios.get(
-        "http://localhost:5000/requests/event/" + event._id
+        "http://localhost:5000/requests/pending/" + event._id
       );
       return res.data;
     } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const rejectRequest  = (reqId) => {
+    try {
+      console.log(reqId);
+      const reqIndex = requestData.findIndex(({ _id }) => _id === reqId);
+
+      Axios.patch(
+        "http://localhost:5000/requests/reject/" + reqId
+      );
+      
+      if (reqIndex !== -1) {
+        setRequestData([
+          ...requestData.slice(0, reqIndex),...requestData.slice(reqIndex + 1)
+        ]);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const acceptRequest  = (reqId) => {
+    try {
+
+      // Get username and password
+      const token = localStorage.getItem("token")
+      const useremail = jwt_decode(token).userDetail.email;
+      const username = jwt_decode(token).userDetail.username;
+      const reqIndex = requestData.findIndex(({ _id }) => _id === reqId);
+      
+      // Post the chat room
+      var participants = [useremail, requestData[0].requester.email];
+      participants.sort(function (a, b) {
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+      });
+
+      Axios.post("http://localhost:5000/api/chats/", {
+        participants: [useremail, requestData[0].requester.email],
+        participantsUsernames: [username, requestData[0].requester.username],
+        chatHistory: [],
+        roomID: participants[0] + participants[1]
+      }).then((response) => {console.log(response) })
+        .catch((err) => console.log(err));
+
+      Axios.patch("http://localhost:5000/requests/accept/" + reqId);
+      
+      if (reqIndex !== -1) {
+        alert('Accepted Request from ' + requestData[0].requester.username);
+        setRequestData([
+          ...requestData.slice(0, reqIndex),...requestData.slice(reqIndex + 1)
+        ]);
+      }
+
+    } 
+    catch (e) {
       console.log(e);
     }
   }
@@ -77,6 +138,21 @@ const RequestItemForMe = ({ event }) => {
                 <div className={requestSentStyles.requestCardStatus}>
                   {makeFirstLetterCapital(req.status)}
                 </div>
+                <div className={requestSentStyles.requestButtons}>
+                  <button
+                    className={requestSentStyles.rejectButton}
+                    onClick={() => {rejectRequest(req._id)}}
+                  >
+                    Reject
+                  </button>
+                  <button
+                    className={requestSentStyles.acceptButton}
+                    onClick={() => {acceptRequest(req._id)}}
+                  >
+                    Accept
+                  </button>
+                </div>
+                
               </li>
             ))}
           </ul>
@@ -92,7 +168,7 @@ const RequestItemForMe = ({ event }) => {
         className={eventStyles.eventDetails}
         onClick={() => {
           setEventClicked(true);
-          fetchRequest().then((data) => setRequestData(data));
+          fetchRequest().then((data) => {setRequestData(data); console.log(requestData);});
         }}
       >
         <div className={eventStyles.eventPhoto}>

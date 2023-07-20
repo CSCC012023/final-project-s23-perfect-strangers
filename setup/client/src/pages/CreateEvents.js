@@ -4,9 +4,10 @@ import Axios from 'axios';
 import './CreateEvents.css';
 
 import styles from "../styles/common_styles.module.css";
-import ceStyles from "../styles/create_events.module.css";
+import ceStyles from "./CreateEvents.module.css";
 import jwt_decode from "jwt-decode";
 
+import {EventTags} from "./EventsTags"
 
 function CreateEvents() {
     const token = localStorage.getItem('token');
@@ -18,7 +19,16 @@ function CreateEvents() {
     const [description, setDescription] = useState("");
     const [ticketLink, setTicketLink] = useState("");
     const [onMe, setOnMe] = useState(false);
+
     const [eventPic, setEventPic] = useState("");
+
+
+    // DEV-CGP-9
+    const [selectedTags, setSelectedTags] = useState(["Other"]);
+    const [popupTrigger, setPopupTrigger] = useState(false);
+    
+
+
     // const [createdUserEvents, setCreatedUserEvents] = useState([]);
 
     // didn't use any of this, but it can be revived if needed
@@ -58,7 +68,10 @@ function CreateEvents() {
 
     async function createUserEvent(e) {
         // create a unique ID for the event
+
         e.preventDefault();
+        localStorage.setItem("tags", JSON.stringify([])); // DEV-CGP-9
+
         const newUUID = uuidv4();//uuid();
 
         console.log(creator);
@@ -73,6 +86,7 @@ function CreateEvents() {
         formData.append("ticketLink", ticketLink);
         formData.append("onMe", onMe);
         formData.append("eventPic", eventPic);
+        formData.append("tags", selectedTags);
 
         // post the event
         await Axios.post("http://localhost:5000/api/userevents", formData).then(() => {
@@ -145,15 +159,35 @@ function CreateEvents() {
                                 <input type='text' className={styles.inputField} placeholder='link' onChange={(event) => setTicketLink(event.target.value)}></input>
                             </div>
                         </div>
+
+
                     </div>
-                    <div className={styles.division}>
+                    <div className={styles.horizontalContent}>
+                        {/* DEV-CGP-9 // tag */}
                         <div className={styles.verticalContent}>
-                            <p className={styles.text}>Describe the event for others</p><br/>
-                            <textarea className={styles.inputField} style={{width: '500px'}}placeholder="type of event, genre of music..." onChange={(event) => setDescription(event.target.value)}></textarea>
+                        <div className={styles.division} onClick={(e) => {setPopupTrigger(true)}}>
+                            <p className={styles.text}>Event Tags</p><br/>
+                        </div>
+                        
+                        <div className={ceStyles.division}>
+                            <EventTags selectedTags={selectedTags} setSelectedTags={setSelectedTags}
+                                popupTrigger={popupTrigger} setPopupTrigger={setPopupTrigger}
+                            />
+                        </div>
+                        </div>
+                    
+                        {/* Description */}
+                        <div className={styles.verticalContent}>
+                            <div className={styles.division}>
+                                
+                                    <p className={styles.text}>Describe the event for others</p><br/>
+                                    <textarea className={styles.inputField} style={{width: '500px'}}placeholder="type of event, genre of music..." onChange={(event) => setDescription(event.target.value)}></textarea>
+
+                            </div>
                         </div>
                     </div>
 
-                    {/* For CGP-12 */}
+                    {/* For CGP-12 // On its own so dont need HWContent*/} 
                     <div className={styles.division}>
                         <div className={styles.verticalContent}>
                             <p className={styles.text}>Add event picture</p><br/>

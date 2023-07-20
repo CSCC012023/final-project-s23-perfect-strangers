@@ -39,6 +39,11 @@ const eventSchema = new mongoose.Schema({
     },
     image: {
         type: String,
+    },
+    // For DEV-CGP-9
+    tags: {
+        type: [String],
+        required: true,
     }
 });
 

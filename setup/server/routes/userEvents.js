@@ -36,6 +36,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   const ticketLink = req.body.ticketLink;
   const onMe = req.body.onMe;
   const image = req.file.filename;
+  const tags = req.body.tags;
 
   const newEvent = new UserEventsModel({
     //creator: creator,
@@ -47,6 +48,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
     ticketLink: ticketLink,
     onMe: onMe,
     image: image,
+    tags: tags
   });
 
   newEvent
@@ -81,6 +83,22 @@ router.route("/myevent/:creator").get(async (req, res) => {
       res.status(404);
       res.send({ error: "Event does not exist" });
     }
-  });
+});
 
+
+/* 
+  - DEV-CGP-9
+  - Get list of events
+  - Retrieved events should match all tags given in query array
+*/
+router.route("/tags/userevents").post( async (req, res) => {
+  const queryTags = req.body.queryTags;
+  try {
+      const event = await UserEventsModel.find({ tags: { $all: queryTags} });
+      res.send(event);
+  } catch {
+      res.status(404);
+      res.send({ error: "No events found matching query tags" });
+  }
+});
 module.exports = router;
