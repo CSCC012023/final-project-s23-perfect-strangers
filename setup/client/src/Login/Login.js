@@ -11,10 +11,15 @@ import StatelessPopup from "../CommonItems/StatelessPopup";
 
 //const jwt = require("jsonwebtoken");
 
-const Login = ({ loggedInCallBack, SignUpRedirect }) => {
+const Login = ({
+  loggedInCallBack,
+  businessLoggedInCallBack,
+  SignUpRedirect,
+  setIsBusiness,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  //const [username, setUsername] = useState("");
   const [cantLogin, setcantLogin] = useState(false);
   const [Msg, setMsg] = useState("");
   const [visible, setVisible] = useState(false);
@@ -24,7 +29,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
     localStorage.removeItem("userPic");
   }, []);
 
-  const throwErrMsg = (emsg) => {
+  const throwErrMsg = emsg => {
     // when user enters invalid info, this function is called
     setcantLogin(true); // it changes the Signup button to display the error msg
     setMsg(emsg);
@@ -41,7 +46,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
   };
 
   const navigate = useNavigate();
-  const onSubmit = (event) => {
+  const onSubmit = event => {
     // called when the form is submitted
     event.preventDefault(); // don't update page
 
@@ -61,7 +66,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
     Axios.post("http://localhost:5000/login", {
       email: email,
       password: password,
-    }).then((res) => {
+    }).then(res => {
       // Handle the login response according to your requirements
       if (res.data.user) {
         // Redirect the user or perform any other necessary actions
@@ -69,8 +74,11 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
         console.log("Login success");
 
         localStorage.setItem("token", res.data.user.token);
-
-        navigate(loggedInCallBack, {});
+        const isBusiness = res.data.isBusiness;
+        setIsBusiness(isBusiness);
+        isBusiness
+          ? navigate(businessLoggedInCallBack, {})
+          : navigate(loggedInCallBack, {});
       } else {
         throwErrMsg(res.data.err);
         console.log(res.data.err);
@@ -84,9 +92,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
       <h1 className={styles.heading}>LOGIN</h1>
 
       <StatelessPopup trigger={cantLogin} setTrigger={setcantLogin}>
-        <div className={styles.wrappableText}>
-          {Msg}
-        </div>
+        <div className={styles.wrappableText}>{Msg}</div>
       </StatelessPopup>
 
       <form onSubmit={onSubmit} className={styles.verticalContent}>
@@ -96,7 +102,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
             value={email}
             placeholder="Email"
             disabled={cantLogin}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             className={styles.inputField}
           />
         </div>
@@ -107,7 +113,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
               value={password}
               placeholder="Password"
               disabled={cantLogin}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               className={styles.inputField}
             />
             <i onClick={handleVisible}>
@@ -117,10 +123,7 @@ const Login = ({ loggedInCallBack, SignUpRedirect }) => {
         </div>
 
         <div className={styles.division}>
-          <button
-            type="submit"
-            className={styles.purpleButton}
-          >
+          <button type="submit" className={styles.purpleButton}>
             Log in
           </button>
         </div>

@@ -18,13 +18,13 @@ import AttendingEvents from "./AttendingEvents";
 
 
 const BioPage = (props) => {
-  // Get user name from MongoDB
+/*   // Get user name from MongoDB
   const userName = "AVINCE";
   const displayName = "Farhan";
 
   // Get age and gender from MongoDB
   const age = "19";
-  const gender = "Male";
+  const gender = "Male"; */
 
   // Get user's profile picture from MongoDB
 
@@ -43,9 +43,13 @@ const BioPage = (props) => {
   const [eventToggle, setEventToggle] = useState(false);
 
   // Get the user Email by decoding JWT
-  const token = localStorage.getItem("token");
-  var useremail = jwt_decode(token).userDetail.email;
-  var userId = jwt_decode(token).userDetail._id;
+  const token = jwt_decode(localStorage.getItem("token"));
+  var useremail = token.userDetail.email;
+  var userId = token.id;
+
+  const displayName = token.userDetail.username;
+  const age = token.userDetail.age;
+  const gender = token.userDetail.gender;
 
   // // Get user details
   // useEffect(() => {
@@ -95,7 +99,7 @@ const BioPage = (props) => {
           <br />
         </div>
       </div>
-      <UserBio useremail={useremail} />
+      <UserBio useremail={useremail} url="http://localhost:5000/user-details/biography/" />
       <div className={styles.line} />
       <div className={styles.horizontalContent}>
         <div style={{ flex: "1" }}>
