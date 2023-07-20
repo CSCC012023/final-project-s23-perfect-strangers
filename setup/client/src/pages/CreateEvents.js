@@ -10,8 +10,9 @@ import jwt_decode from "jwt-decode";
 import {EventTags} from "./EventsTags"
 
 function CreateEvents() {
-    const token = localStorage.getItem('token');
-    // const [creator, setCreator] = useState(jwt_decode(token).userDetail);
+    const token = jwt_decode(localStorage.getItem('token'));
+    console.log(token);
+    const creator= token.id;
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
@@ -74,10 +75,10 @@ function CreateEvents() {
 
         const newUUID = uuidv4();//uuid();
 
-        // console.log(creator);
+        console.log(creator);
         const formData = new FormData();
         formData.append("eventID", newUUID);
-        // formData.append("creator", creator);
+        formData.append("creator", creator);
         formData.append("title", title);
         formData.append("date", date);
         formData.append("location", location);

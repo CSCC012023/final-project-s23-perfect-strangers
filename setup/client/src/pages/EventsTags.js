@@ -66,7 +66,7 @@ const EventTags = ({selectedTags, setSelectedTags, popupTrigger, setPopupTrigger
   return(
     <>
       <div className={ceStyles.eventTagsContainer}>
-        <button className={styles.smallPurpleButton} onClick={() => setPopupTrigger(true)}>
+        <button type="button" className={styles.smallPurpleButton} onClick={() => setPopupTrigger(true)}>
           {'\u270E'}
         </button>
         {eventTagsUI}

@@ -43,8 +43,9 @@ const ProfilePicture = () => {
       Axios.get("http://localhost:5000/user-details/image/" + useremail)
         .then((response) => {
           console.log("Image GET request");
-          console.log(response.data.image);
+          console.log(response.data);
           setProfilePicName(response.data.image);
+
         })
         .catch((err) => console.log(err));
     }, []);
