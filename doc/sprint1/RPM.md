@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # GOGO
 
  > _Note:_ This document is meant to be written during (or shortly after) your initial planning meeting.     
@@ -95,7 +94,6 @@ Event dashboard will be the landing page for users after they login. This page w
 * Account page
 The account page will let users view, edit their profile and interests to best match them.
 
-=======
 # GOGO Release planning meeting document
 
 ## Release Goal
@@ -120,4 +118,3 @@ The following team members will actively participate in the development of the p
 4. Farhan Faisal
 5. Jeremy Neilson
 6. Xin Yi Hu
->>>>>>> develop
