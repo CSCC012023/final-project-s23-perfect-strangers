@@ -1,24 +1,6 @@
 import eventStyles from "../styles/event.module.css";
 import styles from "../styles/common_styles.module.css";
 const EventItem = ({ event }) => {
-  
-  var userEventID = event._id;
-
-  function _arrayBufferToBase64(buffer) {
-    var binary = "";
-    var bytes = new Uint8Array(buffer);
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-  }
-  // Storing event image in local storage where 'key' includes user event id
-  localStorage.setItem(
-    "eventPic" + userEventID,
-    _arrayBufferToBase64(event.image.data.data)
-  );
-
   return (
     <>
       <div
@@ -27,7 +9,7 @@ const EventItem = ({ event }) => {
         {/* For CGP-12 */}
         <div className={eventStyles.eventPhotoContainer}>
         <img
-            src={`data:image/png;base64,${localStorage.getItem("eventPic" + userEventID)}`}
+            src={`http://localhost:5000/uploads/` + event.image}
             alt="No photo"
             className={eventStyles.eventPhoto}
         />

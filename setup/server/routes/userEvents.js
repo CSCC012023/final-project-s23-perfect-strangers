@@ -5,7 +5,7 @@ const multer = require('multer');
 const fs = require('fs');
 const multerStorage = multer. diskStorage( {
   destination: (req, file,cb) => {
-    cb(null, '../server/uploads');
+    cb(null, '../server/public/uploads');
   },
   
   filename: (req, file, cb) => {
@@ -35,10 +35,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   const description = req.body.description;
   const ticketLink = req.body.ticketLink;
   const onMe = req.body.onMe;
-  const image = {
-    data: fs.readFileSync('../server/uploads/' + req.file.filename),
-    contentType: "image/png",
-  };
+  const image = req.file.filename;
 
   const newEvent = new UserEventsModel({
     //creator: creator,

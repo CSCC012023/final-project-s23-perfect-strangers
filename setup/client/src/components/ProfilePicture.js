@@ -38,27 +38,13 @@ const ProfilePicture = () => {
       }
     };
   
-    // function _arrayBufferToBase64(buffer) {
-    //   var binary = "";
-    //   var bytes = new Uint8Array(buffer);
-    //   var len = bytes.byteLength;
-    //   for (var i = 0; i < len; i++) {
-    //     binary += String.fromCharCode(bytes[i]);
-    //   }
-    //   return btoa(binary);
-    // }
-  
     // Sets profile picture to existing picture in mongoDB
     useEffect(() => {
       Axios.get("http://localhost:5000/user-details/image/" + useremail)
         .then((response) => {
-          // localStorage.setItem(
-          //   "userPic",
-          //   _arrayBufferToBase64(response.data.image.data.data)
-          // );
           console.log("Image GET request");
           console.log(response.data.image);
-          setProfilePicName(response.data.image); // Get profile pic from file system
+          setProfilePicName(response.data.image);
         })
         .catch((err) => console.log(err));
     }, []);
@@ -120,9 +106,7 @@ const ProfilePicture = () => {
         >
           <img
             className={bioPageStyles.ProfilePicture}
-            // Unsure of how to display it
-            // src={`data:image/png;base64,${localStorage.getItem("userPic")}`}
-            src={`/setup/server/uploads/${profilePicName}`}
+            src={`http://localhost:5000/uploads/` + profilePicName}
             alt="No image"
           />
         </button>

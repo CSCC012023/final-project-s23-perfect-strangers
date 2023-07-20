@@ -38,8 +38,7 @@ const eventSchema = new mongoose.Schema({
         required: false,
     },
     image: {
-        data: Buffer,
-        contentType: String,
+        type: String,
     }
 });
 
