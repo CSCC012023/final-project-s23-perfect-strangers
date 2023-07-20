@@ -11,7 +11,6 @@ import SignupHub from "./Signup/SignupHub";
 import Login from "./Login/Login";
 import BusinessDashboard from "./Business/BusinessDashboard";
 import PromotersPage from "./Business/PromotersPage";
-import PromoterRequestsPage from "./Requests/PromoterRequests";
 
 import ExamplePage from "./ExamplePage/ExamplePage";
 import RequestsPage from "./Requests/RequestsPage";
@@ -24,10 +23,14 @@ import Socket from "./Socket";
 import jwtDecode from "jwt-decode";
 function App() {
   const [isBusiness, setIsBusiness] = useState(false);
-
+  const rawToken = localStorage.getItem("token");
+  
   useEffect(() => {
-    const token = jwtDecode(localStorage.getItem("token"));
-    setIsBusiness(token.isBusiness);
+    if (rawToken !== null)
+    {
+      const token = jwtDecode(rawToken);
+      setIsBusiness(token.isBusiness);
+    }
   }, []);
 
   return (

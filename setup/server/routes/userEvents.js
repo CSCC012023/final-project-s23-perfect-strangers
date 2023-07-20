@@ -1,13 +1,32 @@
 const router = require("express").Router();
 let UserEventsModel = require("../models/userEventsModel");
 
+const multer = require('multer');
+const fs = require('fs');
+const multerStorage = multer. diskStorage( {
+  destination: (req, file,cb) => {
+    cb(null, '../server/public/uploads');
+  },
+  
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1]
+    cb(null, file.originalname)
+  }
+});
+
+const upload = multer ({storage: multerStorage});
+
 router.get("/userevents", (req, res) => {
   UserEventsModel.find()
     .then((userEvents) => res.json(userEvents))
     .catch((err) => res.status(401).json("Error: " + err));
 });
 
-router.post("/userevents", (req, res) => {
+router.post("/userevents", upload.single("eventPic"), async (req, res) => {
+  console.log("At least the request is made");
+  console.log(req.file);
+  console.log(req.file.filename);
+
   const creator = req.body.creator;
   const title = req.body.title;
   const date = req.body.date;
@@ -16,7 +35,8 @@ router.post("/userevents", (req, res) => {
   const description = req.body.description;
   const ticketLink = req.body.ticketLink;
   const onMe = req.body.onMe;
-  const tags = req.body.tags;
+  const image = req.file.filename;
+  const tags = JSON.parse(req.body.tags);
 
   const newEvent = new UserEventsModel({
     creator: creator,
@@ -27,6 +47,7 @@ router.post("/userevents", (req, res) => {
     description: description,
     ticketLink: ticketLink,
     onMe: onMe,
+    image: image,
     tags: tags
   });
 

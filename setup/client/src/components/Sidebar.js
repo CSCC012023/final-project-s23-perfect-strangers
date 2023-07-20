@@ -7,11 +7,16 @@ import sidebarStyles from "../styles/sidebar.module.css";
 import jwtDecode from "jwt-decode";
 
 function Sidebar({ isBusiness }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(SidebarData);
 
   useEffect(() => {
-    const token = jwtDecode(localStorage.getItem("token"));
-    setData(token.isBusiness === true ? BusinessSidebarData : SidebarData);
+    const rawToken = localStorage.getItem("token");
+    console.log(rawToken);
+    if (rawToken !== null)
+    {
+      const token = jwtDecode(localStorage.getItem("token"));
+      setData(token.isBusiness === true ? BusinessSidebarData : SidebarData);
+    }
   }, [isBusiness]);
 
   return (

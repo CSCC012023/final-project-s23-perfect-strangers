@@ -19,12 +19,15 @@ router.route("/").post(async (req, res) => {
       var businessDetail = await BusinessDetailsModel.findOne({
         email: emailAuth.email,
       });
-      console.log(businessDetail);
-      businessDetail.biography = "";
-      businessDetail.image = "";
-      businessDetail.token = "";
       const token = jwt.sign(
-        { id: businessDetail._id, businessDetail, isBusiness: true },
+        {
+          id: businessDetail._id,
+          businessDetail: {
+            email: businessDetail.email,
+            businessName: businessDetail.businessName,
+          },
+          isBusiness: true,
+        },
         "shhhhh",
         {
           expiresIn: "2h",
@@ -43,12 +46,17 @@ router.route("/").post(async (req, res) => {
       var userDetail = await UserDetailModel.findOne({
         email: emailAuth.email,
       });
-      console.log("User Found " + userDetail);
-      userDetail.biography = "";
-      userDetail.image = "";
-      userDetail.token = "";
       const token = jwt.sign(
-        { id: userDetail._id, userDetail, isBusiness: false },
+        {
+          id: userDetail._id,
+          userDetail: {
+            email: userDetail.email,
+            username: userDetail.username,
+            age: userDetail.age,
+            gender: userDetail.gender
+          },
+          isBusiness: false,
+        },
         "shhhhh",
         {
           expiresIn: "2h",

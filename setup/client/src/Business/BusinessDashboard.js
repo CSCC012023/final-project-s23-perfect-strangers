@@ -19,6 +19,10 @@ const ProfilePicture = ({ token }) => {
   const [profilePic, setProfilePic] = useState("");
 
   const [profileClicked, setProfileClicked] = useState(false);
+<<<<<<< HEAD
+=======
+  console.log(token);
+>>>>>>> develop
   var useremail = token.businessDetail.email;
 
   const changeProfilePic = e => {
