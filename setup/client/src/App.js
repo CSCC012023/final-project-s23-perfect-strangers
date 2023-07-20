@@ -11,6 +11,7 @@ import SignupHub from "./Signup/SignupHub";
 import Login from "./Login/Login";
 import BusinessDashboard from "./Business/BusinessDashboard";
 import PromotersPage from "./Business/PromotersPage";
+import PromoterRequestsPage from "./Requests/PromoterRequests"
 
 import ExamplePage from "./ExamplePage/ExamplePage";
 import RequestsPage from "./Requests/RequestsPage";
