@@ -7,7 +7,7 @@ import sidebarStyles from "../styles/sidebar.module.css";
 import jwtDecode from "jwt-decode";
 
 function Sidebar({ isBusiness }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(SidebarData);
 
   useEffect(() => {
     const rawToken = localStorage.getItem("token");
