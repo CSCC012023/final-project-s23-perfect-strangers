@@ -10,8 +10,13 @@ function Sidebar({ isBusiness }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const token = jwtDecode(localStorage.getItem("token"));
-    setData(token.isBusiness === true ? BusinessSidebarData : SidebarData);
+    const rawToken = localStorage.getItem("token");
+    console.log(rawToken);
+    if (rawToken !== null)
+    {
+      const token = jwtDecode(localStorage.getItem("token"));
+      setData(token.isBusiness === true ? BusinessSidebarData : SidebarData);
+    }
   }, [isBusiness]);
 
   return (

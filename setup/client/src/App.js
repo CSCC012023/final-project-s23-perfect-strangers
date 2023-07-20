@@ -23,10 +23,14 @@ import Socket from "./Socket";
 import jwtDecode from "jwt-decode";
 function App() {
   const [isBusiness, setIsBusiness] = useState(false);
-
+  const rawToken = localStorage.getItem("token");
+  
   useEffect(() => {
-    const token = jwtDecode(localStorage.getItem("token"));
-    setIsBusiness(token.isBusiness);
+    if (rawToken !== null)
+    {
+      const token = jwtDecode(rawToken);
+      setIsBusiness(token.isBusiness);
+    }
   }, []);
 
   return (
