@@ -13,8 +13,7 @@ import requestStyles from "../styles/requests.module.css";
 
 const PromoterRequestsPage = () => {
   const token = jwt_decode(localStorage.getItem("token"));
-  const loggedUserEmail = token.userDetail.email;
-  console.log(loggedUserEmail);
+  const loggedUserEmail = token.businessDetail.email;
   const [myEvents, setMyEvents] = useState([]);
   const [userEmail, setUserEmail] = useState("");
 
@@ -25,15 +24,6 @@ const PromoterRequestsPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-
-  // const getRequestData = (event) => {
-  //   Axios.get(
-  //     "http://localhost:5000/promoter-requests/event/" + event._id
-  //   ).then((response) => {
-  //     setRequestData(response.data);
-  //     console.log(response.data);
-  //   });
-  // }
 
   const Content = (close, event) => {
     const [requestData, setRequestData] = useState([]);
