@@ -25,7 +25,7 @@ router.get("/userevents", (req, res) => {
 router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   console.log("At least the request is made");
   console.log(req.file.filename);
-  console.log(JSON.stringify(req.body.creator));
+  // console.log(JSON.stringify(req.body.creator));
 
  //const creator = req.body.creator;
   const title = req.body.title;
@@ -36,7 +36,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   const ticketLink = req.body.ticketLink;
   const onMe = req.body.onMe;
   const image = req.file.filename;
-  const tags = req.body.tags;
+  const tags = JSON.parse(req.body.tags);
 
   const newEvent = new UserEventsModel({
     //creator: creator,

@@ -11,7 +11,7 @@ import {EventTags} from "./EventsTags"
 
 function CreateEvents() {
     const token = localStorage.getItem('token');
-    const [creator, setCreator] = useState(jwt_decode(token).userDetail);
+    // const [creator, setCreator] = useState(jwt_decode(token).userDetail);
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
@@ -74,10 +74,10 @@ function CreateEvents() {
 
         const newUUID = uuidv4();//uuid();
 
-        console.log(creator);
+        // console.log(creator);
         const formData = new FormData();
         formData.append("eventID", newUUID);
-        formData.append("creator", creator);
+        // formData.append("creator", creator);
         formData.append("title", title);
         formData.append("date", date);
         formData.append("location", location);
@@ -86,7 +86,7 @@ function CreateEvents() {
         formData.append("ticketLink", ticketLink);
         formData.append("onMe", onMe);
         formData.append("eventPic", eventPic);
-        formData.append("tags", selectedTags);
+        formData.append("tags", JSON.stringify(selectedTags));
 
         // post the event
         await Axios.post("http://localhost:5000/api/userevents", formData).then(() => {
@@ -163,6 +163,18 @@ function CreateEvents() {
 
                     </div>
                     <div className={styles.horizontalContent}>
+                        
+                    
+                        {/* Description */}
+                        <div className={styles.verticalContent}>
+                            <div className={styles.division}>
+                                <p className={styles.text}>Describe the event for others</p><br/>
+                            </div>
+                            <div className={styles.division}>
+                                <textarea className={styles.inputField} style={{width: '500px'}}placeholder="type of event, genre of music..." onChange={(event) => setDescription(event.target.value)}></textarea>
+                            </div>
+                        </div>
+
                         {/* DEV-CGP-9 // tag */}
                         <div className={styles.verticalContent}>
                         <div className={styles.division} onClick={(e) => {setPopupTrigger(true)}}>
@@ -174,16 +186,6 @@ function CreateEvents() {
                                 popupTrigger={popupTrigger} setPopupTrigger={setPopupTrigger}
                             />
                         </div>
-                        </div>
-                    
-                        {/* Description */}
-                        <div className={styles.verticalContent}>
-                            <div className={styles.division}>
-                                
-                                    <p className={styles.text}>Describe the event for others</p><br/>
-                                    <textarea className={styles.inputField} style={{width: '500px'}}placeholder="type of event, genre of music..." onChange={(event) => setDescription(event.target.value)}></textarea>
-
-                            </div>
                         </div>
                     </div>
 
