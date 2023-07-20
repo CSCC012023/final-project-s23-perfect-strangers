@@ -7,11 +7,16 @@
     border-width: 0;
 }
 
-.eventPhoto {
+.eventPhotoContainer {
     float: left;
     width: 100px;
     background-color: #df6cff;
     margin-top: 50px;
     height: 100px;
     text-align: center;
+}
+
+.eventPhoto {
+    width: 100px;
+    height: 100px;
 }

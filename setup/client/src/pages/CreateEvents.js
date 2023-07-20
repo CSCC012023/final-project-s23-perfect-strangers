@@ -20,10 +20,14 @@ function CreateEvents() {
     const [ticketLink, setTicketLink] = useState("");
     const [onMe, setOnMe] = useState(false);
 
+    const [eventPic, setEventPic] = useState("");
+
+
     // DEV-CGP-9
     const [selectedTags, setSelectedTags] = useState(["Other"]);
     const [popupTrigger, setPopupTrigger] = useState(false);
     
+
 
     // const [createdUserEvents, setCreatedUserEvents] = useState([]);
 
@@ -62,18 +66,30 @@ function CreateEvents() {
     //     });
     // }
 
-    async function createUserEvent() {
+    async function createUserEvent(e) {
         // create a unique ID for the event
-        const newUUID = uuidv4(); //uuid();
 
+        e.preventDefault();
         localStorage.setItem("tags", JSON.stringify([])); // DEV-CGP-9
 
+        const newUUID = uuidv4();//uuid();
+
+        // console.log(creator);
+        const formData = new FormData();
+        formData.append("eventID", newUUID);
+        // formData.append("creator", creator);
+        formData.append("title", title);
+        formData.append("date", date);
+        formData.append("location", location);
+        formData.append("price", price);
+        formData.append("description", description);
+        formData.append("ticketLink", ticketLink);
+        formData.append("onMe", onMe);
+        formData.append("eventPic", eventPic);
+        formData.append("tags", JSON.stringify(selectedTags));
+
         // post the event
-        await Axios.post("http://localhost:5000/api/userevents", {
-            eventID: newUUID,
-            creator, title, date, location, price, description, ticketLink, onMe,
-            tags: selectedTags // DEV-CGP-9
-        }).then(() => {
+        await Axios.post("http://localhost:5000/api/userevents", formData).then(() => {
             alert("Event Created!");
         }).catch((err) => console.log(err));
     };
@@ -85,98 +101,116 @@ function CreateEvents() {
             <div className={styles.horizontalContent}>
                 <div className={styles.squishHeading}>Create Your Event</div>
             </div>
-            <div>
-                <div className={styles.horizontalContent}>
+
+            <form onSubmit={(e) => createUserEvent(e)} encType="multipart/form-data">
+                <div>
+                    <div className={styles.horizontalContent}>
+                        <div className={styles.verticalContent}>
+                            <div className={styles.division}>
+                                <p className={styles.text}>Give the event a name</p><br />
+                            </div>
+                            <div className={styles.division}>
+                                <input type='text' className={styles.inputField} placeholder='name' onChange={(event) => setTitle(event.target.value)}></input>
+                            </div>
+                        </div>
+                        <div className={styles.verticalContent}>
+                            <div className={styles.division}>
+                                <p className={styles.text}>When is your event?</p><br/>
+                            </div>
+                            <div className={styles.division}>
+                                <input type='date' className={styles.inputField} placeholder='date' onChange={(event) => setDate(event.target.value)}></input> 
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.horizontalContent}>
+                        <div className={styles.verticalContent}>
+                            <div className={styles.division}>
+                                <p className={styles.text}>Where will it be?</p><br/>
+                            </div>
+                            <div className={styles.division}>
+                                <input type='text' className={styles.inputField} placeholder='location' onChange={(event) => setLocation(event.target.value)}></input>
+                            </div>
+                        </div>
+                        <div className={styles.verticalContent}>
+                            <div className={styles.division}>
+                                <p className={styles.text}>How much is a ticket?</p><br/>
+                            </div>
+                            <div className={styles.division}>
+                                <input type='number' className={styles.inputField} placeholder='price' onChange={(event) => setPrice(event.target.value)}></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.horizontalContent}>
+                        <div className={styles.verticalContent}>
+                            <div className={styles.division}>
+                                <p className={styles.text}>Are tickets OnMe?</p><br/>
+                            </div>
+                            <div className={styles.division}>
+                                <input type="radio" name="OnMe" value ="true" className="OnMeRadio" onClick={() => setOnMe(true)}></input><p className={styles.text}>Yes</p>
+                                <input type="radio" name="OnMe" value="false" className="OnMeRadio" onClick={() => setOnMe(false)}></input><p className={styles.text}>No</p> 
+                            </div>
+                            {/* <input type='checkbox' className="EventBox" onChange={() => setOnMe(!onMe)}></input> */}
+                        </div>
+                        <div className={styles.verticalContent}>
+                            <div className={styles.division}>
+                                <p className={styles.text}>Where can you buy tickets?</p><br/>
+                            </div>
+                            <div className={styles.division}>
+                                <input type='text' className={styles.inputField} placeholder='link' onChange={(event) => setTicketLink(event.target.value)}></input>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div className={styles.horizontalContent}>
+                        
                     
-                    <div className={styles.verticalContent}>
-                        <div className={styles.division}>
-                            <p className={styles.text}>Give the event a name</p><br />
+                        {/* Description */}
+                        <div className={styles.verticalContent}>
+                            <div className={styles.division}>
+                                <p className={styles.text}>Describe the event for others</p><br/>
+                            </div>
+                            <div className={styles.division}>
+                                <textarea className={styles.inputField} style={{width: '500px'}}placeholder="type of event, genre of music..." onChange={(event) => setDescription(event.target.value)}></textarea>
+                            </div>
                         </div>
-                        <div className={styles.division}>
-                            <input type='text' className={styles.inputField} placeholder='name' onChange={(event) => setTitle(event.target.value)}></input>
+
+                        {/* DEV-CGP-9 // tag */}
+                        <div className={styles.verticalContent}>
+                        <div className={styles.division} onClick={(e) => {setPopupTrigger(true)}}>
+                            <p className={styles.text}>Event Tags</p><br/>
+                        </div>
+                        
+                        <div className={ceStyles.division}>
+                            <EventTags selectedTags={selectedTags} setSelectedTags={setSelectedTags}
+                                popupTrigger={popupTrigger} setPopupTrigger={setPopupTrigger}
+                            />
+                        </div>
                         </div>
                     </div>
 
-                    <div className={styles.verticalContent}>
-                        <div className={styles.division}>
-                            <p className={styles.text}>When is your event?</p><br/>
-                        </div>
-                        <div className={styles.division}>
-                            <input type='date' className={styles.inputField} placeholder='date' onChange={(event) => setDate(event.target.value)}></input> 
-                        </div>
-                    </div>
-                </div>
-
-
-                <div className={styles.horizontalContent}>
-                    <div className={styles.verticalContent}>
-                        <div className={styles.division}>
-                            <p className={styles.text}>Where will it be?</p><br/>
-                        </div>
-                        <div className={styles.division}>
-                            <input type='text' className={styles.inputField} placeholder='location' onChange={(event) => setLocation(event.target.value)}></input>
+                    {/* For CGP-12 // On its own so dont need HWContent*/} 
+                    <div className={styles.division}>
+                        <div className={styles.verticalContent}>
+                            <p className={styles.text}>Add event picture</p><br/>
+                            <input
+                                type="file"
+                                accept=".png, .jpg, .jpeg"
+                                name="eventPic"
+                                onChange={(e) => {
+                                setEventPic(e.target.files[0]);
+                                }}
+                                style={{ color: "white" }}
+                            />
                         </div>
                     </div>
-                    <div className={styles.verticalContent}>
-                        <div className={styles.division}>
-                            <p className={styles.text}>How much is a ticket?</p><br/>
-                        </div>
-                        <div className={styles.division}>
-                            <input type='number' className={styles.inputField} placeholder='price' onChange={(event) => setPrice(event.target.value)}></input>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.horizontalContent}>
-                    <div className={styles.verticalContent}>
-                        <div className={styles.division}>
-                            <p className={styles.text}>Are tickets OnMe?</p><br/>
-                        </div>
-                        <div className={styles.division}>
-                            <input type="radio" name="OnMe" value ="true" className="OnMeRadio" onClick={() => setOnMe(true)}></input><p className={styles.text}>Yes</p>
-                            <input type="radio" name="OnMe" value="false" className="OnMeRadio" onClick={() => setOnMe(false)}></input><p className={styles.text}>No</p> 
-                        </div>
-                        {/* <input type='checkbox' className="EventBox" onChange={() => setOnMe(!onMe)}></input> */}
-                    </div>
-                    <div className={styles.verticalContent}>
-                        <div className={styles.division}>
-                            <p className={styles.text}>Where can you buy tickets?</p><br/>
-                        </div>
-                        <div className={styles.division}>
-                            <input type='text' className={styles.inputField} placeholder='link' onChange={(event) => setTicketLink(event.target.value)}></input>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.horizontalContent}>
-                    <div className={styles.verticalContent}>
-                        <div className={styles.division}>
-                          <p className={styles.text}>Describe the event for others</p><br/>
-                        </div>
-                        <div className={styles.division}>
-                          <textarea className={styles.inputField} style={{width: '500px'}}placeholder="type of event, genre of music..." onChange={(event) => setDescription(event.target.value)}></textarea>
-                        </div>
-                    </div>
-
-                    {/* DEV-CGP-9 */}
-                    <div className={styles.verticalContent}>
-                      <div className={styles.division} onClick={(e) => {setPopupTrigger(true)}}>
-                        <p className={styles.text}>Event Tags</p><br/>
-                      </div>
-                      
-                      <div className={ceStyles.division}>
-                        <EventTags selectedTags={selectedTags} setSelectedTags={setSelectedTags}
-                            popupTrigger={popupTrigger} setPopupTrigger={setPopupTrigger}
-                        />
-                      </div>
+                    <div className={styles.division}>
+                        <input type="submit" value="Create Event" className={styles.purpleButton}/>
                     </div>
 
                 </div>
-                <div className={styles.division}>
-                    <button className={styles.purpleButton} onClick={createUserEvent}>
-                        Create Event
-                    </button>
-                </div>
-
-            </div>
+            </form>
+            
         </div>
     );
 }

@@ -6,7 +6,7 @@ const eventSchema = new mongoose.Schema({
     },
     creator: {
         type: mongoose.Schema.Types.ObjectId,
-        required: [true, 'Creator info is required'],
+        //required: [true, 'Creator info is required'],
         ref: 'user-details',
     },
     title: {
@@ -36,6 +36,9 @@ const eventSchema = new mongoose.Schema({
     onMe: {
         type: Boolean,
         required: false,
+    },
+    image: {
+        type: String,
     },
     // For DEV-CGP-9
     tags: {

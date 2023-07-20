@@ -9,7 +9,7 @@ const multer = require('multer');
 const fs = require('fs');
 const multerStorage = multer. diskStorage( {
   destination: (req, file,cb) => {
-    cb(null, '../server/uploads');
+    cb(null, '../server/public/uploads');
   },
   
   filename: (req, file, cb) => {
@@ -81,19 +81,14 @@ router.route("/image/:useremail").get(async (req, res) => {
 });
 
 router.route("/image").post(upload.single("profilePic"), async(req, res) => {
-  console.log("At least the request is made");
+  console.log("POST request is made");
   console.log(req.file.filename);
-
-  const userPic = {
-    data: fs.readFileSync('../server/uploads/' + req.file.filename),
-    contentType: "image/png",
-  };
 
   const useremail = req.body.email;
 
   try{
     let user = await UserDetailsModel.findOne({ email: useremail });
-    user.image = userPic;
+    user.image = req.file.filename; // Storing image file name in db for specific user
     
     await user.save();
     res.send(user);

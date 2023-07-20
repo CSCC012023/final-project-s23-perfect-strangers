@@ -62,7 +62,7 @@ io.on("connection", sockets_bioler_plate);
 /* Boiler plate code to connect to mongoDB */
 app.use(cors());
 app.use(express.json());
-
+app.use(express.static('public'));
 
 /* Need this as part of Multer Configuration */
 const bodyParser = require('body-parser');

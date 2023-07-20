@@ -1,15 +1,18 @@
 import eventStyles from "../styles/event.module.css";
 import styles from "../styles/common_styles.module.css";
-import { useState } from "react";
 const EventItem = ({ event }) => {
-
   return (
     <>
       <div
         className={eventStyles.eventDetails}
       >
-        <div className={eventStyles.eventPhoto}>
-          <p>Photo</p>
+        {/* For CGP-12 */}
+        <div className={eventStyles.eventPhotoContainer}>
+        <img
+            src={`http://localhost:5000/uploads/` + event.image}
+            alt="No photo"
+            className={eventStyles.eventPhoto}
+        />
         </div>
         <div className={styles.verticalContent}>
           <h1 className={styles.boldtext}>{event.title}</h1>
