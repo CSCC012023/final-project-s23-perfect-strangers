@@ -20,10 +20,11 @@ const emailAuth = new mongoose.Schema({
         required: [true, 'Username is required'],
         minLength: [2, 'Username too short'],
     },
-    token: {
-        type:String,
-        default: null
-    }
+    isBusiness: {
+        type: Boolean,
+        default: false,
+    },
+    
 })
 
 const EmailAuthModel = mongoose.model("email-auth", emailAuth);

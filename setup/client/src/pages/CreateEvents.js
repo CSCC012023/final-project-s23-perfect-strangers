@@ -10,8 +10,8 @@ import jwt_decode from "jwt-decode";
 import {EventTags} from "./EventsTags"
 
 function CreateEvents() {
-    const token = localStorage.getItem('token');
-    // const [creator, setCreator] = useState(jwt_decode(token).userDetail);
+    const token = jwt_decode(localStorage.getItem('token'));
+    const creator = token.id;
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
