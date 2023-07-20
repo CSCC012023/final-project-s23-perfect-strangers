@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
+import { BusinessSidebarData } from "./BusinessSidebarData";
 
 import sidebarStyles from "../styles/sidebar.module.css";
+import jwtDecode from "jwt-decode";
 
-function Sidebar() {
+function Sidebar({ isBusiness }) {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const token = jwtDecode(localStorage.getItem("token"));
+    setData(token.isBusiness === true ? BusinessSidebarData : SidebarData);
+  }, [isBusiness]);
+
   return (
     <div className={sidebarStyles.sidebar}>
       <div className={sidebarStyles.gogoLogo}>
@@ -13,7 +22,7 @@ function Sidebar() {
       <br></br>
       <nav>
         <ul style={{ listStyleType: "none" }}>
-          {SidebarData.map((page, index) => {
+          {data.map((page, index) => {
             return (
               <li key={index}>
                 <Link to={page.path} style={{ textDecoration: "none" }}>
