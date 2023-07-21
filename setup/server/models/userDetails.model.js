@@ -41,8 +41,9 @@ const userDetails = new mongoose.Schema({
         trim: true,
     },
     image: {
-        data: Buffer,
-        contentType: String,
+        // data: Buffer,
+        // contentType: String,
+        type: String,
     },
 });
 
