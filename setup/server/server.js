@@ -90,6 +90,7 @@ const interestRouter = require("./routes/interests");
 const userEventsRouter = require("./routes/userEvents");
 const chatRouter = require("./routes/room.chat.routes");
 const requestsRouter = require("./routes/request.routes");
+const promoterRequestRouter = require("./routes/promoterRequest.routes");
 const eventLinkRouter = require("./routes/eventLink.routes");
 const businessRouter = require("./routes/businessAccounts.routes");
 
@@ -102,6 +103,7 @@ app.use("/login", loginRouter);
 app.use("/api", usersRouter);
 app.use("/api", userEventsRouter);
 app.use("/requests", requestsRouter);
+app.use("/promoter-requests", promoterRequestRouter);
 app.use("/api", eventLinkRouter);
 app.use("/business", businessRouter);
 /* 
