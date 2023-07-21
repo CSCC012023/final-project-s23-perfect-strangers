@@ -3,19 +3,15 @@ import Axios from "axios";
 
 import { useState, useReducer } from "react";
 
-import jwt_decode from "jwt-decode";
-
 import styles from "../styles/common_styles.module.css";
 import bioPageStyles from "../styles/bio_page.module.css";
 
-const ProfilePicture = () => {
+const ProfilePicture = ({email, url}) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [profilePic, setProfilePic] = useState("");
     const [profilePicName, setProfilePicName] = useState("");
   
     const [profileClicked, setProfileClicked] = useState(false);
-    const token = localStorage.getItem("token");
-    var useremail = jwt_decode(token).userDetail.email;
   
     const changeProfilePic = (e) => {
       e.preventDefault();
@@ -25,10 +21,10 @@ const ProfilePicture = () => {
         console.log(profilePic);
   
         const formData = new FormData();
-        formData.append("email", useremail);
+        formData.append("email", email);
         formData.append("profilePic", profilePic);
   
-        Axios.post("http://localhost:5000/user-details/image/", formData)
+        Axios.post(url, formData)
           .then((response) => {
             console.log(response);
           })
@@ -40,7 +36,7 @@ const ProfilePicture = () => {
   
     // Sets profile picture to existing picture in mongoDB
     useEffect(() => {
-      Axios.get("http://localhost:5000/user-details/image/" + useremail)
+      Axios.get(url + email)
         .then((response) => {
           console.log("Image GET request");
           console.log(response.data);
