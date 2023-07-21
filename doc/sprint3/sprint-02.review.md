@@ -46,9 +46,10 @@ We completed the following user stories:
 
  - As a logged-in user, I want to chat with the user I accepted to go to the event with so that I can communicate with them.
 
-_Please watch the video [here](https://youtu.be/MBSdqsC4KxA) or the one given below for a product demo._
+_Please watch the video [here](https://youtu.be/PzhNk4kgcHA) or the one given below for a product demo._
 
-https://github.com/CSCC012023/final-project-s23-perfect-strangers/assets/77621905/5cf11af7-4784-4759-991b-36d9314e7b71
+
+https://github.com/CSCC012023/final-project-s23-perfect-strangers/assets/77621905/f9a9634a-ceb8-41fa-bd76-6c0dd9fcae58
 
 
 #### Goals and/or tasks that were planned but not met/completed:
