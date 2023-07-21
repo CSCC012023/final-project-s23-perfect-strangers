@@ -85,7 +85,7 @@ const BioPage = (props) => {
     // <div clasName='BioPage'>
     <div className={styles.rightContainer}>
       <div className={styles.horizontalContent}>
-        <ProfilePicture />
+        <ProfilePicture email={useremail} url={"http://localhost:5000/user-details/image/"} />
 
         <div className={styles.verticalContent}>
           <div className={`${styles.boldtext} ${styles.alignleft}`}>
