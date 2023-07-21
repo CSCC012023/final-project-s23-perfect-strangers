@@ -10,6 +10,11 @@ export const BusinessSidebarData = [
     cName: "nav-text",
   },
   {
+    title: "Requests",
+    path: "/promoter-requests",
+    cName: "nav-text",
+  },
+  {
     title: "Logout",
     path: "/logout",
     cName: "nav-text",

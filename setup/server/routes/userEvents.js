@@ -24,10 +24,10 @@ router.get("/userevents", (req, res) => {
 
 router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   console.log("At least the request is made");
+  console.log(req.file);
   console.log(req.file.filename);
-  // console.log(JSON.stringify(req.body.creator));
 
- //const creator = req.body.creator;
+  const creator = req.body.creator;
   const title = req.body.title;
   const date = req.body.date;
   const location = req.body.location;
@@ -39,7 +39,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   const tags = JSON.parse(req.body.tags);
 
   const newEvent = new UserEventsModel({
-    //creator: creator,
+    creator: creator,
     title: title,
     date: date,
     location: location,
