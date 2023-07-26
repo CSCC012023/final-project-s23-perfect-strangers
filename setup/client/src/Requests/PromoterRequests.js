@@ -4,6 +4,7 @@ import Axios from "axios";
 
 import RequestItemForMe from "./RequestItemForMe";
 import EventItem from "../pages/EventItem";
+import ProfilePicture from "../components/ProfilePicture";
 import Popup from "../CommonItems/Popup";
 
 import styles from "../styles/common_styles.module.css";
@@ -37,18 +38,15 @@ const PromoterRequestsPage = () => {
       });
     };
     async function sendRequest(event) {
-      if (userEmail === loggedUserEmail)
-      {
+      if (userEmail === loggedUserEmail) {
         alert("This is your email!");
         return;
       }
       try {
-        await Axios.post(
-          "http://localhost:5000/promoter-requests/", {
-            requesteeEmail: userEmail,
-            event: event._id,
-          }
-        );
+        await Axios.post("http://localhost:5000/promoter-requests/", {
+          requesteeEmail: userEmail,
+          event: event._id,
+        });
         getRequestData();
         alert("Request sent!");
       } catch (error) {
@@ -87,9 +85,11 @@ const PromoterRequestsPage = () => {
         <ul className={requestStyles.unorderedList}>
           {requestData.map((req) => (
             <li className={requestSentStyles.requestSentCard}>
-              <div className={requestSentStyles.eventPhoto}>
-                <p>Photo</p>
-              </div>
+              <img
+                src={`http://localhost:5000/uploads/` + req.requestee.image}
+                alt="No photo"
+                className={requestSentStyles.eventPhoto}
+              />
               <div className={requestSentStyles.requestSentCardContent}>
                 <h4>
                   <b>{req.requestee.username}</b>

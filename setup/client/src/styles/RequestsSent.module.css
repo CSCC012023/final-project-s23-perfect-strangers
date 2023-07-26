@@ -37,7 +37,8 @@
     width: 100px ;
     background-color: #df6cff ;
     height: 100px ;
-    text-align: center;
+    align-self: center;
+    flex-shrink: 0;
 }
 
 .requestButtons button{
