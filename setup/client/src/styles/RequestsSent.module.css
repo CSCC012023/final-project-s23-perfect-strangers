@@ -42,7 +42,7 @@
 }
 
 .requestButtons button{
-    display:block;
+    display:flex;
 }
 
 .acceptButton {
@@ -60,9 +60,7 @@
     text-decoration: none;
     margin: 10px;
     cursor: pointer;
-    position: absolute;
-    right:    0;
-    bottom:   0;
+    align-self: center;
 }
 .acceptButton:hover {
     background-color: #df6cff;
@@ -84,8 +82,8 @@
     margin: 10px;
     cursor: pointer;
     position: absolute;
-    right:    0;
-    top:   0;
+    bottom: 0;
+    align-self: end;
 }
 .rejectButton:hover {
     background-color: #df6cff;
