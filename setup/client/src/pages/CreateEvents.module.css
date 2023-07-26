@@ -54,3 +54,10 @@
     background-color: #1e1e1e;
     border-radius: 10px;
 }
+
+.onMeInfo{
+    border-radius: 5px;
+    font-weight: bold;
+    width: auto;
+    height: 30px;
+}
