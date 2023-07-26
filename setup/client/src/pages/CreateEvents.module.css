@@ -56,8 +56,12 @@
 }
 
 .onMeInfo{
-    border-radius: 5px;
+    border-radius: 3px;
     font-weight: bold;
     width: auto;
     height: 30px;
+    background-color: #4169e1;
+    color: white;
+    border: none;
+    font-family: 'Times New Roman', Times, serif;
 }
