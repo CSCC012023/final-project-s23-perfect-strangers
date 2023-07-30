@@ -16,6 +16,14 @@
     text-align: center;
 }
 
+.expandedPhoto {
+    float: left;
+    width: 400px;
+    background-color: #df6cff;
+    height: 400px;
+    text-align: center;
+}
+
 .eventPhoto {
     width: 100px;
     height: 100px;
