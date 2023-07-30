@@ -9,10 +9,10 @@
 
 .eventPhotoContainer {
     float: left;
-    width: 100px;
+    width: 130px;
     background-color: #df6cff;
     margin-top: 50px;
-    height: 100px;
+    height: 130px;
     text-align: center;
 }
 
@@ -25,6 +25,12 @@
 }
 
 .eventPhoto {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
+}
+
+.eventOnMe {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
 }

@@ -4,11 +4,9 @@ let UserDetailsModel = require("../models/userDetails.model");
 
 router.route("/event/:event_id").get((req, res) => {
   PromoterRequestModel.find({ event: req.params.event_id })
-    .populate([
-      "requestee"
-    ])
-    .then((r) => res.status(202).json(r))
-    .catch((err) => res.json({ err: err }));
+    .populate(["requestee"])
+    .then((r) => res.status(200).json(r))
+    .catch((err) => res.status(404).json({ err: err }));
 });
 
 router.route("/").post(async (req, res) => {
@@ -32,13 +30,13 @@ router.route("/").post(async (req, res) => {
       newRequest
         .save()
         .then((r) =>
-          res.status(201).json({ msg: "request issued", request: r })
+          res.status(200).json({ msg: "request issued", request: r })
         )
         .catch((err) => {
-          res.json({ msg: "request was not issued", err: err });
+          res.status(404).json({ msg: "request was not issued", err: err });
         });
     } else {
-      res.json({ msg: "request already exists" });
+      res.status(409).json({ msg: "request already exists" });
     }
   });
 });

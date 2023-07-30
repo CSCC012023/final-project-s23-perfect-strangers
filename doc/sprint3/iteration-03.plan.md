@@ -60,4 +60,4 @@ This workflow lets us separate the working code from the previous iteration from
 
 #### Artifacts
 
-We will produce a demo video of the functionality we listed above and post it on our GitHub repo in the sprint2 folder.
+We will produce a [demo video](https://youtu.be/PzhNk4kgcHA) of the functionality we listed above and post it on our GitHub repo in the sprint2 folder.
