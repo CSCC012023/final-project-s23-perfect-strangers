@@ -39,10 +39,12 @@ const Dashboard = () => {
         queryTags: JSON.parse(localTags),
       }).then(response => {
         setEvents(response.data);
+        console.log(response.data);
       });
     } else {
       Axios.get("http://localhost:5000/api/userevents").then(response => {
         setEvents(response.data);
+        console.log(response.data);
       });
     }
     setPopupTrigger(placeHolder); // Closes the popup
@@ -60,11 +62,11 @@ const Dashboard = () => {
   return (
     <>
       <StatelessPopup trigger={eventExpand} setTrigger={setEventExpand}>
-      <EventPopupContent
-                      userid={token.id}
-                      event={eventSelected}
-                      close={() => setEventExpand(false)}
-                    />
+        <EventPopupContent
+          userid={token.id}
+          event={eventSelected}
+          close={() => setEventExpand(false)}
+        />
       </StatelessPopup>
 
       <div className={styles.rightContainer}>
@@ -102,8 +104,12 @@ const Dashboard = () => {
         <div className={styles.wrapContainer}>
           {events &&
             events.map(event => (
-              <div key={event._id} style={{ margin: "10px" }} onClick={() => openPopup(event)}>
-                  <EventItem event={event} />
+              <div
+                key={event._id}
+                style={{ margin: "10px", cursor: "pointer" }}
+                onClick={() => openPopup(event)}
+              >
+                <EventItem event={event} />
               </div>
             ))}
 

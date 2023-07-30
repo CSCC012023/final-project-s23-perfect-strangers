@@ -13,6 +13,7 @@ function CreateEvents() {
   const token = jwt_decode(localStorage.getItem("token"));
   console.log(token);
   const creator = token.id;
+  const creator_ref = token.isBusiness ? "business-details" : "user-details";
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
@@ -76,6 +77,7 @@ function CreateEvents() {
     const formData = new FormData();
     formData.append("eventID", newUUID);
     formData.append("creator", creator);
+    formData.append("creator_ref", creator_ref);
     formData.append("title", title);
     formData.append("date", date);
     formData.append("location", location);
