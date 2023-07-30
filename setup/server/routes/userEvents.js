@@ -28,10 +28,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   console.log(req.file.filename);
 
   const creator = req.body.creator;
-<<<<<<< HEAD
   const creator_ref = req.body.creator_ref;
-=======
->>>>>>> develop
   const title = req.body.title;
   const date = req.body.date;
   const location = req.body.location;
@@ -44,10 +41,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
 
   const newEvent = new UserEventsModel({
     creator: creator,
-<<<<<<< HEAD
     creator_ref: creator_ref,
-=======
->>>>>>> develop
     title: title,
     date: date,
     location: location,
