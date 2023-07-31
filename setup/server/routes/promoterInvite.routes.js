@@ -60,7 +60,30 @@ router.route("/").post(async (req, res) => {
     });
   });
 
-// PATCH REQUEST: delete a request object by its _id
+// GET REQUEST: get a list of invites by who issued them
+/* 
+    //example usage (take promoter_id from the session token)
+
+    Axios.get("http://localhost:5000/requests/by/promoter_id", {})
+    .then(res => {
+        // do stuff...
+    })
+*/
+router.route("/by/:promoter").get((req, res) => {
+  RequestModel.find({ requester: req.params.promoter })
+    .populate([
+      "promoter",
+      {
+        path: "event",
+        populate: { path: "creator" },
+      },
+    ])
+    .then((r) => res.status(202).json(r))
+    .catch((err) => res.json({ err: err }));
+});
+
+
+// DELETE INVITE: delete a request object by its _id
 /* 
     //example usage
 
@@ -76,7 +99,7 @@ router.route("/delete/:_id").delete((req, res) => {
     .catch((err) => res.json({ err: err }));
 });
 
-// PATCH REQUEST: accept the request by its _id
+// PATCH INVITE: accept the request by its _id
 /* 
     //example usage
 
@@ -91,7 +114,7 @@ router.route("/accept/:_id").patch((req, res) => {
     .catch((err) => res.status(400).json({ err: err }));
 });
 
-// PATCH REQUEST: reject the request by its _id
+// PATCH INVITE: reject the request by its _id
 /* 
     //example usage
 
