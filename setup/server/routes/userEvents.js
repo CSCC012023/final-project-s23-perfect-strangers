@@ -17,7 +17,7 @@ const multerStorage = multer. diskStorage( {
 const upload = multer ({storage: multerStorage});
 
 router.get("/userevents", (req, res) => {
-  UserEventsModel.find()
+  UserEventsModel.find().populate(["creator"])
     .then((userEvents) => res.json(userEvents))
     .catch((err) => res.status(401).json("Error: " + err));
 });
@@ -28,6 +28,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   console.log(req.file.filename);
 
   const creator = req.body.creator;
+  const creator_ref = req.body.creator_ref;
   const title = req.body.title;
   const date = req.body.date;
   const location = req.body.location;
@@ -40,6 +41,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
 
   const newEvent = new UserEventsModel({
     creator: creator,
+    creator_ref: creator_ref,
     title: title,
     date: date,
     location: location,
@@ -68,7 +70,7 @@ router.route("/userevents/:email").get(async (req, res) => {
   console.log(req.params.email);
   const userEventDoc = await UserEventsModel.find({
     creator: req.params.email,
-  });
+  }).populate(["creator"]);
   // console.log(userEventDoc);
   res.send(userEventDoc);
 });
@@ -77,7 +79,7 @@ router.route("/myevent/:creator").get(async (req, res) => {
     try {
       const event = await UserEventsModel.find({
         creator: req.params.creator,
-      });
+      }).populate(["creator"]);
       res.send(event);
     } catch {
       res.status(404);
@@ -94,7 +96,7 @@ router.route("/myevent/:creator").get(async (req, res) => {
 router.route("/tags/userevents").post( async (req, res) => {
   const queryTags = req.body.queryTags;
   try {
-      const event = await UserEventsModel.find({ tags: { $all: queryTags} });
+      const event = await UserEventsModel.find({ tags: { $all: queryTags} }).populate(["creator"]);
       res.send(event);
   } catch {
       res.status(404);
