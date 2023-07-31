@@ -1,26 +1,34 @@
 const router = require("express").Router();
 let PromoterRequestModel = require("../models/promoterRequest.model");
 let UserDetailsModel = require("../models/userDetails.model");
-let RequestModel = require("../models/request.model");
+let PromoterInviteModel = require("../models/promoterInvite.model");
 
 router.route("/event/:event_id").get(async (req, res) => {
   try {
     var promoterRequests = await PromoterRequestModel.find({
       event: req.params.event_id,
-    }).populate(["requestee"]);
-    promoterRequests
-      .filter((req) => req.status === "accepted")
-      .forEach(async (r) => {
-        var acceptedData = await RequestModel.countDocuments({
-          email: r.email,
-          status: "accepted",
-          event: req.params.event_id,
-        });
-        console.log(acceptedData);
-      });
-    res.send(promoterRequests);
+    })
+      .populate(["requestee"])
+      .lean();
+
+    const transformedRequests = await Promise.all(
+      promoterRequests.map(async (pReq) => {
+        if (pReq.status === "accepted") {
+          const acceptedInvites = await PromoterInviteModel.countDocuments({
+            promoter: pReq.requestee._id,
+            status: "accepted",
+            event: req.params.event_id,
+          });
+          return { ...pReq, numAcceptedInvites: acceptedInvites };
+        } else {
+          return pReq;
+        }
+      })
+    );
+    console.log(transformedRequests);
+    res.send(transformedRequests);
   } catch (e) {
-    res.status(500).json({ msg: "request was not issued", err: err });
+    res.status(500).json({ msg: "request was not issued", err: e });
   }
   //console.log(promoterRequests);
 });

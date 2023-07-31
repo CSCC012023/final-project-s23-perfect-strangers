@@ -103,7 +103,7 @@ const PromoterRequestsPage = () => {
                 </div>
                 <div className={requestSentStyles.promoterAcceptedInvites}>
                   <text>Number of accepted invites:</text>
-                  <p>1</p>
+                  <p>{req.numAcceptedInvites}</p>
                 </div>
               </li>
             ))}

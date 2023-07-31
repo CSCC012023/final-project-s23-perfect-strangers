@@ -7,7 +7,7 @@ let UserDetailsModel = require("../models/userDetails.model");
     //example usage
 
     Axios.post("http://localhost:5000/promoter-invite/", {
-        inviteeEmail: invitee_email,
+        inviteeEmail: invitee_emailhttps://desktop.postman.com/?desktopVersion=10.16.0&userId=27586672&teamId=0,
         promoterEmail: promoter_email,
         event: rand_event_id
     })
@@ -18,7 +18,8 @@ let UserDetailsModel = require("../models/userDetails.model");
 router.route("/").post(async (req, res) => {
     const inviteeEmail = req.body.inviteeEmail;
     const promoterEmail = req.body.promoterEmail;
-  
+    console.log (inviteeEmail);
+    console.log (promoterEmail);
     const invitee = await UserDetailsModel.findOne({
       email: inviteeEmail
     });
@@ -26,6 +27,8 @@ router.route("/").post(async (req, res) => {
     const promoter = await UserDetailsModel.findOne({
       email: promoterEmail
     });
+    console.log (invitee);
+    console.log (promoter);
 
     if (invitee === null || promoter === null){
         res.status(404).json({ msg: "could not find invitee or promoter" + promoterEmail});
