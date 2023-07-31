@@ -33,6 +33,12 @@
     align-self: center;
 }
 
+.promoterAcceptedInvites {
+    margin-left: auto;
+    text-align: center;
+    align-self: center;
+}
+
 .eventPhoto{
     width: 100px ;
     background-color: #df6cff ;
