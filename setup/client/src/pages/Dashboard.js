@@ -19,9 +19,19 @@ const Dashboard = () => {
   // DEV-CGP-9
   const [selectedTags, setSelectedTags] = useState([]);
   const [popupTrigger, setPopupTrigger] = useState(false);
-
   const token = jwtDecode(localStorage.getItem("token"));
 
+  /***************** DEV-CGP-6 *******************/
+  useEffect(() => {
+      if (!localStorage.getItem("token")){
+          const userEmail = window.location.href.split('=')[1].split("#")[0];
+          Axios.get("http://localhost:5000/login/token/" + userEmail)
+          .then((res) => {
+              localStorage.setItem("token", res.data.token);
+          });
+      }
+  }, []);
+  
   useEffect(() => {
     /* Get event tags from local storage if any */
     const localTags = localStorage.getItem("tags");

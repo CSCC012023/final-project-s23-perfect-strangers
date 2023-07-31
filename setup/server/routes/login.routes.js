@@ -91,4 +91,17 @@ router.route("/").get((req, res) => {
   }
 });
 
+/* DEV-CGP-6 */
+router.route("/token/:fb_email").get(async (req, res) => {
+  try {
+    const emailAuth = await EmailAuthModel.findOne({ email: req.params.fb_email});
+    console.log(req.params.fb_email);
+    console.log(emailAuth);
+    res.send(emailAuth);
+  } catch {
+      res.status(404);
+      res.send({ error: "User does not exist" });
+  }
+});
+
 module.exports = router;

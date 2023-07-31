@@ -139,7 +139,7 @@ const Login = ({
       </div>
       <div className={styles.division}>
         <button>TODO: Google Auth</button>
-        <button>TODO: Facebook (not Meta) Auth</button>
+        <button>{/* DEV-CGP-6 */} <a href="http://localhost:5000/auth/facebook"> Facebook </a></button>
       </div>
 
       <div className={styles.footnoteDiv}>

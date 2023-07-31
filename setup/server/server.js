@@ -4,8 +4,119 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
+const passport = require("passport");
 
 require("dotenv").config();
+
+/* Boiler plate code to for cross origin applications */
+app.use(cors());
+app.use(express.json());
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
+
+/* Setup passport server */ // DEV-CGP-6
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(function(user, done) { done(null, user); });
+passport.deserializeUser(function(user, done) { done(null, user); });
+
+/*********************************************************************/
+/* DEV-CGP-6 */
+/* Setup passport-facebook */ // DEV-CGP-6
+const FacebookStrategy = require("passport-facebook").Strategy;
+let EmailAuthModel = require("./models/emailAuth.model");
+let UserDetailModel = require("./models/userDetails.model");
+const jwt = require("jsonwebtoken");
+passport.authorize('facebook', { scope : ['email'] })
+passport.use(
+  new FacebookStrategy ({
+    clientID: process.env.FB_APP_ID,
+    clientSecret: process.env.FB_APP_SECRET,
+    callbackURL: "http://localhost:5000/auth/facebook/callback",
+    profileFields: ['email', 'id', 'first_name', 'gender', 'last_name']
+    },
+  async function(accessToken, refreshToken, profile, cb){
+
+    // Find or create here
+
+    const emailAuth = await EmailAuthModel.findOne({
+      facebookID: profile.id
+    });
+
+    if (emailAuth) {
+      // user already registered // log the user in
+        const userDetail = await UserDetailModel.findOne({ email: emailAuth.email });
+        console.log("User Found " + userDetail);
+        userDetail.biography = ""; userDetail.image = "";
+
+        const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {
+          expiresIn: "2h",
+        });
+
+        console.log("User Saved " + token);
+        emailAuth.token = token;
+        await emailAuth.save(); // Save the user with the updated token
+    }
+    else {
+        // User was not signed up from before
+        // Need to redirect to account setup
+        const newEmailAuth = new EmailAuthModel({
+          email: profile.id + "@facebook.com",
+          password: profile.id,
+          username: profile.name.givenName + " " + profile.name.familyName,
+          facebookID: profile.id
+        });
+
+        const newUserDetails = new UserDetailModel({
+          email: profile.id + "@facebook.com",
+          username: profile.name.givenName + " " + profile.name.familyName,
+          age: 1000,
+          gender: "secret",
+        });
+      
+        newUserDetails.save()
+        newEmailAuth.save() 
+    }
+
+    return cb(null, profile);
+  })
+);
+
+/* Setup facebook authorization routes */
+/* http://localhost:5000/auth/facebook */
+app.get('/auth/facebook', cors(), passport.authenticate('facebook')
+);
+
+app.get('/auth/facebook/callback', cors(),
+  passport.authenticate('facebook', { failureRedirect: 'http://localhost:3000/dashboard' }),
+  async function(req, res) {
+    // Successful authentication, redirect home.
+      console.log(req.user) // Got the user here // King of the world
+      const emailAuth = await EmailAuthModel.findOne({ email: req.user.id + "@facebook.com" });
+      const userDetail = await UserDetailModel.findOne({ email: emailAuth.email });
+
+      if (userDetail){
+        // Generate jwt-token for the user
+        const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {expiresIn: "2h", });
+        emailAuth.token = token;
+        await emailAuth.save();
+        
+        res.redirect('http://localhost:3000/dashboard?facebookEmail=' + emailAuth.email);
+
+      }
+      else{
+        // redirect to account setup
+      }
+  }
+);
+
+/*********************************************************************/
 
 
 /*
@@ -60,8 +171,6 @@ const sockets_bioler_plate = (socket) => {
 io.on("connection", sockets_bioler_plate);
 
 /* Boiler plate code to connect to mongoDB */
-app.use(cors());
-app.use(express.json());
 app.use(express.static('public'));
 
 /* Need this as part of Multer Configuration */
@@ -106,23 +215,9 @@ app.use("/requests", requestsRouter);
 app.use("/promoter-requests", promoterRequestRouter);
 app.use("/api", eventLinkRouter);
 app.use("/business", businessRouter);
-/* 
-    - If more API_End_Point files (routes) have been added in the routes folder, only need to make changes in this section
-    - Currently, routers for only two routes have been set up
-    - In the routers below, need to give path to the js file containing the routes/API_End_Points
-*/
 app.use("/api", chatRouter);
 
 /* Listen on port 5000 */
-app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
-  })
-);
-
 httpServer.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
