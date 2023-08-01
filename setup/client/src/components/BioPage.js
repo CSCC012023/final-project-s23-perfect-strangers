@@ -39,7 +39,6 @@ const BioPage = (props) => {
   var token = jwt_decode(localStorage.getItem("token"));
   var useremail = token.userDetail.email;
   var userId = token.id;
-
   const displayName = token.userDetail.username;
 
   useEffect(() => {
@@ -56,61 +55,14 @@ const BioPage = (props) => {
   }, []);
 
   /* DEV-CGP-6 */
-  const [age, setAge] = useState(token.userDetail.age);
-  const [gender, setGender] = useState(token.userDetail.gender);
-  const [accSetupPopup, accSetupPopupTrigger] = useState(false);
-
-  const handleAccountSetup = (e) => {
-    Axios.patch("http://localhost:5000/api/biopage/account_setup/" + useremail, {
-      gender: gender,
-      age: age,
-    }).then((res) => {
-      console.log("Account setup complete");
-    })
-  }
+  const age = token.userDetail.age;
+  const gender = token.userDetail.gender;
 
 
   return (
     // <div clasName='BioPage'>
     <div className={styles.rightContainer}>
-      <StatelessPopup trigger={accSetupPopup} setTrigger={accSetupPopupTrigger}> {/*DEV_CGP-6*/}
-        <form className={styles.verticalContent} onSubmit={(e) => {handleAccountSetup(e)}}>
-          <div className={styles.division}>
-            <label className={styles.text}>Age: </label>
-            <input
-              className={styles.inputField}
-              name="Age"
-              type="number"
-              min={18}
-              value={age}
-              placeholder="1"
-              onChange={(e) => setAge(e.target.value)}
-            />
-          </div>
-          <div className={styles.division}>
-            <label className={styles.text}>Gender: </label>
-            <select
-              name="gender"
-              className={styles.inputField}
-              onChange={(e) => setGender(e.target.value)}
-            >
-              <option value="">Please select</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-              <option value="secret">Prefer not to say</option>
-            </select>
-          </div>
-          <div className={styles.division}>
-            <button type="submit" className={styles.purpleButton}>
-              Submit
-            </button>
-          </div>
-            
-        </form>
-      </StatelessPopup>
-
-
+     
       <div className={styles.horizontalContent}>
         <ProfilePicture email={useremail} url={"http://localhost:5000/user-details/image/"} />
 

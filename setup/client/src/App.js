@@ -20,9 +20,12 @@ import ChatPage from "./Chat/ChatPage";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Socket from "./Socket";
 import jwtDecode from "jwt-decode";
 import AccountSetup from "./Signup/AccountSetup";
+import FBAccountSetup from "./Signup/FBAccountSetup"; // DEV-CGP-6
+
+
+
 function App() {
   const [isBusiness, setIsBusiness] = useState(false);
   const rawToken = localStorage.getItem("token");
@@ -78,7 +81,7 @@ function App() {
           ) : (
             /* elements specific to users */
             <>
-              <Route path="/account-setup" exact element={<AccountSetup />} />
+              <Route path="/account-setup" exact element={<FBAccountSetup />} />
               <Route path="/dashboard" exact element={<Dashboard />} />
               <Route path="/create-events" exact element={<CreateEvents back={"/dashboard"} />} />
               <Route path="/invites" exact element={<Invites />} />

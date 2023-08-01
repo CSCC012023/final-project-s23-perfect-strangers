@@ -26,69 +26,43 @@ app.use(passport.session());
 passport.serializeUser(function(user, done) { done(null, user); });
 passport.deserializeUser(function(user, done) { done(null, user); });
 
-/*********************************************************************/
-/* DEV-CGP-6 */
-/* Setup passport-facebook */ // DEV-CGP-6
+/* Setup passport-facebook */ /* DEV-CGP-6 */
 const FacebookStrategy = require("passport-facebook").Strategy;
-let EmailAuthModel = require("./models/emailAuth.model");
-let UserDetailModel = require("./models/userDetails.model");
+const EmailAuthModel = require("./models/emailAuth.model");
+const UserDetailModel = require("./models/userDetails.model");
 const jwt = require("jsonwebtoken");
+
 passport.authorize('facebook', { scope : ['email'] })
 passport.use(
   new FacebookStrategy ({
     clientID: process.env.FB_APP_ID,
     clientSecret: process.env.FB_APP_SECRET,
     callbackURL: "http://localhost:5000/auth/facebook/callback",
-    profileFields: ['id', 'email', 'gender', 'birthday', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified'],
+    profileFields: ['id', 'email', 'gender', 'name', 'verified'],
     },
   async function(accessToken, refreshToken, profile, cb){
 
-    // Find or create here
-
-    const emailAuth = await EmailAuthModel.findOne({
-      facebookID: profile.id
-    });
+    const emailAuth = await EmailAuthModel.findOne({ facebookID: profile.id });
 
     if (emailAuth) {
-        /*
-          - user already registered
-          - Generate jwt-token
-          - Redirect to log the use in
-        */
+        /* user exists -> generate token -> redirect to dashboard */
         const userDetail = await UserDetailModel.findOne({ email: emailAuth.email });
-        console.log("User Found " + userDetail);
-        userDetail.biography = ""; userDetail.image = "";
 
         const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {
           expiresIn: "2h",
         });
 
-        console.log("User Saved " + token);
-        emailAuth.token = token;
-        await emailAuth.save(); // Save the user with the updated token
+        userDetail.token = token;
+        await userDetail.save(); // Save the user with the updated token
     }
     else {
-        /*
-          - User was not signed up from before
-          - Create the user
-          - Need account setup before generating jwt
-          - So redirect to redirect to account setup
-        */
+        /* unregistered user -> create emaulAuth -> redirect to FBAccountSetup */
         const newEmailAuth = new EmailAuthModel({
-          email: profile.id + "@facebook.com",
-          password: profile.id,
+          email: profile.id + "@facebook.com", password: profile.id,
           username: profile.name.givenName + " " + profile.name.familyName,
           facebookID: profile.id
         });
 
-        // const newUserDetails = new UserDetailModel({
-        //   email: profile.id + "@facebook.com",
-        //   username: profile.name.givenName + " " + profile.name.familyName,
-        //   age: 1000,
-        //   gender: "secret",
-        // });
-      
-        // newUserDetails.save()
         newEmailAuth.save() 
     }
 
@@ -97,42 +71,27 @@ passport.use(
 );
 
 /* Setup facebook authorization routes */
-/* http://localhost:5000/auth/facebook */
 app.get('/auth/facebook', cors(), passport.authenticate('facebook')
 );
 
 app.get('/auth/facebook/callback', cors(),
-  passport.authenticate('facebook', { scope: ['email', 'birthday'], failureRedirect: 'http://localhost:3000/dashboard' }),
+  passport.authenticate('facebook', { scope: ['email'], failureRedirect: 'http://localhost:3000/dashboard' }),
   async function(req, res) {
-    // Successful authentication, redirect home.
-      console.log(req.user) // Got the user here // King of the world
-      
-      const emailAuth = await EmailAuthModel.findOne({ email: req.user.id + "@facebook.com" });
+      // Successful authentication
       const userDetail = await UserDetailModel.findOne({ email: req.user.id + "@facebook.com" });
       const username = req.user.name.givenName + " " + req.user.name.familyName;
       const email = req.user.id + "@facebook.com";
 
-      if (userDetail){
-        // Generate jwt-token for the user
-        // const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {expiresIn: "2h", });
-        // emailAuth.token = token;
-        // await emailAuth.save();
-        
-        /* 
-          - redirect user to dashboard with email in url
-          - jwt in email-auth
-          - user is logged in
-        */
+      if (userDetail){        
+        /* redirect to dashboard -> username and email in url for dashboard to access jwt */
         res.redirect('http://localhost:3000/dashboard?facebookEmail=' + email + "?username=" + username);
       }
       else{
-        // redirect to account setup
+        /* redirect to account setup */
         res.redirect('http://localhost:3000/account-setup?facebookEmail=' + email + "?username=" + username);
       }
   }
 );
-
-/*********************************************************************/
 
 
 /*

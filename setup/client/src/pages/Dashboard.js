@@ -5,7 +5,6 @@ import Axios from "axios";
 
 import styles from "../styles/common_styles.module.css";
 import EventItem from "./EventItem";
-import Popup from "../CommonItems/Popup";
 
 import jwtDecode from "jwt-decode";
 
@@ -13,24 +12,31 @@ import EventsFilter from "./EventsFilter";
 import EventPopupContent from "./EventPopupContent";
 import StatelessPopup from "../CommonItems/StatelessPopup";
 
+
 const Dashboard = () => {
   const [events, setEvents] = useState([]);
 
   // DEV-CGP-9
   const [selectedTags, setSelectedTags] = useState([]);
   const [popupTrigger, setPopupTrigger] = useState(false);
-  const token = jwtDecode(localStorage.getItem("token"));
+  const [token, setToken] = useState({});
 
-  /***************** DEV-CGP-6 *******************/
+
+  // DEV-CGP-6
   useEffect(() => {
-      if (!localStorage.getItem("token")){
-          const userEmail = window.location.href.split('?')[1].split("=")[1];
-          console.log(userEmail);
-          Axios.get("http://localhost:5000/login/token/" + userEmail)
-          .then((res) => {
-              localStorage.setItem("token", res.data.token);
-          });
-      }
+    if (window.location.href.includes('facebook')){
+
+        const userEmail = window.location.href.split('=')[1];
+        Axios.get("http://localhost:5000/login/token/" + userEmail)
+        .then((res) => {
+            localStorage.setItem("token", res.data.token);
+            setToken(jwtDecode(res.data.token))
+            console.log("token in dashboard")
+        });
+    }
+    else{
+      setToken(jwtDecode(localStorage.getItem("token")));;
+    }
   }, []);
   
   useEffect(() => {
