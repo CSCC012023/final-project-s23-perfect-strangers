@@ -39,7 +39,7 @@ passport.use(
     clientID: process.env.FB_APP_ID,
     clientSecret: process.env.FB_APP_SECRET,
     callbackURL: "http://localhost:5000/auth/facebook/callback",
-    profileFields: ['email', 'id', 'first_name', 'gender', 'last_name']
+    profileFields: ['id', 'email', 'gender', 'birthday', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified'],
     },
   async function(accessToken, refreshToken, profile, cb){
 
@@ -50,7 +50,11 @@ passport.use(
     });
 
     if (emailAuth) {
-      // user already registered // log the user in
+        /*
+          - user already registered
+          - Generate jwt-token
+          - Redirect to log the use in
+        */
         const userDetail = await UserDetailModel.findOne({ email: emailAuth.email });
         console.log("User Found " + userDetail);
         userDetail.biography = ""; userDetail.image = "";
@@ -64,8 +68,12 @@ passport.use(
         await emailAuth.save(); // Save the user with the updated token
     }
     else {
-        // User was not signed up from before
-        // Need to redirect to account setup
+        /*
+          - User was not signed up from before
+          - Create the user
+          - Need account setup before generating jwt
+          - So redirect to redirect to account setup
+        */
         const newEmailAuth = new EmailAuthModel({
           email: profile.id + "@facebook.com",
           password: profile.id,
@@ -73,14 +81,14 @@ passport.use(
           facebookID: profile.id
         });
 
-        const newUserDetails = new UserDetailModel({
-          email: profile.id + "@facebook.com",
-          username: profile.name.givenName + " " + profile.name.familyName,
-          age: 1000,
-          gender: "secret",
-        });
+        // const newUserDetails = new UserDetailModel({
+        //   email: profile.id + "@facebook.com",
+        //   username: profile.name.givenName + " " + profile.name.familyName,
+        //   age: 1000,
+        //   gender: "secret",
+        // });
       
-        newUserDetails.save()
+        // newUserDetails.save()
         newEmailAuth.save() 
     }
 
@@ -94,24 +102,32 @@ app.get('/auth/facebook', cors(), passport.authenticate('facebook')
 );
 
 app.get('/auth/facebook/callback', cors(),
-  passport.authenticate('facebook', { failureRedirect: 'http://localhost:3000/dashboard' }),
+  passport.authenticate('facebook', { scope: ['email', 'birthday'], failureRedirect: 'http://localhost:3000/dashboard' }),
   async function(req, res) {
     // Successful authentication, redirect home.
       console.log(req.user) // Got the user here // King of the world
+      
       const emailAuth = await EmailAuthModel.findOne({ email: req.user.id + "@facebook.com" });
-      const userDetail = await UserDetailModel.findOne({ email: emailAuth.email });
+      const userDetail = await UserDetailModel.findOne({ email: req.user.id + "@facebook.com" });
+      const username = req.user.name.givenName + " " + req.user.name.familyName;
+      const email = req.user.id + "@facebook.com";
 
       if (userDetail){
         // Generate jwt-token for the user
-        const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {expiresIn: "2h", });
-        emailAuth.token = token;
-        await emailAuth.save();
+        // const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {expiresIn: "2h", });
+        // emailAuth.token = token;
+        // await emailAuth.save();
         
-        res.redirect('http://localhost:3000/dashboard?facebookEmail=' + emailAuth.email);
-
+        /* 
+          - redirect user to dashboard with email in url
+          - jwt in email-auth
+          - user is logged in
+        */
+        res.redirect('http://localhost:3000/dashboard?facebookEmail=' + email + "?username=" + username);
       }
       else{
         // redirect to account setup
+        res.redirect('http://localhost:3000/account-setup?facebookEmail=' + email + "?username=" + username);
       }
   }
 );

@@ -24,7 +24,8 @@ const Dashboard = () => {
   /***************** DEV-CGP-6 *******************/
   useEffect(() => {
       if (!localStorage.getItem("token")){
-          const userEmail = window.location.href.split('=')[1].split("#")[0];
+          const userEmail = window.location.href.split('?')[1].split("=")[1];
+          console.log(userEmail);
           Axios.get("http://localhost:5000/login/token/" + userEmail)
           .then((res) => {
               localStorage.setItem("token", res.data.token);

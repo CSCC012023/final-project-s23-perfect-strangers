@@ -22,6 +22,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Socket from "./Socket";
 import jwtDecode from "jwt-decode";
+import AccountSetup from "./Signup/AccountSetup";
 function App() {
   const [isBusiness, setIsBusiness] = useState(false);
   const rawToken = localStorage.getItem("token");
@@ -77,12 +78,9 @@ function App() {
           ) : (
             /* elements specific to users */
             <>
+              <Route path="/account-setup" exact element={<AccountSetup />} />
               <Route path="/dashboard" exact element={<Dashboard />} />
-              <Route
-                path="/create-events"
-                exact
-                element={<CreateEvents back={"/dashboard"} />}
-              />
+              <Route path="/create-events" exact element={<CreateEvents back={"/dashboard"} />} />
               <Route path="/invites" exact element={<Invites />} />
               <Route path="/account" exact element={<Account />} />
               <Route path="/bio-page" exact element={<BioPage />} />

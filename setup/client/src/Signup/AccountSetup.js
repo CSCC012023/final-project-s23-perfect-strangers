@@ -4,11 +4,15 @@ import styles from "../styles/common_styles.module.css";
 
 import Axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const AccountSetup = ({ accountSetupCallback, email, username }) => {
   // state for age and gender
   const [age, setAge] = useState(18);
   const [gender, setGender] = useState("");
+  const [Email, setEmail] = useState(email); // DEV-CGP-6
+  const [userName, setuserName] = useState(username); // DEV-CGP-6
+  const [AccountSetupCallback, setAccountSetupCallback] = useState(accountSetupCallback); // DEV-CGP-6
 
   const navigate = useNavigate();
 
@@ -19,31 +23,40 @@ const AccountSetup = ({ accountSetupCallback, email, username }) => {
     else setAge(intVal);
   };
 
+  useEffect(() => { // DEV-CGP-6
+    if (window.location.href.includes('facebook')){
+      setAccountSetupCallback('/dashboard');
+      setEmail(window.location.href.split('?')[1].split("=")[1]);
+      setuserName(window.location.href.split('?')[2].split("=")[1].split("#")[0].replace("%20", ' ').replace("%20", ' '));
+    }
+  }, []);
+
   // function to call post request when submit button is pressed
   const handleOnSubmit = (e) => {
     e.preventDefault();
+
     Axios.post("http://localhost:5000/user-details/", {
-      email: email,
-      username: username,
+      email: Email,
+      username: userName,
       age: age,
       gender: gender,
     }).then((res) => {
       console.log(res);
-      navigate(accountSetupCallback, {});
+      navigate(AccountSetupCallback, {});
       //accountSetupCallback();
     });
   };
 
-  return username !== undefined &&
-    email !== undefined &&
-    username !== "" &&
-    email !== " " ? (
+  return userName !== undefined &&
+    Email !== undefined &&
+    userName !== "" &&
+    Email !== " " ? (
     <div className={styles.container}>
       <h1 className={styles.heading}>ACCOUNT SETUP</h1>
       <div className={styles.division}>
-        <p className={styles.text}>{username}</p>
+        <p className={styles.text}>{userName}</p>
         <p className={styles.text}>|</p>
-        <p className={styles.text}>{email}</p>
+        <p className={styles.text}>{Email}</p>
       </div>
 
       <form className={styles.verticalContent} onSubmit={handleOnSubmit}>
