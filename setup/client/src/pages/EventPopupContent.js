@@ -299,7 +299,7 @@ const EventPopupContent = ({ userid, event, index, setEvent, close }) => {
           {processed ? (<div className={styles.text}>{processedMessage}</div>) :
           (
           <button
-            className={styles.smallTransparentButton}
+            className={styles.smallPurpleButton}
             onClick={makeRequest}
           >
             make a request
