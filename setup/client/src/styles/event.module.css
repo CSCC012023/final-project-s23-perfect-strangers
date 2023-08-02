@@ -22,11 +22,13 @@
     background-color: #df6cff;
     height: 400px;
     text-align: center;
+    object-fit: cover;
 }
 
 .eventPhoto {
     width: 130px;
     height: 130px;
+    object-fit: cover;
 }
 
 .eventOnMe {

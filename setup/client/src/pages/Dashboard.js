@@ -51,11 +51,11 @@ const Dashboard = () => {
   };
 
   //DEV-CGP-23: refactoring popup into a single component instead of separate popups for each event
-  const [eventSelected, setEventSelected] = useState(null);
+  const [eventSelected, setEventSelected] = useState([]);
   const [eventExpand, setEventExpand] = useState(false);
 
-  const openPopup = event => {
-    setEventSelected(event);
+  const openPopup = (event, index) => {
+    setEventSelected([event, index]);
     setEventExpand(true);
   };
 
@@ -64,7 +64,15 @@ const Dashboard = () => {
       <StatelessPopup trigger={eventExpand} setTrigger={setEventExpand}>
         <EventPopupContent
           userid={token.id}
-          event={eventSelected}
+          event={eventSelected[0]}
+          index={eventSelected[1]}
+          setEvent={(e, i) => {
+            setEvents(prevEvents => {
+              prevEvents[i] = e;
+              return prevEvents;
+            });
+            console.log({e, events});
+          }}
           close={() => setEventExpand(false)}
         />
       </StatelessPopup>
@@ -103,11 +111,11 @@ const Dashboard = () => {
 
         <div className={styles.wrapContainer}>
           {events &&
-            events.map(event => (
+            events.map((event, index) => (
               <div
                 key={event._id}
                 style={{ margin: "10px", cursor: "pointer" }}
-                onClick={() => openPopup(event)}
+                onClick={() => openPopup(event, index)}
               >
                 <EventItem event={event} />
               </div>
