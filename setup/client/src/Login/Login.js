@@ -140,6 +140,7 @@ const Login = ({
         <div className={styles.line}></div>
       </div>
       <div className={styles.division}>
+<<<<<<< HEAD
         <button className={styles.googleButton} >
           <a href="http://localhost:3000">   <FaGoogle/> </a>
         </button>
@@ -148,6 +149,10 @@ const Login = ({
         <button className={styles.facebookButton} >  
           <a  href="http://localhost:5000/auth/facebook"> <FaFacebook /> </a>
         </button>
+=======
+        <button>TODO: Google Auth</button>
+        <button>{/* DEV-CGP-6 */} <a href="http://localhost:5000/auth/facebook"> Facebook </a></button>
+>>>>>>> develop
       </div>
 
       <div className={styles.footnoteDiv}>
