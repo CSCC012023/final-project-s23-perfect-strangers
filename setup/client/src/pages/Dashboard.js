@@ -59,6 +59,17 @@ const Dashboard = () => {
       }).then(res => {
           setProcessed(true);
           setProcessedMessage(res.data.msg);
+
+          // Update numRequests for specific event in db only if the request does not already exist
+          if (!res.data.exists){
+            Axios.post("http://localhost:5000/api/userevents/numRequests", {
+            _id: event._id,
+            numRequests: event.numRequests + 1,
+            }).then((response) => {
+              console.log(response);
+            })
+            .catch((err) => console.log(err));
+          }
       });
     };
 
@@ -82,6 +93,58 @@ const Dashboard = () => {
             </button>
           </>
         )}
+      </>
+    );
+  };
+
+  const PopularEvents = () => {
+    const getNumRequests = (event) => event.numRequests;
+
+    const popularEventsList = [];
+
+    events.forEach((event) => {
+      if (popularEventsList.length < 6) {
+        popularEventsList.push(event);
+      } else {
+        const mostPopularEvent = popularEventsList.reduce((min, current) => (getNumRequests(min) < getNumRequests(current) ? min : current));
+        if (getNumRequests(event) > getNumRequests(mostPopularEvent)) {
+          popularEventsList.splice(popularEventsList.indexOf(mostPopularEvent), 1, event);
+        }
+      }
+    });
+
+    popularEventsList.sort((event1, event2) => event2.numRequests - event1.numRequests);
+    const remainingEvents = events.filter(event => !popularEventsList.includes(event));
+
+    return (
+      <>
+        <div className={styles.wrapContainer}>
+          {popularEventsList &&
+            popularEventsList.map(event => (
+              <div key={event._id} style={{ margin: "10px" }}>
+                <Popup content={c => Content(event, c)}>
+                  <EventItem event={event} />
+                </Popup>
+              </div>
+            ))
+          }
+        </div>
+        {
+          selectedTags.length === 0 && (
+            <hr style={{borderTop: "3px solid white", marginLeft: "8px", marginRight: "100px"}}></hr>
+          )
+        }
+        <div className={styles.wrapContainer}>
+          {remainingEvents &&
+            remainingEvents.map(event => (
+              <div key={event._id} style={{ margin: "10px" }}>
+                <Popup content={c => Content(event, c)}>
+                  <EventItem event={event} />
+                </Popup>
+              </div>
+            ))
+          }
+        </div>
       </>
     );
   };
@@ -120,16 +183,18 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {
+        selectedTags.length === 0 && (
+          <div className={styles.Division}>
+            <div className={styles.horizontalContent} style={{marginLeft: 10}}>
+              <div className={styles.whiteHeading}>Trending🔥</div>
+            </div>
+          </div>
+        )
+      }
+
+      <PopularEvents/>
       <div className={styles.wrapContainer}>
-          {events &&
-            events.map(event => (
-              <div key={event._id} style={{ margin: "10px" }}>
-                <Popup content={c => Content(event, c)}>
-                  <EventItem event={event} />
-                </Popup>
-              </div>
-            ))
-          }
 
          { // DEV-CGP-9
             (selectedTags.length !== 0 && events.length === 0) && (
