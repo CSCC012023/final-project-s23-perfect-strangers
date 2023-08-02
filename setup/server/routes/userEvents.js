@@ -106,16 +106,6 @@ router.route("/tags/userevents").post( async (req, res) => {
 module.exports = router;
 
 // Quiz 4
-// Get user event by Id
-// router.route("/userevents/:_id").get(async (req, res) => {
-//   console.log("User event get request is made");
-//   console.log("user" + req.params._id);
-//   const userEvent = await UserEventsModel.find({
-//     _id: req.params._id,
-//   });
-//   res.send(userEvent);
-// });
-
 router.route("/userevents/numRequests").post( async(req, res) => {
   console.log("POST request is made");
 
