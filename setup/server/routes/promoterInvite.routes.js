@@ -55,7 +55,7 @@ router.route("/").post(async (req, res) => {
             res.status(404).json({ msg: "invite was not issued", err: err });
           });
       } else {
-        res.status(409).json({ msg: "request already exists" });
+        res.status(409).json({ msg: "invite already exists" });
       }
     });
   });
@@ -64,24 +64,59 @@ router.route("/").post(async (req, res) => {
 /* 
     //example usage (take promoter_id from the session token)
 
-    Axios.get("http://localhost:5000/requests/by/promoter_id", {})
+    Axios.get("http://localhost:5000/requests/by/:promoter_id", {})
     .then(res => {
         // do stuff...
     })
 */
 router.route("/by/:promoter").get((req, res) => {
-  RequestModel.find({ requester: req.params.promoter })
+  PromoterInviteModel.find({ promoter: req.params.promoter })
     .populate([
+      "invitee",
       "promoter",
       {
-        path: "event",
-        populate: { path: "creator" },
+        path: "event"
       },
     ])
     .then((r) => res.status(202).json(r))
     .catch((err) => res.json({ err: err }));
 });
 
+// GET REQUEST: get a list of invites by invitees
+/* 
+    //example usage (take promoter_id from the session token)
+
+    Axios.get("http://localhost:5000/requests/by/:invitee_id", {})
+    .then(res => {
+        // do stuff...
+    })
+*/
+router.route("/to/:invitee").get((req, res) => {
+  PromoterInviteModel.find({ invitee: req.params.invitee, status: "pending"})
+    .populate([
+      "invitee",
+      "promoter",
+      {
+        path: "event"
+      },
+    ])
+    .then((r) => res.status(202).json(r))
+    .catch((err) => res.json({ err: err }));
+});
+
+
+router.route("/accepted/:invitee").get((req, res) => {
+  PromoterInviteModel.find({ invitee: req.params.invitee, status: "accepted"})
+    .populate([
+      "invitee",
+      "promoter",
+      {
+        path: "event"
+      },
+    ])
+    .then((r) => res.status(202).json(r))
+    .catch((err) => res.json({ err: err }));
+});
 
 // DELETE INVITE: delete a request object by its _id
 /* 
@@ -99,7 +134,7 @@ router.route("/delete/:_id").delete((req, res) => {
     .catch((err) => res.json({ err: err }));
 });
 
-// PATCH INVITE: accept the request by its _id
+// PATCH INVITE: accept the invite by its _id
 /* 
     //example usage
 
@@ -114,7 +149,7 @@ router.route("/accept/:_id").patch((req, res) => {
     .catch((err) => res.status(400).json({ err: err }));
 });
 
-// PATCH INVITE: reject the request by its _id
+// PATCH INVITE: reject the invite by its _id
 /* 
     //example usage
 

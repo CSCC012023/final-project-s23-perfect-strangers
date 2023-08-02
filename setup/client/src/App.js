@@ -3,7 +3,7 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 import BioPage from "./components/BioPage";
 import Dashboard from "./pages/Dashboard";
-import Invites from "./pages/Invites";
+import Invites from "./Invites/Invites";
 import Account from "./pages/Account";
 import Logout from "./pages/Logout";
 import CreateEvents from "./pages/CreateEvents";
