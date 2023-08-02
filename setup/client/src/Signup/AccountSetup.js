@@ -6,12 +6,15 @@ import Axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const AccountSetup = ({ accountSetupCallback, email, username }) => {
+const AccountSetup = ({ accountSetupCallback, email, username, url, successfunc }) => {
   // state for age and gender
   const [age, setAge] = useState(18);
   const [gender, setGender] = useState("");
 
   const navigate = useNavigate();
+
+  // DEV-CGP-5: custom url for making users
+  const requestUrl = (url === undefined) ? "http://localhost:5000/user-details/" : url;
 
   // function to check age when a user enters it
   const checkAndSetAge = (val) => {
@@ -25,13 +28,14 @@ const AccountSetup = ({ accountSetupCallback, email, username }) => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    Axios.post("http://localhost:5000/user-details/", {
+    Axios.post(requestUrl, {
       email: email,
       username: username,
       age: age,
       gender: gender,
     }).then((res) => {
       console.log(res);
+      if (successfunc !== undefined) successfunc(res);// DEV-CGP-5: call a custom function after successful account setup
       navigate(accountSetupCallback, {email: email}); // DEV-CGP-6
     });
   };
