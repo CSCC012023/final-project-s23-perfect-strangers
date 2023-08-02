@@ -3,13 +3,17 @@ import { useState } from "react";
 import styles from "../styles/common_styles.module.css";
 
 import Axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { EventTags } from '../pages/EventsTags'
 
 const AccountSetup = ({ accountSetupCallback, email, username }) => {
   // state for age and gender
   const [age, setAge] = useState(18);
   const [gender, setGender] = useState("");
+
+  const [userInterests, setUserInterests] = useState(["Other"]); // DEV-CGP-19
+  const [popupTrigger, setPopupTrigger] = useState(false); // DEV-CGP-19
 
   const navigate = useNavigate();
 
@@ -22,10 +26,10 @@ const AccountSetup = ({ accountSetupCallback, email, username }) => {
 
 
   // function to call post request when submit button is pressed
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    Axios.post("http://localhost:5000/user-details/", {
+    await Axios.post("http://localhost:5000/user-details/", {
       email: email,
       username: username,
       age: age,
@@ -34,6 +38,14 @@ const AccountSetup = ({ accountSetupCallback, email, username }) => {
       console.log(res);
       navigate(accountSetupCallback, {email: email}); // DEV-CGP-6
     });
+
+    await Axios.post("http://localhost:5000/api/userInterests/", {
+      email: email,
+      interestList: userInterests,
+    }).then(res => {
+      console.log(res.data.interestList)
+    });
+
   };
 
   return username !== undefined &&
@@ -75,6 +87,16 @@ const AccountSetup = ({ accountSetupCallback, email, username }) => {
             <option value="secret">Prefer not to say</option>
           </select>
         </div>
+
+        {/*  DEV-CGP-19 // regInterests1@gmail.com */}
+        <div className={styles.division}>
+          <label className={styles.text}>Interests: </label>
+          <EventTags
+            popupTrigger={popupTrigger} setPopupTrigger={setPopupTrigger}
+            selectedTags={userInterests} setSelectedTags={setUserInterests}
+          />
+        </div>
+
         <div className={styles.division}>
           <button type="submit" className={styles.purpleButton}>
             Submit
