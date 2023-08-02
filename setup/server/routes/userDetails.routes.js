@@ -99,4 +99,26 @@ router.route("/image").post(upload.single("profilePic"), async(req, res) => {
   }
 });
 
+
+
+/* DEV-CGP-6 */
+
+router.route("/biopage/account_setup/:useremail").patch(async (req, res) => {
+
+  try {
+    UserDetailsModel.updateOne(
+      {
+        email: req.params.useremail
+      },{
+        $set:{ age: req.body.age, gender: req.body.gender}
+      })
+    res.status(204).send();
+  }
+  catch{
+      // res.status(404)
+      // res.send({ error: "Post doesn't exist!" })
+      console.log("Error updating chat room");
+  }
+});
+
 module.exports = router;
