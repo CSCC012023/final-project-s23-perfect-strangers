@@ -236,6 +236,19 @@ const EventPopupContent = ({ userid, event, index, setEvent, close }) => {
     close();
   };
 
+  const [processed, setProcessed] = useState(false);
+  const [processedMessage, setProcessedMessage] = useState("");
+
+  const makeRequest = () => {
+    axios.post("http://localhost:5000/requests/", {
+      requester: userid,
+      event: event._id,
+    }).then(res => {
+      setProcessed(true);
+      setProcessedMessage(res.data.msg);
+    });
+  };
+
   return (
     <div>
       <EventTagsPopup
@@ -283,7 +296,15 @@ const EventPopupContent = ({ userid, event, index, setEvent, close }) => {
             marginRight: "0px",
           }}
         >
-          <button className={styles.smallPurpleButton}>request</button>
+          {processed ? (<div className={styles.text}>{processedMessage}</div>) :
+          (
+          <button
+            className={styles.smallTransparentButton}
+            onClick={makeRequest}
+          >
+            make a request
+          </button>
+          )}
         </div>
       )}
     </div>
