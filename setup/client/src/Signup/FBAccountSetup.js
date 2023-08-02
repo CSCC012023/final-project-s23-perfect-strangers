@@ -28,6 +28,8 @@ const FBAccountSetup = () => {
   // function to call post request when submit button is pressed
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    
+    localStorage.setItem("tags", JSON.stringify([])); // DEV-CGP-19
 
     await Axios.post("http://localhost:5000/login/facebook/first-time", {
       email: Email,
