@@ -37,7 +37,9 @@ const EventTagsPopup = ({ popupTrigger, setPopupTrigger, selectedTags, setSelect
     );
 
     const saveChanges = () => {
-      saveTags(selectedTags); // DEV-CGP-23: generalising event tags feature for reuse
+      if (saveTags !== undefined){
+        saveTags(selectedTags); // DEV-CGP-23: generalising event tags feature for reuse
+      }
       setPopupTrigger(false);
     }
 

@@ -7,7 +7,7 @@ import Axios from "axios";
 
 import styles from "../styles/common_styles.module.css";
 
-function Invites(){
+function Promoter(){
     const token = jwtDecode(localStorage.getItem("token"));
     console.log(token);
 
@@ -108,4 +108,4 @@ function Invites(){
     );
 }
 
-export default Invites;
+export default Promoter;

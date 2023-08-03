@@ -78,12 +78,12 @@ router.route("/").post(async (req, res) => {
     })
 */
 router.route("/by/:promoter").get((req, res) => {
-  RequestModel.find({ requester: req.params.promoter })
+  PromoterInviteModel.find({ promoter: req.params.promoter })
     .populate([
+      "invitee",
       "promoter",
       {
-        path: "event",
-        populate: { path: "creator" },
+        path: "event"
       },
     ])
     .then((r) => res.status(202).json(r))

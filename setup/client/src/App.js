@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar";
 import BioPage from "./components/BioPage";
 import Dashboard from "./pages/Dashboard";
 import Invites from "./Invites/Invites";
+import Promoter from "./pages/Promoter";
 import Account from "./pages/Account";
 import Logout from "./pages/Logout";
 import CreateEvents from "./pages/CreateEvents";
@@ -84,6 +85,7 @@ function App() {
               <Route path="/dashboard" exact element={<Dashboard />} />
               <Route path="/create-events" exact element={<CreateEvents back={"/dashboard"} />} />
               <Route path="/invites" exact element={<Invites />} />
+              <Route path="/promoter" exact element={<Promoter />} />
               <Route path="/account" exact element={<Account />} />
               <Route path="/bio-page" exact element={<BioPage />} />
               <Route path="/chats" exact element={<ChatPage />} />
