@@ -11,6 +11,7 @@ import {eyeDisabled} from 'react-icons-kit/ionicons/eyeDisabled'
 import StatelessPopup from "../CommonItems/StatelessPopup";
 import { FaFacebook } from "@react-icons/all-files/fa/FaFacebook"; // npm install @react-icons/all-files --save // DEV-CGP-6
 import { FaGoogle } from "@react-icons/all-files/fa/FaGoogle"; // npm install @react-icons/all-files --save
+import GoogleAuthButton from "../CommonItems/GoogleAuthButton";
 
 const Signup = ({ signedUpCallback, loginRedirect }) => {
   // signedUpCallBack = (JSON object) => {...do stuff, doesn't care for the return value}
@@ -147,9 +148,7 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
       </div>
       <div className={styles.division}>
 
-        <button className={styles.googleButton} >
-          <a href="http://localhost:3000">   <FaGoogle/> </a>
-        </button>
+        <GoogleAuthButton />
 
         {/* DEV-CGP-6 */} 
         <button className={styles.facebookButton} >  
