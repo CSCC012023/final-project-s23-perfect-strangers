@@ -146,7 +146,7 @@ const PromoterRequestsPage = () => {
         {myEvents &&
           myEvents.map((event) => (
             <div key={event._id} style={{ margin: "10px" }}>
-              <Popup content={(c) => Content(c, event)}>
+              <Popup content={(c) => Content(c, event)} popupStyle = "old"> 
                 <EventItem event={event} />
               </Popup>
             </div>
