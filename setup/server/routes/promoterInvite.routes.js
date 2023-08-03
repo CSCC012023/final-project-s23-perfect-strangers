@@ -6,7 +6,7 @@ let UserDetailsModel = require("../models/userDetails.model");
 /* 
     //example usage
 
-    Axios.post("http://localhost:5000/promoter-invite/", {
+    Axios.post("http://localhost:5000/promoter-invites/", {
         inviteeEmail: invitee_email,
         promoterEmail: promoter_email,
         event: rand_event_id
@@ -15,6 +15,14 @@ let UserDetailsModel = require("../models/userDetails.model");
         // do stuff...
     })
 */
+
+router.route("/event/:event_id").get((req, res) => {
+    PromoterInviteModel.find({ event: req.params.event_id })
+      .populate(["invitee"])
+      .then((r) => res.status(200).json(r))
+      .catch((err) => res.status(404).json({ err: err }));
+  });
+
 router.route("/").post(async (req, res) => {
     const inviteeEmail = req.body.inviteeEmail;
     const promoterEmail = req.body.promoterEmail;
@@ -55,7 +63,7 @@ router.route("/").post(async (req, res) => {
             res.status(404).json({ msg: "invite was not issued", err: err });
           });
       } else {
-        res.status(409).json({ msg: "invite already exists" });
+        res.status(409).json({ msg: "request already exists" });
       }
     });
   });
@@ -64,7 +72,7 @@ router.route("/").post(async (req, res) => {
 /* 
     //example usage (take promoter_id from the session token)
 
-    Axios.get("http://localhost:5000/requests/by/:promoter_id", {})
+    Axios.get("http://localhost:5000/requests/by/promoter_id", {})
     .then(res => {
         // do stuff...
     })
@@ -80,6 +88,53 @@ router.route("/by/:promoter").get((req, res) => {
     ])
     .then((r) => res.status(202).json(r))
     .catch((err) => res.json({ err: err }));
+});
+
+
+// DELETE INVITE: delete a request object by its _id
+/* 
+    //example usage
+
+    Axios.post("http://localhost:5000/promoter-invites/delete/invite._id")
+    .then(res => {
+        // do stuff...
+    })
+ */
+router.route("/delete/:_id").delete((req, res) => {
+  //console.log(req.body.requester);
+  PromoterInviteModel.deleteOne({ _id: req.params._id })
+    .then((r) => res.status(203).json(r))
+    .catch((err) => res.json({ err: err }));
+});
+
+// PATCH INVITE: accept the request by its _id
+/* 
+    //example usage
+
+    Axios.post("http://localhost:5000/promoter-invites/accept/invite._id")
+    .then(res => {
+        // do stuff...
+    })
+ */
+router.route("/accept/:_id").patch((req, res) => {
+  PromoterInviteModel.findOneAndUpdate({_id: req.params._id}, {status: 'accepted'})
+    .then((r) => res.status(203).json(r))
+    .catch((err) => res.status(400).json({ err: err }));
+});
+
+// PATCH INVITE: reject the request by its _id
+/* 
+    //example usage
+
+    Axios.post("http://localhost:5000/promoterInvite/reject/promoterInvite_id")
+    .then(res => {
+        // do stuff...
+    })
+ */
+router.route("/reject/:_id").patch((req, res) => {
+  PromoterInviteModel.findOneAndUpdate({_id: req.params._id}, {status: 'rejected'})
+    .then((r) => res.status(203).json(r))
+    .catch((err) => res.status(400).json({ err: err }));
 });
 
 // GET REQUEST: get a list of invites by invitees
@@ -118,50 +173,5 @@ router.route("/accepted/:invitee").get((req, res) => {
     .catch((err) => res.json({ err: err }));
 });
 
-// DELETE INVITE: delete a request object by its _id
-/* 
-    //example usage
-
-    Axios.post("http://localhost:5000/promoter-invite/delete/invite._id")
-    .then(res => {
-        // do stuff...
-    })
- */
-router.route("/delete/:_id").delete((req, res) => {
-  //console.log(req.body.requester);
-  PromoterInviteModel.deleteOne({ _id: req.params._id })
-    .then((r) => res.status(203).json(r))
-    .catch((err) => res.json({ err: err }));
-});
-
-// PATCH INVITE: accept the invite by its _id
-/* 
-    //example usage
-
-    Axios.post("http://localhost:5000/promoter-invite/accept/invite._id")
-    .then(res => {
-        // do stuff...
-    })
- */
-router.route("/accept/:_id").patch((req, res) => {
-  PromoterInviteModel.findOneAndUpdate({_id: req.params._id}, {status: 'accepted'})
-    .then((r) => res.status(203).json(r))
-    .catch((err) => res.status(400).json({ err: err }));
-});
-
-// PATCH INVITE: reject the invite by its _id
-/* 
-    //example usage
-
-    Axios.post("http://localhost:5000/promoterInvite/reject/promoterInvite_id")
-    .then(res => {
-        // do stuff...
-    })
- */
-router.route("/reject/:_id").patch((req, res) => {
-  PromoterInviteModel.findOneAndUpdate({_id: req.params._id}, {status: 'rejected'})
-    .then((r) => res.status(203).json(r))
-    .catch((err) => res.status(400).json({ err: err }));
-});
 
 module.exports = router;

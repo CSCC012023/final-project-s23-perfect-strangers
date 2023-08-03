@@ -13,7 +13,7 @@ const RequestsByMe = () => {
     const [invites, setInvites] = useState([]);
 
     useEffect(() => {
-        Axios.get("http://localhost:5000/promoter-invite/by/" + token.id)
+        Axios.get("http://localhost:5000/promoter-invites/by/" + token.id)
             .then(res => {
                 setInvites(res.data);
                 console.log(res.data);
