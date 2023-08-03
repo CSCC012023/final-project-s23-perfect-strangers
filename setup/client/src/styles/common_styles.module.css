@@ -185,6 +185,47 @@ body {
     background-color: #df6cff;
 }
 
+.facebookButton { /* DEV-CGP-6 */
+    padding: 9.5px;
+    flex: 1;
+    margin: 10px 0;
+    margin: 1px;
+    background-color: #4267B2;
+    color: #ffffff;
+    border-radius: 5px;
+    border-width: 0;
+    font-size: 30px;
+    font-family: 'Advent Pro', sans-serif;
+    font-weight: 700;
+    text-align: center;
+    transition-duration: 0.4s;
+}
+
+a:visited {
+    color: white;
+}
+
+a:hover {
+    color: blue
+}
+
+.googleButton { /* DEV-CGP-6 placeholder*/
+    padding: 9.5px;
+    flex: 1;
+    margin: 10px 0;
+    margin: 1px;
+    background-color: #1aa260;
+    color: #ffffff;
+    border-radius: 5px;
+    border-width: 0;
+    font-size: 30px;
+    font-family: 'Advent Pro', sans-serif;
+    font-weight: 700;
+    text-align: center;
+    transition-duration: 0.4s;
+}
+
+
 /* style for an interactive small purple button */
 .smallPurpleButton {
     font-family: 'Advent Pro', sans-serif;

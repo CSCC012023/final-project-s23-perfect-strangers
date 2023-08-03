@@ -4,8 +4,94 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
+const passport = require("passport");
 
 require("dotenv").config();
+
+/* Boiler plate code to for cross origin applications */
+app.use(cors());
+app.use(express.json());
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true },
+  })
+);
+
+/* Setup passport server */ // DEV-CGP-6
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(function(user, done) { done(null, user); });
+passport.deserializeUser(function(user, done) { done(null, user); });
+
+/* Setup passport-facebook */ /* DEV-CGP-6 */
+const FacebookStrategy = require("passport-facebook").Strategy;
+const EmailAuthModel = require("./models/emailAuth.model");
+const UserDetailModel = require("./models/userDetails.model");
+const jwt = require("jsonwebtoken");
+
+passport.authorize('facebook', { scope : ['email'] })
+passport.use(
+  new FacebookStrategy ({
+    clientID: process.env.FB_APP_ID,
+    clientSecret: process.env.FB_APP_SECRET,
+    callbackURL: "http://localhost:5000/auth/facebook/callback",
+    profileFields: ['id', 'email', 'gender', 'name', 'verified'],
+    },
+  async function(accessToken, refreshToken, profile, cb){
+
+    const emailAuth = await EmailAuthModel.findOne({ facebookID: profile.id });
+
+    if (emailAuth) {
+        /* user exists -> generate token -> redirect to dashboard */
+        const userDetail = await UserDetailModel.findOne({ email: emailAuth.email });
+
+        const token = jwt.sign({ id: userDetail._id, userDetail: userDetail }, "shhhhh", {
+          expiresIn: "2h",
+        });
+
+        userDetail.token = token;
+        await userDetail.save(); // Save the user with the updated token
+    }
+    else {
+        /* unregistered user -> create emaulAuth -> redirect to FBAccountSetup */
+        const newEmailAuth = new EmailAuthModel({
+          email: profile.id + "@facebook.com", password: profile.id,
+          username: profile.name.givenName + " " + profile.name.familyName,
+          facebookID: profile.id
+        });
+
+        newEmailAuth.save() 
+    }
+
+    return cb(null, profile);
+  })
+);
+
+/* Setup facebook authorization routes */
+app.get('/auth/facebook', cors(), passport.authenticate('facebook')
+);
+
+app.get('/auth/facebook/callback', cors(),
+  passport.authenticate('facebook', { scope: ['email'], failureRedirect: 'http://localhost:3000/dashboard' }),
+  async function(req, res) {
+      // Successful authentication
+      const userDetail = await UserDetailModel.findOne({ email: req.user.id + "@facebook.com" });
+      const username = req.user.name.givenName + " " + req.user.name.familyName;
+      const email = req.user.id + "@facebook.com";
+
+      if (userDetail){        
+        /* redirect to dashboard -> username and email in url for dashboard to access jwt */
+        res.redirect('http://localhost:3000/dashboard?facebookEmail=' + email + "?username=" + username);
+      }
+      else{
+        /* redirect to account setup */
+        res.redirect('http://localhost:3000/account-setup?facebookEmail=' + email + "?username=" + username);
+      }
+  }
+);
 
 
 /*
@@ -60,8 +146,6 @@ const sockets_bioler_plate = (socket) => {
 io.on("connection", sockets_bioler_plate);
 
 /* Boiler plate code to connect to mongoDB */
-app.use(cors());
-app.use(express.json());
 app.use(express.static('public'));
 
 /* Need this as part of Multer Configuration */
@@ -106,23 +190,9 @@ app.use("/requests", requestsRouter);
 app.use("/promoter-requests", promoterRequestRouter);
 app.use("/api", eventLinkRouter);
 app.use("/business", businessRouter);
-/* 
-    - If more API_End_Point files (routes) have been added in the routes folder, only need to make changes in this section
-    - Currently, routers for only two routes have been set up
-    - In the routers below, need to give path to the js file containing the routes/API_End_Points
-*/
 app.use("/api", chatRouter);
 
 /* Listen on port 5000 */
-app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
-  })
-);
-
 httpServer.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
