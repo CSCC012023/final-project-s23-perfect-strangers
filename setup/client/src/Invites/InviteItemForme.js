@@ -85,7 +85,6 @@ const InviteItemForMe = ({ _id, invitee, promoter, event, status, setInvite }) =
                 <p>{"From " + promoter.username}</p>
                 <p>{makeFirstLetterCapital(promoter.gender)}</p>
                 <p>{promoter.email}</p>
-                {event.description && <p>{event.description}</p>}
               </div>
               <div className={inviteStyles.requestButtons}>
                 <button
