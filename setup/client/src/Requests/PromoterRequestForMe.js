@@ -78,8 +78,8 @@ const PromoterRequestForMe = ({ event, changeRequestStatusCallback }) => {
         <div className={requestStyles.popupHeading}>
           Promoter request for this event created by:{" "}
         </div>
-        {eventData.map(() => (
-          <ul className={requestStyles.unorderedList}>
+        <ul className={requestStyles.unorderedList}>
+          {eventData.map(() => (
             <li className={requestSentStyles.requestSentCard}>
               <img
                 src={`http://localhost:5000/uploads/` + event.requestee.image}
@@ -114,16 +114,15 @@ const PromoterRequestForMe = ({ event, changeRequestStatusCallback }) => {
                 </button>
               </div>
             </li>
-          </ul>
-        ))}
-        ;
+          ))}
+        </ul>
       </div>
     );
   }
 
   return (
     <div key={event.event._id} style={{ margin: "10px" }}>
-      <Popup content={(c) => onClick(event.event, c)} popupStyle = "old">
+      <Popup content={(c) => onClick(event.event, c)} popupStyle="old">
         <EventItem event={event.event} />
       </Popup>
     </div>
