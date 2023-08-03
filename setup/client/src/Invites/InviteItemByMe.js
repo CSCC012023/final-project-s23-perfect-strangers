@@ -19,7 +19,7 @@ const InviteItemByMe = ({ _id, event, invitee, status, setInvite }) => {
     return (
         <div className={requestStyles.request}>
             <EventItem event={event} disableRequest={true} />
-            <div>{invitee.username}</div>
+            <div className={styles.smalltext}>To {invitee.username}</div>
             <div className={styles.horizontalContent}>
                 <div
                     style={{
