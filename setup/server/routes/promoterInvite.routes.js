@@ -6,8 +6,8 @@ let UserDetailsModel = require("../models/userDetails.model");
 /* 
     //example usage
 
-    Axios.post("http://localhost:5000/promoter-invite/", {
-        inviteeEmail: invitee_emailhttps://desktop.postman.com/?desktopVersion=10.16.0&userId=27586672&teamId=0,
+    Axios.post("http://localhost:5000/promoter-invites/", {
+        inviteeEmail: invitee_email,
         promoterEmail: promoter_email,
         event: rand_event_id
     })
@@ -15,11 +15,18 @@ let UserDetailsModel = require("../models/userDetails.model");
         // do stuff...
     })
 */
+
+router.route("/event/:event_id").get((req, res) => {
+    PromoterInviteModel.find({ event: req.params.event_id })
+      .populate(["invitee"])
+      .then((r) => res.status(200).json(r))
+      .catch((err) => res.status(404).json({ err: err }));
+  });
+
 router.route("/").post(async (req, res) => {
     const inviteeEmail = req.body.inviteeEmail;
     const promoterEmail = req.body.promoterEmail;
-    console.log (inviteeEmail);
-    console.log (promoterEmail);
+  
     const invitee = await UserDetailsModel.findOne({
       email: inviteeEmail
     });
@@ -27,8 +34,6 @@ router.route("/").post(async (req, res) => {
     const promoter = await UserDetailsModel.findOne({
       email: promoterEmail
     });
-    console.log (invitee);
-    console.log (promoter);
 
     if (invitee === null || promoter === null){
         res.status(404).json({ msg: "could not find invitee or promoter" + promoterEmail});
@@ -73,12 +78,12 @@ router.route("/").post(async (req, res) => {
     })
 */
 router.route("/by/:promoter").get((req, res) => {
-  RequestModel.find({ requester: req.params.promoter })
+  PromoterInviteModel.find({ promoter: req.params.promoter })
     .populate([
+      "invitee",
       "promoter",
       {
-        path: "event",
-        populate: { path: "creator" },
+        path: "event"
       },
     ])
     .then((r) => res.status(202).json(r))
@@ -90,7 +95,7 @@ router.route("/by/:promoter").get((req, res) => {
 /* 
     //example usage
 
-    Axios.post("http://localhost:5000/promoter-invite/delete/invite._id")
+    Axios.post("http://localhost:5000/promoter-invites/delete/invite._id")
     .then(res => {
         // do stuff...
     })
@@ -106,7 +111,7 @@ router.route("/delete/:_id").delete((req, res) => {
 /* 
     //example usage
 
-    Axios.post("http://localhost:5000/promoter-invite/accept/invite._id")
+    Axios.post("http://localhost:5000/promoter-invites/accept/invite._id")
     .then(res => {
         // do stuff...
     })
@@ -131,5 +136,42 @@ router.route("/reject/:_id").patch((req, res) => {
     .then((r) => res.status(203).json(r))
     .catch((err) => res.status(400).json({ err: err }));
 });
+
+// GET REQUEST: get a list of invites by invitees
+/* 
+    //example usage (take promoter_id from the session token)
+
+    Axios.get("http://localhost:5000/requests/by/:invitee_id", {})
+    .then(res => {
+        // do stuff...
+    })
+*/
+router.route("/to/:invitee").get((req, res) => {
+  PromoterInviteModel.find({ invitee: req.params.invitee, status: "pending"})
+    .populate([
+      "invitee",
+      "promoter",
+      {
+        path: "event"
+      },
+    ])
+    .then((r) => res.status(202).json(r))
+    .catch((err) => res.json({ err: err }));
+});
+
+
+router.route("/accepted/:invitee").get((req, res) => {
+  PromoterInviteModel.find({ invitee: req.params.invitee, status: "accepted"})
+    .populate([
+      "invitee",
+      "promoter",
+      {
+        path: "event"
+      },
+    ])
+    .then((r) => res.status(202).json(r))
+    .catch((err) => res.json({ err: err }));
+});
+
 
 module.exports = router;

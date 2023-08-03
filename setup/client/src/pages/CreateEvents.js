@@ -256,6 +256,7 @@ function CreateEvents() {
                   setSelectedTags={setSelectedTags}
                   popupTrigger={popupTrigger}
                   setPopupTrigger={setPopupTrigger}
+                  saveTags={setSelectedTags}
                 />
               </div>
             </div>
@@ -272,6 +273,7 @@ function CreateEvents() {
                 name="eventPic"
                 onChange={(e) => {
                   setEventPic(e.target.files[0]);
+                  console.log(e.target.files);
                 }}
                 style={{ color: "white" }}
               />
