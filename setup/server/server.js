@@ -93,6 +93,7 @@ const requestsRouter = require("./routes/request.routes");
 const promoterRequestRouter = require("./routes/promoterRequest.routes");
 const eventLinkRouter = require("./routes/eventLink.routes");
 const businessRouter = require("./routes/businessAccounts.routes");
+const promoterInviteRouter = require("./routes/promoterInvite.routes");
 
 // connect routers
 app.use("/api", chatRouter);
@@ -106,6 +107,7 @@ app.use("/requests", requestsRouter);
 app.use("/promoter-requests", promoterRequestRouter);
 app.use("/api", eventLinkRouter);
 app.use("/business", businessRouter);
+app.use("/promoter-invites", promoterInviteRouter);
 /* 
     - If more API_End_Point files (routes) have been added in the routes folder, only need to make changes in this section
     - Currently, routers for only two routes have been set up

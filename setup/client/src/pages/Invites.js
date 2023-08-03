@@ -1,20 +1,21 @@
 import jwtDecode from "jwt-decode";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import PromoterRequestForMe from "../Requests/PromoterRequestForMe";
+import PromoterEvents from "../Requests/PromoterEvents";
 
 import Axios from "axios";
 
 import styles from "../styles/common_styles.module.css";
-import RequestItemForMe from "../Requests/RequestItemForMe";
 
 function Invites(){
     const token = jwtDecode(localStorage.getItem("token"));
     console.log(token);
 
-    const [myEvents, setMyEvents] = useState([]);
     const [pendingRequests, setPendingRequests] = useState([]);
     const [acceptedRequests, setAcceptedRequests] = useState([]);
+    const [requests, setRequests] = useState([]);
     const [requestToggle, setRequestToggle] = useState(false);
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     // useEffect(() => {
     //   Axios.get("http://localhost:5000/requests/for/" + token.id)
@@ -25,21 +26,38 @@ function Invites(){
     //     .catch((err) => console.log(err));
     // }, []);
 
-    useEffect(() => {
-        Axios.get("http://localhost:5000/promoter-requests/pending/for/" + token.id)
+
+
+    const changeRequestStatus = (request, status) => {
+        var temp = [];
+        requests.filter(r => request._id !== r._id).map(r => {temp.push(r)});
+        var copy = requests.slice();
+        copy = copy.filter(r => request._id === r._id)[0];
+        copy.status = status;
+        temp.push(copy);
+        setRequests(temp);
+    }
+
+    useEffect( () => {
+        Axios.get("http://localhost:5000/promoter-requests/for/" + token.id)
         .then((res) => {
-            setPendingRequests(res.data);
-            console.log("this is the result of the pending request");
+            setRequests(res.data);
             console.log(res.data);
         })
         .catch((err) => console.log(err));
-        Axios.get("http://localhost:5000/promoter-requests/accepted/for/" + token.id)
-        .then((res) => {
-            setAcceptedRequests(res.data);
-            console.log("this is the result of the accepted request");
-            console.log(res.data);
-        })
-        .catch((err) => console.log(err));
+        
+        // Axios.get("http://localhost:5000/promoter-requests/pending/for/" + token.id)
+        // .then((res) => {
+        //     setRequests(res.data);
+        //     console.log(res.data);
+        // })
+        // .catch((err) => console.log(err));
+        // Axios.get("http://localhost:5000/promoter-requests/accepted/for/" + token.id)
+        // .then((res) => {
+        //     setRequests(...requests, res.data);
+        //     console.log(res.data);
+        // })
+        // .catch((err) => console.log(err));
     }, []);
     
     return (
@@ -70,17 +88,18 @@ function Invites(){
             </div>
             {requestToggle ? (
                 <div className={styles.wrapContainer}>
-                {acceptedRequests.map((request) => (
-                    <PromoterRequestForMe
+                {requests.filter(request => request.status === "accepted").map((request) => (
+                    <PromoterEvents
                     event={request}
                     />
                 ))}{" "}
                 </div>
             ): (
                 <div className={styles.wrapContainer}>
-                {pendingRequests.map((request) => (
+                {requests.filter(request => request.status === "pending").map((request) => (
                     <PromoterRequestForMe
                     event={request}
+                    changeRequestStatusCallback={changeRequestStatus}
                     />
                 ))}{" "}
                 </div>

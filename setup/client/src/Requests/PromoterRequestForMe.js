@@ -7,7 +7,7 @@ import EventItem from "../pages/EventItem";
 
 import Axios from "axios";
 
-const PromoterRequestForMe = ({ event }) => {
+const PromoterRequestForMe = ({ event, changeRequestStatusCallback }) => {
   //TODO: DELETE REQUEST to delete the request
   //   const deleteRequest = () => {
   //     axios
@@ -17,13 +17,13 @@ const PromoterRequestForMe = ({ event }) => {
   //       })
   //       .catch((err) => console.log(err));
   //   };
-  const [requestData, setRequestData] = useState([]);
+  const [eventData, setEventData] = useState([event]);
 
   const rejectRequest = () => {
     try {
 
       Axios.patch("http://localhost:5000/promoter-requests/reject/" + event._id);
-
+      changeRequestStatusCallback(event, "rejected");
     } catch (e) {
       console.log(e);
     }
@@ -53,7 +53,8 @@ const PromoterRequestForMe = ({ event }) => {
     //     .catch((err) => console.log(err));
 
         Axios.patch("http://localhost:5000/promoter-requests/accept/" + event._id);
-        alert("Accepted Request from " + event.event.creator.username);
+        alert("Accepted Request from " + event.event.creator.businessName);
+        changeRequestStatusCallback(event, "accepted");
     } catch (e) {
         console.log(e);
     }
@@ -71,45 +72,45 @@ const PromoterRequestForMe = ({ event }) => {
 
   function forMeRequestsCallback() {
     return (
+      
       <div>
         <div className={requestStyles.popupHeading}>Promoter request for this event created by: </div>
-        <ul className={requestStyles.unorderedList}>
-            <li className={requestSentStyles.requestSentCard}>
-              <div className={requestSentStyles.eventPhoto}>
-                <p>Photo</p>
-              </div>
-              <div className={requestSentStyles.requestSentCardContent}>
-                <h4>
-                  <b>{event.event.creator.username}</b>
-                </h4>
-                <p>{event.event.creator.age}</p>
-                <p>{makeFirstLetterCapital(event.event.creator.gender)}</p>
-                <p>{event.event.creator.email}</p>
-                {event.event.creator.biography && <p>{event.event.creator.biography}</p>}
-              </div>
-              <div className={requestSentStyles.requestButtons}>
-                <button
-                  className={requestSentStyles.acceptButton}
-                  onClick={() => {
-                    acceptRequest();
-                  }}
-                >
-                  Accept
-                </button>
-                <button
-                  className={requestSentStyles.rejectButton}
-                  onClick={() => {
-                    rejectRequest();
-                  }}
-                >
-                  Reject
-                </button>
-              </div>
-            </li>
-        </ul>
-      </div>
-    );
-  }
+        {eventData.map( () => (
+            <ul className={requestStyles.unorderedList}>
+              <li className={requestSentStyles.requestSentCard}>
+                <div className={requestSentStyles.eventPhoto}>
+                  <p>Photo</p>
+                </div>
+                <div className={requestSentStyles.requestSentCardContent}>
+                  <h4>
+                    <b>{event.event.creator.businessName}</b>
+                  </h4>
+                  <p>{event.event.creator.email}</p>
+                  {event.event.creator.biography && <p>{event.event.creator.biography}</p>}
+                </div>
+                <div className={requestSentStyles.requestButtons}>
+                  <button
+                    className={requestSentStyles.acceptButton}
+                    onClick={() => {
+                      acceptRequest();
+                    }}
+                  >
+                    Accept
+                  </button>
+                  <button
+                    className={requestSentStyles.rejectButton}
+                    onClick={() => {
+                      rejectRequest();
+                    }}
+                  >
+                    Reject
+                  </button>
+                </div>
+              </li>
+            </ul>
+      ))};
+    </div>
+  )}
 
   return (
     <div key={event.event._id} style={{ margin: "10px" }}>

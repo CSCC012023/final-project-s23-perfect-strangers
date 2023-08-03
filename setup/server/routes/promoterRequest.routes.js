@@ -9,20 +9,42 @@ router.route("/event/:event_id").get((req, res) => {
     .catch((err) => res.status(404).json({ err: err }));
 });
 
-router.route("/pending/for/:requestee").get((req, res) => {
-  console.log("For");
-  PromoterRequestModel.find({ requestee: req.params.requestee, status: "pending"})
-    .populate({
+router.route("/for/:requestee").get((req, res) => {
+  PromoterRequestModel.find({ requestee: req.params.requestee })
+    .populate([
+      "requestee",
+      {
       path: "event",
-      populate: { path: "creator", model: "user-details" },
-    })
+      populate: { path: "creator", model: "business-details" },
+    }])
     .then((r) =>
       res
         .status(202)
         .json(
           r.filter((request) => request.event.creator && request.requestee.equals(req.params.requestee))
         )
-    ) // remove unmatched requests
+    )
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+router.route("/pending/for/:requestee").get((req, res) => {
+  PromoterRequestModel.find({ requestee: req.params.requestee, status: "pending"})
+    .populate([
+      "requestee",
+      {
+      path: "event",
+      populate: { path: "creator", model: "business-details" },
+    }])
+    .then((r) =>
+      res
+        .status(202)
+        .json(
+          r.filter((request) => request.event.creator && request.requestee.equals(req.params.requestee))
+        )
+    )
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -30,19 +52,19 @@ router.route("/pending/for/:requestee").get((req, res) => {
 });
 
 router.route("/accepted/for/:requestee").get((req, res) => {
-  console.log("For");
   PromoterRequestModel.find({ requestee: req.params.requestee, status: "accepted"})
-    .populate({
+    .populate([
+      "requestee", {
       path: "event",
-      populate: { path: "creator", model: "user-details" },
-    })
+      populate: { path: "creator", model: "business-details" },
+    }])
     .then((r) =>
       res
         .status(202)
         .json(
           r.filter((request) => request.event.creator && request.requestee.equals(req.params.requestee))
         )
-    ) // remove unmatched requests
+    ) 
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
