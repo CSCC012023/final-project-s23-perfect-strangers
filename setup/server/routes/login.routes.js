@@ -91,4 +91,50 @@ router.route("/").get((req, res) => {
   }
 });
 
+/* DEV-CGP-6 */
+router.route("/token/:fb_email").get(async (req, res) => {
+  try {
+    const userDetail = await UserDetailModel.findOne({ email: req.params.fb_email});
+    console.log(userDetail);
+    res.send(userDetail);
+  } catch {
+      res.status(404);
+      res.send({ error: "User does not exist" });
+  }
+});
+
+router.route("/facebook/first-time").post(async (req, res) => {
+  try {
+
+    const userDetail = new UserDetailModel({
+      email: req.body.email, username: req.body.username,
+      age: req.body.age, gender: req.body.gender,
+    });
+
+    userDetail.save()
+    .then(async () => {
+      var savedUser = await UserDetailModel.findOne({email: req.body.email});
+      const token = jwt.sign({ id: savedUser._id, userDetail: {
+            email: savedUser.email,
+            username: savedUser.username,
+            age: savedUser.age,
+            gender: savedUser.gender
+          },
+          isBusiness: false,
+        },
+        "shhhhh", { expiresIn: "2h", }
+      );
+      savedUser.token = token;
+      await savedUser.save();
+
+      console.log(savedUser);
+      res.send({ token: token });
+    })
+
+  } catch {
+      res.status(404);
+      res.send({ error: "User does not exist" });
+  }
+});
+
 module.exports = router;

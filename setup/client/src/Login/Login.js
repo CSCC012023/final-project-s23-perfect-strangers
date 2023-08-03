@@ -8,6 +8,8 @@ import { Icon } from "react-icons-kit";
 import { eye } from "react-icons-kit/ionicons/eye";
 import { eyeDisabled } from "react-icons-kit/ionicons/eyeDisabled";
 import StatelessPopup from "../CommonItems/StatelessPopup";
+import { FaFacebook } from "@react-icons/all-files/fa/FaFacebook"; // npm install @react-icons/all-files --save // DEV-CGP-6
+import { FaGoogle } from "@react-icons/all-files/fa/FaGoogle"; // npm install @react-icons/all-files --save
 
 //const jwt = require("jsonwebtoken");
 
@@ -69,6 +71,7 @@ const Login = ({
     }).then(res => {
       // Handle the login response according to your requirements
       if (res.data.user) {
+        localStorage.setItem("tags", JSON.stringify([])); // DEV-CGP-19
         // Redirect the user or perform any other necessary actions
         console.log(res.data.user.token);
         console.log("Login success");
@@ -138,8 +141,14 @@ const Login = ({
         <div className={styles.line}></div>
       </div>
       <div className={styles.division}>
-        <button>TODO: Google Auth</button>
-        <button>TODO: Facebook (not Meta) Auth</button>
+        <button className={styles.googleButton} >
+          <a href="http://localhost:3000">   <FaGoogle/> </a>
+        </button>
+
+        {/* DEV-CGP-6 */} 
+        <button className={styles.facebookButton} >  
+          <a  href="http://localhost:5000/auth/facebook"> <FaFacebook /> </a>
+        </button>
       </div>
 
       <div className={styles.footnoteDiv}>
