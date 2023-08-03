@@ -57,7 +57,6 @@ function App() {
               <SignupHub accountSetupCallback={"/"} loginRedirect={"/"} />
             }
           />
-          <Route path="/logout" exact element={<Logout />} />
 
           {isBusiness /* elements specific to businesses */ ? (
             <>
