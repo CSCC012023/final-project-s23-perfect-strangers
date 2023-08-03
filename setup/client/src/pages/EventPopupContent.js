@@ -246,6 +246,17 @@ const EventPopupContent = ({ userid, event, index, setEvent, close }) => {
     }).then(res => {
       setProcessed(true);
       setProcessedMessage(res.data.msg);
+
+      // Update numRequests for specific event in db only if the request does not already exist
+      if (!res.data.exists){
+        axios.post("http://localhost:5000/api/userevents/numRequests", {
+        _id: event._id,
+        numRequests: event.numRequests + 1,
+        }).then((response) => {
+          console.log(response);
+        })
+        .catch((err) => console.log(err));
+      }
     });
   };
 

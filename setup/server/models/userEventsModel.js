@@ -48,6 +48,10 @@ const eventSchema = new mongoose.Schema({
     tags: {
         type: [String],
         required: true,
+    },
+    // For Quiz 4
+    numRequests: {
+        type: Number,
     }
 });
 

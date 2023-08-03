@@ -38,6 +38,7 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
   const onMe = req.body.onMe;
   const image = req.file.filename;
   const tags = JSON.parse(req.body.tags);
+  const numRequests = 0;
 
   const newEvent = new UserEventsModel({
     creator: creator,
@@ -50,7 +51,8 @@ router.post("/userevents", upload.single("eventPic"), async (req, res) => {
     ticketLink: ticketLink,
     onMe: onMe,
     image: image,
-    tags: tags
+    tags: tags,
+    numRequests: numRequests
   });
 
   newEvent
@@ -103,7 +105,26 @@ router.route("/tags/userevents").post( async (req, res) => {
       res.send({ error: "No events found matching query tags" });
   }
 });
-module.exports = router;
+
+
+// Quiz 4
+router.route("/userevents/numRequests").post( async(req, res) => {
+  console.log("POST request is made");
+
+  const userEventID = req.body._id;
+
+  try{
+    let userEvent = await UserEventsModel.findOne({ _id: userEventID });
+    userEvent.numRequests = req.body.numRequests; // Storing numRequests in db for specific event
+    
+    await userEvent.save();
+    res.send(userEvent);
+  } catch (err) {
+    console.log(err);
+    res.status(404);
+    res.send(err);
+  }
+});
 
 /* 
   - DEV-CGP-23
@@ -155,3 +176,4 @@ router.route("/image/:_id").post(upload.single("eventPic"), async(req, res) => {
     res.send(err);
   }
 });
+module.exports = router;

@@ -84,6 +84,15 @@ body {
     text-align: center;
 }
 
+/* White heading*/
+.whiteHeading {
+    font-family: 'Advent Pro', sans-serif;
+    color: white;
+    font-size: 80px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
 /* DEV-CGP-9 */
 /* Displaying large Messages */
 .largeMessage{

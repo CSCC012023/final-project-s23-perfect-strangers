@@ -23,21 +23,21 @@ const Dashboard = () => {
 
   // DEV-CGP-6
   useEffect(() => {
-    if (window.location.href.includes('facebook')){
+    if (window.location.href.includes('facebook')) {
 
-        const userEmail = window.location.href.split('=')[1];
-        Axios.get("http://localhost:5000/login/token/" + userEmail)
+      const userEmail = window.location.href.split('=')[1];
+      Axios.get("http://localhost:5000/login/token/" + userEmail)
         .then((res) => {
-            localStorage.setItem("token", res.data.token);
-            setToken(jwtDecode(res.data.token))
-            console.log("token in dashboard")
+          localStorage.setItem("token", res.data.token);
+          setToken(jwtDecode(res.data.token))
+          console.log("token in dashboard")
         });
     }
-    else{
+    else {
       setToken(jwtDecode(localStorage.getItem("token")));;
     }
   }, []);
-  
+
   useEffect(() => {
     /* Get event tags from local storage if any */
     const localTags = localStorage.getItem("tags");
@@ -75,6 +75,62 @@ const Dashboard = () => {
     setEventExpand(true);
   };
 
+  const PopularEvents = () => {
+    const getNumRequests = (event) => event.numRequests;
+
+    const popularEventsList = [];
+
+    events.forEach((event) => {
+      if (popularEventsList.length < 6) {
+        popularEventsList.push(event);
+      } else {
+        const mostPopularEvent = popularEventsList.reduce((min, current) => (getNumRequests(min) < getNumRequests(current) ? min : current));
+        if (getNumRequests(event) > getNumRequests(mostPopularEvent)) {
+          popularEventsList.splice(popularEventsList.indexOf(mostPopularEvent), 1, event);
+        }
+      }
+    });
+
+    popularEventsList.sort((event1, event2) => event2.numRequests - event1.numRequests);
+    const remainingEvents = events.filter(event => !popularEventsList.includes(event));
+
+    return (
+      <>
+        <div className={styles.wrapContainer}>
+          {popularEventsList &&
+            popularEventsList.map((event, index) => (
+              <div
+                key={event._id}
+                style={{ margin: "10px", cursor: "pointer" }}
+                onClick={() => openPopup(event, index)}
+              >
+                <EventItem event={event} />
+              </div>
+            ))
+          }
+        </div>
+        {
+          selectedTags.length === 0 && (
+            <hr style={{ borderTop: "3px solid white", marginLeft: "8px", marginRight: "100px" }}></hr>
+          )
+        }
+        <div className={styles.wrapContainer}>
+          {remainingEvents &&
+            remainingEvents.map((event, index) => (
+              <div
+                key={event._id}
+                style={{ margin: "10px", cursor: "pointer" }}
+                onClick={() => openPopup(event, index)}
+              >
+                <EventItem event={event} />
+              </div>
+            ))
+          }
+        </div>
+      </>
+    );
+  };
+
   return (
     <>
       <StatelessPopup trigger={eventExpand} setTrigger={setEventExpand}>
@@ -87,7 +143,7 @@ const Dashboard = () => {
               prevEvents[i] = e;
               return prevEvents;
             });
-            console.log({e, events});
+            console.log({ e, events });
           }}
           close={() => setEventExpand(false)}
         />
@@ -125,18 +181,19 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className={styles.wrapContainer}>
-          {events &&
-            events.map((event, index) => (
-              <div
-                key={event._id}
-                style={{ margin: "10px", cursor: "pointer" }}
-                onClick={() => openPopup(event, index)}
-              >
-                <EventItem event={event} />
-              </div>
-            ))}
 
+        {
+          selectedTags.length === 0 && (
+            <div className={styles.Division}>
+              <div className={styles.horizontalContent} style={{ marginLeft: 10 }}>
+                <div className={styles.whiteHeading}>Trending🔥</div>
+              </div>
+            </div>
+          )
+        }
+
+        <PopularEvents />
+        <div className={styles.wrapContainer}>
           {
             // DEV-CGP-9
             selectedTags.length !== 0 && events.length === 0 && (
