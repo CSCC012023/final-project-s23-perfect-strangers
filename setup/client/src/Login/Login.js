@@ -72,6 +72,7 @@ const Login = ({
     }).then(res => {
       // Handle the login response according to your requirements
       if (res.data.user) {
+        localStorage.setItem("tags", JSON.stringify([])); // DEV-CGP-19
         // Redirect the user or perform any other necessary actions
         console.log(res.data.user.token);
         console.log("Login success");

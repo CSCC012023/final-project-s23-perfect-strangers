@@ -9,7 +9,6 @@ import { Icon } from 'react-icons-kit'
 import {eye} from 'react-icons-kit/ionicons/eye'
 import {eyeDisabled} from 'react-icons-kit/ionicons/eyeDisabled'
 import StatelessPopup from "../CommonItems/StatelessPopup";
-
 import { FaFacebook } from "@react-icons/all-files/fa/FaFacebook"; // npm install @react-icons/all-files --save // DEV-CGP-6
 import { FaGoogle } from "@react-icons/all-files/fa/FaGoogle"; // npm install @react-icons/all-files --save
 import GoogleAuthButton from "../CommonItems/GoogleAuthButton";
@@ -76,12 +75,6 @@ const Signup = ({ signedUpCallback, loginRedirect }) => {
     }).then(res => {
       if (res.data.msg === "user created") {
         // new user is created
-
-        /* dispatch(updateUserInfo({
-                    email: email,
-                    username: username
-                })); */
-
         signedUpCallback(email, username);
       }
 

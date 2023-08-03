@@ -4,7 +4,7 @@ import styles from "../styles/common_styles.module.css";
 
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { EventTags } from '../pages/EventsTags'
 
 const FBAccountSetup = () => {
   // state for age and gender
@@ -12,6 +12,9 @@ const FBAccountSetup = () => {
   const [gender, setGender] = useState("");
   const [Email, setEmail] = useState(window.location.href.split('?')[1].split("=")[1]); 
   const [userName, setuserName] = useState(window.location.href.split('?')[2].split("=")[1].split("#")[0].replace("%20", ' ').replace("%20", ' '));
+
+  const [userInterests, setUserInterests] = useState(["Other"]); // DEV-CGP-19
+  const [popupTrigger, setPopupTrigger] = useState(false); // DEV-CGP-19
 
   const navigate = useNavigate();
 
@@ -23,10 +26,12 @@ const FBAccountSetup = () => {
   };
 
   // function to call post request when submit button is pressed
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
+    
+    localStorage.setItem("tags", JSON.stringify([])); // DEV-CGP-19
 
-    Axios.post("http://localhost:5000/login/facebook/first-time", {
+    await Axios.post("http://localhost:5000/login/facebook/first-time", {
       email: Email,
       username: userName,
       age: age,
@@ -35,6 +40,14 @@ const FBAccountSetup = () => {
       console.log(res);
       navigate('/dashboard?facebookEmail=' + Email, {}); // DEV-CGP-6
     });
+
+    await Axios.post("http://localhost:5000/api/userInterests/", {
+      email: Email,
+      interestList: userInterests,
+    }).then(res => {
+      console.log(res.data.interestList)
+    });
+
   };
 
   return (
@@ -73,6 +86,16 @@ const FBAccountSetup = () => {
             <option value="secret">Prefer not to say</option>
           </select>
         </div>
+
+         {/*  DEV-CGP-19 // regInterests1@gmail.com */}
+         <div className={styles.division}>
+          <label className={styles.text}>Interests: </label>
+          <EventTags
+            popupTrigger={popupTrigger} setPopupTrigger={setPopupTrigger}
+            selectedTags={userInterests} setSelectedTags={setUserInterests}
+          />
+        </div>
+
         <div className={styles.division}>
           <button type="submit" className={styles.purpleButton}>
             Submit

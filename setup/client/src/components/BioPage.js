@@ -23,13 +23,10 @@ const BioPage = (props) => {
 
   // Set the interest master list
   const [interestList, setInterestList] = useState([
-    "Hockey",
-    "Gaming",
-    "Coding",
-    "Yoga",
-    "Movies",
-    "Burger",
-    "Books",
+    "Music", "Visual Arts", "Performing Arts", 
+    "Film", "Lectures", "Books", "Fashion", 
+    "Food & Drink", "Festivals", "Charities", "Active Life", 
+    "Nightlife", "Kids & Family", "Sports", "Other"
   ]);
   const [events, setEvents] = useState([]);
   const [attendingEvents, setAttendingEvents] = useState([]);
@@ -50,6 +47,10 @@ const BioPage = (props) => {
     );
     Axios.get("http://localhost:5000/requests/accepted/" + userId).then((response) => {
         setAttendingEvents(response.data);
+        console.log(response.data);
+    });
+    Axios.get("http://localhost:5000/promoter-invite/accepted/" + userId).then((response) => {
+        setAttendingEvents(attendingEvents + response.data);
         console.log(response.data);
     });
   }, []);
