@@ -49,6 +49,10 @@ const BioPage = (props) => {
         setAttendingEvents(response.data);
         console.log(response.data);
     });
+    Axios.get("http://localhost:5000/promoter-invite/accepted/" + userId).then((response) => {
+        setAttendingEvents(attendingEvents + response.data);
+        console.log(response.data);
+    });
   }, []);
 
   /* DEV-CGP-6 */
