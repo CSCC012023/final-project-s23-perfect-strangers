@@ -9,7 +9,7 @@ const InviteItemByMe = ({ _id, event, invitee, status, setInvite }) => {
     //TODO: DELETE REQUEST to delete the request
     const deleteInvite = () => {
         axios
-            .delete("http://localhost:5000/promoter-invite/delete/" + _id)
+            .delete("http://localhost:5000/promoter-invites/delete/" + _id)
             .then(res => {
                 setInvite(prev => prev.filter(r => r._id !== _id));
             })

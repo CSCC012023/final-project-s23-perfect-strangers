@@ -25,7 +25,7 @@ const InviteItemForMe = ({ _id, invitee, promoter, event, status, setInvite }) =
     try {
       console.log(reqId);
 
-      Axios.patch("http://localhost:5000/promoter-invite/reject/" + reqId);
+      Axios.patch("http://localhost:5000/promoter-invites/reject/" + reqId);
       setInvite(prev => prev.filter(r => r._id !== _id));
 
     } catch (e) {
@@ -59,7 +59,7 @@ const InviteItemForMe = ({ _id, invitee, promoter, event, status, setInvite }) =
         })
         .catch((err) => console.log(err));
 
-      Axios.patch("http://localhost:5000/promoter-invite/accept/" + reqId);
+      Axios.patch("http://localhost:5000/promoter-invites/accept/" + reqId);
 
       setInvite(prev => prev.filter(r => r._id !== _id));
     } catch (e) {

@@ -17,7 +17,7 @@ function AttendingEvents() {
             setRequests(response.data);
             console.log(response.data);
         });
-        Axios.get("http://localhost:5000/promoter-invite/accepted/" + token.id).then((response) => {
+        Axios.get("http://localhost:5000/promoter-invites/accepted/" + token.id).then((response) => {
             setRequests([...requests, ...response.data]);
             console.log(response.data);
         });
