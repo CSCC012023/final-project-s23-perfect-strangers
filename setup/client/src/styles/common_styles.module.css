@@ -56,8 +56,8 @@ body {
 .popup {
     position: relative;
     padding: 10px;
-    width: 100%;
-    max-width: 640px;
+    min-width: 640px;
+    width: "min-content";
     background-color: #1e1e1e;
     border-radius: 10px;
 }
@@ -241,6 +241,7 @@ a:hover {
     text-decoration: none;
     margin: 10px;
     cursor: pointer;
+    transition-duration: 0.4s;
 }
 .smallPurpleButton:hover {
     background-color: #df6cff;
