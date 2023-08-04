@@ -1,6 +1,11 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(axios)/)"
+    ]
+  },
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
