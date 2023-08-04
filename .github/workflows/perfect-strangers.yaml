@@ -23,41 +23,41 @@ jobs:
     steps:
     - uses: actions/checkout@v2 # Needed by default
 
-    # - name: Build server image
-    #   run: docker build . --file Dockerfile --tag perfectstrangers/setup-server:v1.0.0
+    - name: Build server image
+      run: docker build . --file Dockerfile --tag perfectstrangers/setup-server:v1.0.0
       
     - name: Log into DockerHub Registry xx
       run: echo "perfect-strangers" | docker login -u perfectstrangers --password-stdin 
 
-    # - name: Push server image to DockerHub Registry
-    #   run: docker push perfectstrangers/setup-server:v1.0.0
+    - name: Push server image to DockerHub Registry
+      run: docker push perfectstrangers/setup-server:v1.0.0
   
-  # build-client:
+  build-client:
 
-  #   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  #   # strategy:
-  #   #   matrix:
-  #   #     node-version: [18.x]
+    # strategy:
+    #   matrix:
+    #     node-version: [18.x]
 
-  #   defaults:
-  #     run:
-  #       working-directory: setup/client
+    defaults:
+      run:
+        working-directory: setup/client
     
-  #   steps:
-  #   - uses: actions/checkout@v2 # Needed by default
+    steps:
+    - uses: actions/checkout@v2 # Needed by default
     
-  #   - name: Install node_modules
-  #     run: npm i
+    - name: Install node_modules
+      run: npm i
       
-  #   - name: Run unit tests
-  #     run: npm test
+    # - name: Run unit tests
+    #   run: npm test
 
-  #   - name: Build client image
-  #     run: docker build . --file Dockerfile --tag perfectstrangers/setup-client:v1.0.0
+    - name: Build client image
+      run: docker build . --file Dockerfile --tag perfectstrangers/setup-client:v1.0.0
 
-  #   - name: Log into DockerHub Registry
-  #     run: echo "perfect-strangers" | docker login -u perfectstrangers --password-stdin 
+    - name: Log into DockerHub Registry
+      run: echo "perfect-strangers" | docker login -u perfectstrangers --password-stdin 
 
-  #   - name: Push server image to DockerHub Registry
-  #     run: docker push perfectstrangers/setup-client:v1.0.0
+    - name: Push server image to DockerHub Registry
+      run: docker push perfectstrangers/setup-client:v1.0.0
