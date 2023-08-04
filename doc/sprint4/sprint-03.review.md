@@ -1,4 +1,4 @@
-# GOGO
+# GOGO/Perfect-Strangers
 
 ## Iteration 3 - Review & Retrospect
 

@@ -1,4 +1,4 @@
-# GOGO
+# GOGO/Perfect-Strangers
 
 ## Iteration 04
 
@@ -6,8 +6,6 @@
  * End date: 04/08/2023
 
 ## Process
-
-Quick Introduction to the process
 
 #### Changes from previous iteration
 
