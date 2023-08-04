@@ -63,4 +63,7 @@ We will expand on the work completed in the previous sprints including but not l
 
 #### Artifacts
 
-We will produce a [demo video]() of the functionality we listed above and post it on our GitHub repo in the sprint4 folder.
+We will produce a [demo video](https://youtu.be/OFLQa7Mwb4o) of the functionality we listed above and post it on our GitHub repo in the sprint4 folder.
+
+https://github.com/CSCC012023/final-project-s23-perfect-strangers/assets/77621905/2b9b7a73-6e35-4462-b390-fc1bec2053f8
+
