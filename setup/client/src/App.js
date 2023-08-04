@@ -70,7 +70,6 @@ function App() {
                 exact
                 element={<BusinessDashboard />}
               />
-              <Route path="/promoters" exact element={<PromotersPage />} />
               <Route
                 path="/create-events"
                 exact
