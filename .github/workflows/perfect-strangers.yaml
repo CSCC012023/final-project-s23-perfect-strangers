@@ -26,7 +26,7 @@ jobs:
     # - name: Build server image
     #   run: docker build . --file Dockerfile --tag perfectstrangers/setup-server:v1.0.0
       
-    - name: Log into DockerHub Registry
+    - name: Log into DockerHub Registry xx
       run: echo "perfect-strangers" | docker login -u perfectstrangers --password-stdin 
 
     # - name: Push server image to DockerHub Registry
