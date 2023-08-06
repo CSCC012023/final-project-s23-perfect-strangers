@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Axios from "axios";
-
+import configData from "../config.json";
 import { useState, useReducer } from "react";
 
 import styles from "../styles/common_styles.module.css";
@@ -102,7 +102,7 @@ const ProfilePicture = ({ email, url }) => {
       >
         <img
           className={bioPageStyles.ProfilePicture}
-          src={`http://localhost:5000/uploads/` + profilePicName}
+          src={configData.SERVER_URL + "/uploads/" + profilePicName}
           alt="No image"
         />
       </button>

@@ -1,5 +1,6 @@
 import eventStyles from "../styles/event.module.css";
 import styles from "../styles/common_styles.module.css";
+import configData from "../config.json";
 const EventItem = ({ event }) => {
   console.log("Event item" + event.image);
   return (
@@ -10,7 +11,7 @@ const EventItem = ({ event }) => {
         {/* For CGP-12 */}
         <div className={eventStyles.eventPhotoContainer}>
         <img
-            src={`http://localhost:5000/uploads/` + event.image}
+            src={configData.SERVER_URL + "/uploads/" + event.image}
             alt="No photo"
             className={eventStyles.eventPhoto}
         />
