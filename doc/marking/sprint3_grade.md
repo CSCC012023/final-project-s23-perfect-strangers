@@ -262,7 +262,7 @@ Documentation Total Mark: 1.5 / 3
   - 1 mark = one or more errors identified by the demo TA
   - 0 marks = UI is visually unappealing
 
-  Your Mark: 1 / 2 
+  Your Mark: 2 / 2 
 
 - Documentation (max 2 marks)
 
@@ -272,11 +272,11 @@ Documentation Total Mark: 1.5 / 3
 
   Your Mark: 2 / 2
 
-Sprint Demo Total Mark: 13 / 14
+Sprint Demo Total Mark: 14 / 14
 
 ## Total Mark
 
-78.5 / 95
+79.5 / 95
 
 
 
